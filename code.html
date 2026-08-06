@@ -1,0 +1,974 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="pt-BR"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Lumina Estates - Viva o Extraordinário</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts: Hanken Grotesk, Inter, JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@500;600;700&amp;family=Inter:wght@400&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "on-surface": "#1a1c1c",
+                "on-surface-variant": "#444748",
+                "surface-bright": "#f9f9f9",
+                "on-background": "#1a1c1c",
+                "secondary": "#735c00",
+                "error": "#ba1a1a",
+                "on-secondary-fixed": "#241a00",
+                "inverse-on-surface": "#f0f1f1",
+                "secondary-container": "#fed65b",
+                "on-error-container": "#93000a",
+                "surface-tint": "#5f5e5e",
+                "on-secondary-fixed-variant": "#574500",
+                "inverse-surface": "#2f3131",
+                "surface-variant": "#e2e2e2",
+                "outline": "#747878",
+                "tertiary": "#000000",
+                "inverse-primary": "#c8c6c5",
+                "on-secondary-container": "#745c00",
+                "surface-container-lowest": "#ffffff",
+                "surface-dim": "#dadada",
+                "surface-container": "#eeeeee",
+                "on-primary-container": "#858383",
+                "on-primary-fixed-variant": "#474746",
+                "error-container": "#ffdad6",
+                "primary-container": "#1c1b1b",
+                "primary-fixed": "#e5e2e1",
+                "tertiary-fixed-dim": "#c6c6c7",
+                "surface-container-high": "#e8e8e8",
+                "outline-variant": "#c4c7c7",
+                "on-tertiary-fixed": "#1a1c1c",
+                "on-error": "#ffffff",
+                "surface-container-low": "#f3f3f4",
+                "tertiary-container": "#1a1c1c",
+                "secondary-fixed-dim": "#e9c349",
+                "on-tertiary-fixed-variant": "#454747",
+                "on-tertiary-container": "#838484",
+                "secondary-fixed": "#ffe088",
+                "surface": "#f9f9f9",
+                "on-tertiary": "#ffffff",
+                "on-primary-fixed": "#1c1b1b",
+                "tertiary-fixed": "#e2e2e2",
+                "on-secondary": "#ffffff",
+                "background": "#f9f9f9",
+                "surface-container-highest": "#e2e2e2",
+                "on-primary": "#ffffff",
+                "primary": "#000000",
+                "primary-fixed-dim": "#c8c6c5"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+        },
+        "spacing": {
+                "section-gap": "120px",
+                "gutter": "24px",
+                "margin-desktop": "64px",
+                "margin-mobile": "16px",
+                "container-max": "1280px",
+                "unit": "8px"
+        },
+        "fontFamily": {
+                "body-md": [
+                        "Inter"
+                ],
+                "display-lg": [
+                        "Hanken Grotesk"
+                ],
+                "body-lg": [
+                        "Inter"
+                ],
+                "headline-lg-mobile": [
+                        "Hanken Grotesk"
+                ],
+                "caption": [
+                        "Inter"
+                ],
+                "headline-lg": [
+                        "Hanken Grotesk"
+                ],
+                "headline-md": [
+                        "Hanken Grotesk"
+                ],
+                "label-md": [
+                        "Hanken Grotesk"
+                ]
+        },
+        "fontSize": {
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "24px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "display-lg": [
+                        "48px",
+                        {
+                                "lineHeight": "56px",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "28px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-lg-mobile": [
+                        "28px",
+                        {
+                                "lineHeight": "36px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "caption": [
+                        "12px",
+                        {
+                                "lineHeight": "16px",
+                                "fontWeight": "400"
+                        }
+                ],
+                "headline-lg": [
+                        "32px",
+                        {
+                                "lineHeight": "40px",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "headline-md": [
+                        "24px",
+                        {
+                                "lineHeight": "32px",
+                                "fontWeight": "600"
+                        }
+                ],
+                "label-md": [
+                        "14px",
+                        {
+                                "lineHeight": "20px",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+<style>
+        .glass-panel {
+            background: theme('colors.surface-container-lowest');
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid theme('colors.surface-variant');
+        }
+        
+        .luxury-button-primary {
+            background-color: theme('colors.secondary-container');
+            color: theme('colors.on-secondary-container');
+            transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .luxury-button-primary:hover {
+            transform: scale(1.02);
+            filter: saturate(1.2);
+        }
+
+        .luxury-button-ghost {
+            border: 1px solid theme('colors.outline');
+            background: transparent;
+            color: theme('colors.on-surface');
+            transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .luxury-button-ghost:hover {
+            background: theme('colors.surface-variant');
+        }
+
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 800ms ease-out, transform 800ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Smooth scrolling for navigation */
+        html { scroll-behavior: smooth; }
+
+        /* ===== Galeria (master-detail): grupos, thumbnails e crossfade ===== */
+        .gallery-group-btn {
+            background: transparent;
+            border: 1px solid theme('colors.surface-variant');
+            color: theme('colors.on-surface-variant');
+            transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+                        border-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+                        color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .gallery-group-btn:hover {
+            background: theme('colors.surface-container-lowest');
+            border-color: theme('colors.outline-variant');
+            color: theme('colors.on-surface');
+        }
+        .gallery-group-btn.is-active {
+            border-left: 3px solid theme('colors.secondary-container');
+            background: rgba(254, 214, 91, 0.15);
+            color: theme('colors.on-surface');
+        }
+        .gallery-group-btn.is-active i {
+            color: theme('colors.secondary');
+        }
+        .gallery-thumb {
+            opacity: 0.6;
+            transition: opacity 250ms ease, box-shadow 250ms ease;
+            cursor: pointer;
+        }
+        .gallery-thumb:hover {
+            opacity: 0.85;
+        }
+        .gallery-thumb.is-active {
+            opacity: 1;
+            box-shadow: 0 0 0 2px theme('colors.secondary-container');
+        }
+        #gallery-cover-img {
+            transition: opacity 300ms ease;
+        }
+        .is-swapping {
+            opacity: 0;
+        }
+        .gallery-group-btn:focus-visible,
+        .gallery-thumb:focus-visible {
+            outline: 2px solid theme('colors.secondary-container');
+            outline-offset: 2px;
+        }
+
+        /* ===== Lightbox fullscreen ===== */
+        #gallery-lightbox { opacity: 0; transition: opacity 200ms ease; }
+        #gallery-lightbox.is-open { opacity: 1; }
+        #gallery-lightbox #lb-img { transition: opacity 150ms ease; }
+        #gallery-lightbox.is-swapping #lb-img { opacity: 0; }
+        /* Honra usuários que preferem menos movimento */
+        @media (prefers-reduced-motion: reduce) {
+          #gallery-lightbox,
+          #gallery-lightbox #lb-img { transition: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased overflow-x-hidden selection:bg-secondary-container/30 selection:text-on-surface">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl border-b border-surface-variant transition-all duration-300" id="mainNav">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-6 max-w-container-max mx-auto">
+<!-- Brand -->
+<a class="font-display-lg text-[24px] md:text-[32px] tracking-tighter text-on-surface truncate md:text-clip max-w-[200px] md:max-w-none" href="#">AMBIANCE 1</a>
+<!-- Navigation Links (Desktop) -->
+<ul class="hidden md:flex gap-gutter font-body-md text-[14px] uppercase tracking-widest font-semibold">
+<li class=""><a class="text-on-surface-variant hover:scale-105 hover:text-on-surface transition-all duration-300" href="#galeria">Galeria</a></li>
+<li class=""><a class="text-on-surface-variant hover:scale-105 hover:text-on-surface transition-all duration-300" href="#planta">Planta</a></li>
+<li class=""><a class="text-on-surface-variant hover:scale-105 hover:text-on-surface transition-all duration-300" href="#localizacao">Localização</a></li>
+<li class=""><a class="text-on-surface-variant hover:scale-105 hover:text-on-surface transition-all duration-300" href="#contato">Contato</a></li>
+</ul>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<button class="hidden md:block font-body-md text-[14px] uppercase tracking-widest luxury-button-primary px-6 py-3 rounded-DEFAULT font-bold">
+                    Agendar Visita
+                </button>
+<button class="text-on-surface-variant hover:text-on-surface transition-colors duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">light_mode</span>
+</button>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-on-surface-variant hover:text-on-surface transition-colors duration-300" id="mobileMenuBtn">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center pt-24 pb-section-gap px-margin-mobile md:px-margin-desktop overflow-hidden">
+<!-- Background Asset (Image + Wash) -->
+<img src="ambiance.jpg"
+     alt="" role="presentation"
+     class="absolute inset-0 w-full h-full object-cover object-center opacity-40 select-none pointer-events-none z-0"
+     loading="eager"
+     decoding="async">
+<!-- Velo branco uniforme: garante fundo efetivo claro e contraste AA do texto escuro -->
+<div class="absolute inset-0 bg-background/40 z-10"></div>
+
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent z-10"></div>
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-background/50 to-background z-10"></div>
+<div class="relative z-20 flex flex-col items-center text-center max-w-4xl mx-auto w-full bg-surface-container-lowest/80 backdrop-blur-md rounded-[2rem] px-6 py-10 md:px-12 md:py-14 shadow-lg border border-white/50">
+<h1 class="font-display-lg text-headline-lg-mobile md:text-display-lg mb-6 text-on-surface reveal-up active" style="transition-delay: 100ms;">Viva no condomínio <span class="text-secondary-container">Ambiance 1</span></h1>
+<div class="flex flex-wrap justify-center gap-3 md:gap-6 mb-12 font-label-md text-on-surface-variant reveal-up active" style="transition-delay: 200ms;">
+<span class="glass-panel px-4 py-2 rounded-full flex items-center gap-2">
+<i class="bi bi-rulers text-[18px]"></i> 50m²
+                </span>
+<span class="glass-panel px-4 py-2 rounded-full flex items-center gap-2">
+<i class="bi bi-door-closed text-[18px]"></i> 2 quartos
+                </span>
+<span class="glass-panel px-4 py-2 rounded-full flex items-center gap-2">
+<i class="bi bi-droplet-half text-[18px]"></i> 1 banheiro
+                </span>
+<span class="glass-panel px-4 py-2 rounded-full flex items-center gap-2">
+<i class="bi bi-door-open text-[18px]"></i> Sacada
+                </span>
+<span class="glass-panel px-4 py-2 rounded-full flex items-center gap-2">
+<i class="bi bi-car-front text-[18px]"></i> 1 vaga
+                </span>
+</div>
+<div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto reveal-up active" style="transition-delay: 300ms;">
+<button class="luxury-button-primary font-label-md uppercase tracking-widest px-8 py-4 rounded-DEFAULT w-full sm:w-auto flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">calendar_month</span> Agendar Visita
+                </button>
+<button class="luxury-button-ghost font-label-md uppercase tracking-widest px-8 py-4 rounded-DEFAULT w-full sm:w-auto flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">chat</span> WhatsApp
+                </button>
+</div>
+</div>
+</section>
+<!-- Galeria (Master-Detail por cômodo) -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto scroll-mt-24" id="galeria">
+<div class="mb-16 reveal-up active">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">Galeria</h2>
+<p class="font-body-lg text-on-surface-variant max-w-2xl">Conheça o Apt 36 no Bloco 3: um refúgio de 50m² no coração de Campinas, com 2 quartos, 1 banheiro, sacada e 1 vaga, além de acabamento de alto padrão. Navegue pelos ambientes e descubra a sofisticação de cada espaço.</p>
+</div>
+<div class="flex flex-col lg:flex-row gap-10 lg:gap-16">
+<!-- COLUNA ESQUERDA — Palco (imagem principal do cômodo selecionado) -->
+<div class="w-full lg:w-3/5">
+<figure class="glass-panel rounded-xl overflow-hidden reveal-up active" id="gallery-stage">
+<div class="relative group/cover" id="gallery-cover-wrap">
+<img id="gallery-cover-img" class="w-full aspect-[4/3] object-cover cursor-zoom-in" src="images/lateral-da-sala-vista-para-sacada.jpeg" alt="Sala de estar integrada do apartamento, com sofá claro e vista ampla para a sacada ensolarada." loading="eager" decoding="async">
+<button type="button" id="gallery-zoom-btn" class="absolute top-3 right-3 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm opacity-0 group-hover/cover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-secondary-container transition-opacity" aria-label="Ampliar imagem em tela cheia">
+<i class="bi bi-arrows-fullscreen text-[18px]"></i>
+</button>
+</div>
+<figcaption class="p-6">
+<h3 id="gallery-cover-title" class="font-headline-md text-headline-md text-on-surface">Sala de Estar</h3>
+<p id="gallery-cover-caption" class="font-label-md text-on-secondary-container mt-2">VISTA PARA A SACADA</p>
+</figcaption>
+<ul id="gallery-thumbs" class="flex flex-wrap gap-3 px-6 pb-6" aria-label="Fotos deste ambiente">
+<li>
+<button type="button" class="gallery-thumb is-active" data-img="images/lateral-da-sala-vista-para-sacada.jpeg" aria-label="Ver foto: Sala de Estar - sacada">
+<img src="images/lateral-da-sala-vista-para-sacada.jpeg" class="w-20 h-16 object-cover rounded-lg" loading="lazy" decoding="async" alt="Miniatura da sala de estar com vista para a sacada.">
+</button>
+</li>
+<li>
+<button type="button" class="gallery-thumb" data-img="images/sala-vista-para-espelhos-e-corredor-principal.jpeg" aria-label="Ver foto: Sala de Estar - espelhos e corredor">
+<img src="images/sala-vista-para-espelhos-e-corredor-principal.jpeg" class="w-20 h-16 object-cover rounded-lg" loading="lazy" decoding="async" alt="Miniatura da sala com painel de espelhos e acesso ao corredor principal.">
+</button>
+</li>
+</ul>
+</figure>
+</div>
+<!-- COLUNA DIREITA — Lista de grupos (textos dos cômodos) -->
+<div class="w-full lg:w-2/5">
+<p class="font-label-md text-on-surface-variant uppercase mb-6">Ambientes</p>
+<ul id="gallery-groups" class="space-y-3" aria-label="Ambientes da galeria">
+<li class="reveal-up active">
+<button type="button" class="gallery-group-btn is-active w-full text-left p-5 rounded-xl flex items-center gap-4" data-group="sala" data-cover="images/lateral-da-sala-vista-para-sacada.jpeg" data-title="Sala de Estar" data-caption="VISTA PARA A SACADA" data-photos='["images/lateral-da-sala-vista-para-sacada.jpeg","images/sala-vista-para-espelhos-e-corredor-principal.jpeg"]' aria-pressed="true">
+<span class="w-10 h-10 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant shrink-0"><i class="bi bi-couch text-[20px]"></i></span>
+<span class="flex-1 min-w-0">
+<span class="block font-headline-md text-[18px] text-on-surface">Sala de Estar</span>
+<span class="block font-body-md text-[14px] text-on-surface-variant">Living integrado com a sacada e pé-direito generoso.</span>
+</span>
+<span class="shrink-0 inline-flex items-center gap-1 font-label-md text-on-surface-variant text-[12px]"><i class="bi bi-images"></i> 2</span>
+</button>
+</li>
+<li class="reveal-up active">
+<button type="button" class="gallery-group-btn w-full text-left p-5 rounded-xl flex items-center gap-4" data-group="cozinha" data-cover="images/cozinha-vista-para-geladeira.jpeg" data-title="Cozinha" data-caption="ACABAMENTO GOURMET" data-photos='["images/cozinha-vista-para-geladeira.jpeg","images/vista-cozinha-forno.jpeg"]' aria-pressed="false">
+<span class="w-10 h-10 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant shrink-0"><i class="bi bi-cup-hot text-[20px]"></i></span>
+<span class="flex-1 min-w-0">
+<span class="block font-headline-md text-[18px] text-on-surface">Cozinha</span>
+<span class="block font-body-md text-[14px] text-on-surface-variant">Cozinha gourmet equipada com marcenaria sob medida.</span>
+</span>
+<span class="shrink-0 inline-flex items-center gap-1 font-label-md text-on-surface-variant text-[12px]"><i class="bi bi-images"></i> 2</span>
+</button>
+</li>
+<li class="reveal-up active">
+<button type="button" class="gallery-group-btn w-full text-left p-5 rounded-xl flex items-center gap-4" data-group="quarto-principal" data-cover="images/quarto-principal-vista-para-janela.jpeg" data-title="Suíte Principal" data-caption="LUZ NATURAL PRIVILEGIADA" data-photos='["images/quarto-principal-vista-para-janela.jpeg","images/quarto-principal-vista-do-armario.jpeg"]' aria-pressed="false">
+<span class="w-10 h-10 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant shrink-0"><i class="bi bi-moon-stars text-[20px]"></i></span>
+<span class="flex-1 min-w-0">
+<span class="block font-headline-md text-[18px] text-on-surface">Suíte Principal</span>
+<span class="block font-body-md text-[14px] text-on-surface-variant">Suíte espaçosa com janela panorâmica e closet.</span>
+</span>
+<span class="shrink-0 inline-flex items-center gap-1 font-label-md text-on-surface-variant text-[12px]"><i class="bi bi-images"></i> 2</span>
+</button>
+</li>
+<li class="reveal-up active">
+<button type="button" class="gallery-group-btn w-full text-left p-5 rounded-xl flex items-center gap-4" data-group="quarto-visita" data-cover="images/quarto-visita-com-vista-para-janela.jpeg" data-title="Quarto de Visita" data-caption="CONFORTO E PRIVACIDADE" data-photos='["images/quarto-visita-com-vista-para-janela.jpeg"]' aria-pressed="false">
+<span class="w-10 h-10 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant shrink-0"><i class="bi bi-people text-[20px]"></i></span>
+<span class="flex-1 min-w-0">
+<span class="block font-headline-md text-[18px] text-on-surface">Quarto de Visita</span>
+<span class="block font-body-md text-[14px] text-on-surface-variant">Suíte de visitas com conforto e total privacidade.</span>
+</span>
+<span class="shrink-0 inline-flex items-center gap-1 font-label-md text-on-surface-variant text-[12px]"><i class="bi bi-images"></i> 1</span>
+</button>
+</li>
+<li class="reveal-up active">
+<button type="button" class="gallery-group-btn w-full text-left p-5 rounded-xl flex items-center gap-4" data-group="banheiro" data-cover="images/banheiro.jpeg" data-title="Banheiro" data-caption="REVESTIMENTO PREMIUM" data-photos='["images/banheiro.jpeg"]' aria-pressed="false">
+<span class="w-10 h-10 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant shrink-0"><i class="bi bi-droplet-half text-[20px]"></i></span>
+<span class="flex-1 min-w-0">
+<span class="block font-headline-md text-[18px] text-on-surface">Banheiro</span>
+<span class="block font-body-md text-[14px] text-on-surface-variant">Banheiro com revestimento premium e acabamento impecável.</span>
+</span>
+<span class="shrink-0 inline-flex items-center gap-1 font-label-md text-on-surface-variant text-[12px]"><i class="bi bi-images"></i> 1</span>
+</button>
+</li>
+<li class="reveal-up active">
+<button type="button" class="gallery-group-btn w-full text-left p-5 rounded-xl flex items-center gap-4" data-group="lavanderia" data-cover="images/lavanteria.jpeg" data-title="Lavanderia" data-caption="ESPAÇO FUNCIONAL" data-photos='["images/lavanteria.jpeg"]' aria-pressed="false">
+<span class="w-10 h-10 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant shrink-0"><i class="bi bi-washing-machine text-[20px]"></i></span>
+<span class="flex-1 min-w-0">
+<span class="block font-headline-md text-[18px] text-on-surface">Lavanderia</span>
+<span class="block font-body-md text-[14px] text-on-surface-variant">Lavanderia planejada com infraestrutura completa.</span>
+</span>
+<span class="shrink-0 inline-flex items-center gap-1 font-label-md text-on-surface-variant text-[12px]"><i class="bi bi-images"></i> 1</span>
+</button>
+</li>
+<li class="reveal-up active">
+<button type="button" class="gallery-group-btn w-full text-left p-5 rounded-xl flex items-center gap-4" data-group="corredor" data-cover="images/corredor-entre-sala-quarto-banheiro-quarto-principal.jpeg" data-title="Corredor" data-caption="CIRCULAÇÃO INTEGRADA" data-photos='["images/corredor-entre-sala-quarto-banheiro-quarto-principal.jpeg"]' aria-pressed="false">
+<span class="w-10 h-10 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant shrink-0"><i class="bi bi-signpost-split text-[20px]"></i></span>
+<span class="flex-1 min-w-0">
+<span class="block font-headline-md text-[18px] text-on-surface">Corredor</span>
+<span class="block font-body-md text-[14px] text-on-surface-variant">Circulação fluida que conecta todos os ambientes.</span>
+</span>
+<span class="shrink-0 inline-flex items-center gap-1 font-label-md text-on-surface-variant text-[12px]"><i class="bi bi-images"></i> 1</span>
+</button>
+</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- Planta & Interatividade -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low relative" id="planta">
+<div class="max-w-container-max mx-auto flex flex-col lg:flex-row gap-16 items-center">
+<div class="w-full lg:w-1/3 reveal-up active">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-6">Planta Inteligente</h2>
+<p class="font-body-lg text-on-surface-variant mb-8">Navegue pelos 50m² de puro design funcional. Cada ambiente foi projetado para maximizar a entrada de luz natural e a fluidez espacial.</p>
+<ul class="space-y-4 font-body-md text-on-surface">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-container">done</span> Fluxo circular otimizado
+                    </li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-container">done</span> Ventilação cruzada
+                    </li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-container">done</span> Isolamento acústico premium
+                    </li>
+</ul>
+</div>
+<div class="w-full lg:w-2/3 relative group reveal-up active" style="transition-delay: 200ms;">
+<div class="glass-panel p-2 rounded-xl overflow-hidden relative">
+<img alt="Planta" class="w-full h-auto object-cover transition-transform duration-[1.5s] group-hover:scale-[1.03] invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJHjixTdNbp6gtwDHZnC8MVjLCduAB-nXd3yhEP4ZM2pFFudCm0WfLylzlNazP0YQyr-EYN48PE9-4p_JNiov7dwin1EhEyHIDUlaD9ZDpocpMcPQLatVEOtBT-t6ao0m4C_TGq8v5rDcLgunNieAW48VWGazP_TlPGulrirIAZQyFsITwNMfEpY_Gj7qIaUDTxCfWjozRe9o1qwSrHmMzHPfrK_35KHXLaXPH1_MR5uvehEmPHg">
+<!-- Hotspots -->
+<div class="absolute top-[40%] left-[30%] w-6 h-6 bg-secondary-container rounded-full animate-pulse flex items-center justify-center cursor-pointer group/hotspot">
+<span class="absolute w-full h-full bg-secondary-container rounded-full animate-ping opacity-50"></span>
+<div class="absolute bottom-full mb-2 w-48 bg-surface-container-highest p-4 rounded-lg border border-surface-variant opacity-0 group-hover/hotspot:opacity-100 transition-opacity pointer-events-none z-10 shadow-lg">
+<p class="font-label-md text-on-surface mb-1">LIVING</p>
+<p class="font-body-md text-[14px] text-on-surface-variant">Integração total com a sacada.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Localização Inteligente -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto" id="localizacao">
+<div class="mb-16 reveal-up active">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">Localização Inteligente</h2>
+<p class="font-body-lg text-on-surface-variant max-w-2xl">Localizado na Rua Luís Dionísio de Souza, 375, o Condomínio Ambiance 1 oferece a conveniência de estar perto de tudo o que Campinas tem de melhor.</p>
+</div>
+<div class="flex flex-col lg:flex-row gap-12">
+<div class="w-full lg:w-1/2 rounded-xl overflow-hidden glass-panel h-[400px] lg:h-auto reveal-up active">
+<img alt="Map Placeholder" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiTWRrNBRNsP_JJqBaBrXsEIcMNNUvHdj415itbG-iO8-3YKHu8sn-0ulwbZbuCs8hmRwxqNzBqHuVwJ-Fdbi2LahArZCfVioeSSRujsAMH4-Jz7PCLW9OAri9takjUYwSP9HwPOmDLKriixfBTs9pfeJcPKp1Fue4LZoTOPTBQhe80NfcwYMb-PuxWp9YQdOhqsQ_mLX62D9d38yvquI1hos-m0QC65vSZESqr9cZT0eesGK0Mw">
+</div>
+<div class="w-full lg:w-1/2 flex flex-col gap-8 reveal-up active" style="transition-delay: 200ms;">
+<div class="grid grid-cols-2 gap-4">
+<div class="glass-panel p-4 rounded-lg flex items-center gap-4 hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-secondary-container">bakery_dining</span>
+<div>
+<p class="font-label-md text-on-surface">Padaria</p>
+<p class="font-body-md text-[14px] text-on-surface-variant">250m (3 min)</p>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-lg flex items-center gap-4 hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-secondary-container">local_grocery_store</span>
+<div>
+<p class="font-label-md text-on-surface">Mercado</p>
+<p class="font-body-md text-[14px] text-on-surface-variant">400m (5 min)</p>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-lg flex items-center gap-4 hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-secondary-container">school</span>
+<div>
+<p class="font-label-md text-on-surface">Escola</p>
+<p class="font-body-md text-[14px] text-on-surface-variant">800m (10 min)</p>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-lg flex items-center gap-4 hover:shadow-md transition-shadow">
+<span class="material-symbols-outlined text-secondary-container">local_hospital</span>
+<div>
+<p class="font-label-md text-on-surface">Hospital</p>
+<p class="font-body-md text-[14px] text-on-surface-variant">1.2km (5 min carro)</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="font-headline-md text-[20px] text-on-surface mb-6">Tempo até pontos importantes</h3>
+<div class="relative border-l border-surface-variant ml-4 space-y-8">
+<div class="relative pl-8">
+<span class="absolute -left-3 top-0 w-6 h-6 bg-surface rounded-full border-2 border-secondary-container flex items-center justify-center">
+<span class="w-2 h-2 bg-secondary-container rounded-full"></span>
+</span>
+<h4 class="font-label-md text-on-surface">Parque da Cidade</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant">10 minutos de caminhada</p>
+</div>
+<div class="relative pl-8">
+<span class="absolute -left-3 top-0 w-6 h-6 bg-surface rounded-full border-2 border-secondary-container flex items-center justify-center">
+<span class="w-2 h-2 bg-secondary-container rounded-full"></span>
+</span>
+<h4 class="font-label-md text-on-surface">Shopping Center</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant">15 minutos de carro</p>
+</div>
+<div class="relative pl-8">
+<span class="absolute -left-3 top-0 w-6 h-6 bg-surface rounded-full border-2 border-secondary-container flex items-center justify-center">
+<span class="w-2 h-2 bg-secondary-container rounded-full"></span>
+</span>
+<h4 class="font-label-md text-on-surface">Aeroporto</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant">25 minutos de carro</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Características & Diferenciais -->
+<section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low max-w-none w-full">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16 reveal-up active">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">Diferenciais</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active">
+<div class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
+<span class="material-symbols-outlined text-[32px]">balcony</span>
+</div>
+<h3 class="font-headline-md text-on-surface mb-4 text-xl">Sacada Gourmet</h3>
+<p class="font-body-md text-on-surface-variant">Ampla varanda com churrasqueira a carvão e vista definitiva.</p>
+</div>
+<div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active" style="transition-delay: 100ms;">
+<div class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
+<span class="material-symbols-outlined text-[32px]">pets</span>
+</div>
+<h3 class="font-headline-md text-on-surface mb-4 text-xl">Pet Place</h3>
+<p class="font-body-md text-on-surface-variant">Espaço dedicado e equipado para o bem-estar do seu animal de estimação.</p>
+</div>
+<div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active" style="transition-delay: 200ms;">
+<div class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
+<span class="material-symbols-outlined text-[32px]">computer</span>
+</div>
+<h3 class="font-headline-md text-on-surface mb-4 text-xl">Coworking</h3>
+<p class="font-body-md text-on-surface-variant">Ambiente climatizado, com internet de alta velocidade e salas de reunião.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface border-t border-surface-variant w-full" id="contato">
+<div class="flex flex-col md:flex-row justify-between items-center px-margin-mobile md:px-margin-desktop py-12 max-w-container-max mx-auto gap-gutter">
+<div class="font-headline-lg text-[20px] text-on-surface">AMBIANCE 1</div>
+<ul class="flex flex-wrap justify-center gap-6 font-label-md text-on-surface-variant">
+<li class=""><a class="hover:text-secondary-container transition-colors duration-300" href="#">Instagram</a></li>
+<li class=""><a class="hover:text-secondary-container transition-colors duration-300" href="#">LinkedIn</a></li>
+<li class=""><a class="hover:text-secondary-container transition-colors duration-300" href="#">WhatsApp</a></li>
+<li class=""><a class="hover:text-secondary-container transition-colors duration-300" href="#">Privacidade</a></li>
+</ul>
+<div class="font-label-md text-on-surface-variant text-center md:text-right text-[12px]">© 2024 AMBIANCE 1. APT 36 BLOCO 3 - CAMPINAS.</div>
+</div>
+</footer>
+<!-- Lightbox da galeria (fullscreen) -->
+<div id="gallery-lightbox" class="fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-black/90 backdrop-blur-sm px-4" role="dialog" aria-modal="true" aria-label="Visualização ampliada da imagem" aria-hidden="true">
+  <button type="button" id="lb-close" class="absolute top-4 right-4 md:top-6 md:right-6 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-secondary-container" aria-label="Fechar visualização ampliada">
+    <i class="bi bi-x-lg text-[22px]"></i>
+  </button>
+  <button type="button" id="lb-prev" class="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-secondary-container disabled:opacity-25 disabled:cursor-not-allowed disabled:hover:bg-white/10" aria-label="Imagem anterior">
+    <i class="bi bi-chevron-left text-[28px]"></i>
+  </button>
+  <img id="lb-img" class="max-w-[92vw] max-h-[80vh] object-contain shadow-2xl select-none" alt="" />
+  <button type="button" id="lb-next" class="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-secondary-container disabled:opacity-25 disabled:cursor-not-allowed disabled:hover:bg-white/10" aria-label="Próxima imagem">
+    <i class="bi bi-chevron-right text-[28px]"></i>
+  </button>
+  <p id="lb-counter" class="absolute bottom-5 left-1/2 -translate-x-1/2 font-label-md text-white/80 text-[12px] uppercase tracking-widest" aria-live="polite"></p>
+</div>
+
+<!-- Reveal Animation Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-up').forEach((el) => {
+                observer.observe(el);
+            });
+        });
+    </script>
+
+
+<!-- Galeria Master-Detail — interação por event delegation (JS vanilla) -->
+<script>
+(function () {
+  document.addEventListener('DOMContentLoaded', () => {
+    // Guarda inicial: se o palco da galeria não existir, sai silenciosamente.
+    const stage = document.getElementById('gallery-stage');
+    if (!stage) return;
+
+    // Cache dos elementos do contrato.
+    const coverImg     = document.getElementById('gallery-cover-img');
+    const coverTitle   = document.getElementById('gallery-cover-title');
+    const coverCaption = document.getElementById('gallery-cover-caption');
+    const thumbsList   = document.getElementById('gallery-thumbs');
+    const groupsList   = document.getElementById('gallery-groups');
+
+    const lbRoot    = document.getElementById('gallery-lightbox');
+    const lbImg     = document.getElementById('lb-img');
+    const lbClose   = document.getElementById('lb-close');
+    const lbPrev    = document.getElementById('lb-prev');
+    const lbNext    = document.getElementById('lb-next');
+    const lbCounter = document.getElementById('lb-counter');
+    const coverWrap = document.getElementById('gallery-cover-wrap');
+
+    // Elementos essenciais — sem eles não há o que fazer.
+    if (!coverImg || !groupsList || !thumbsList) return;
+
+    // Respeita a preferência do usuário por menos movimento.
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    // Token que serializa trocas concorrentes: só a mais recente prospera.
+    let swapToken = 0;
+
+    // Estado atual do grupo visível no palco (usado pelo lightbox).
+    let currentPhotos = [];
+    let currentIndex  = 0;
+    let lastFocused   = null; // elemento que abriu o lightbox (para devolver o foco)
+
+    // Crossfade robusto da capa: fade-out -> troca src/alt -> fade-in ao carregar.
+    function swapCover(newSrc, newAlt) {
+      if (!newSrc || coverImg.getAttribute('src') === newSrc) return;
+
+      const myToken = ++swapToken;
+      const isCurrent = () => myToken === swapToken;
+
+      const setSrc = () => {
+        coverImg.setAttribute('src', newSrc);
+        if (newAlt) coverImg.setAttribute('alt', newAlt);
+      };
+
+      const revealWhenReady = () => {
+        if (!isCurrent()) return;
+        const reveal = () => {
+          if (!isCurrent()) return;
+          coverImg.classList.remove('is-swapping');
+        };
+        coverImg.addEventListener('load',  reveal, { once: true });
+        coverImg.addEventListener('error', reveal, { once: true });
+        if (coverImg.complete && coverImg.naturalWidth > 0) reveal();
+        setTimeout(reveal, 1500); // fallback caso load/error não disparem
+      };
+
+      // Caminho reduzido: sem fade, troca direta.
+      if (prefersReduced.matches) {
+        setSrc();
+        revealWhenReady();
+        return;
+      }
+
+      const FADE_MS = 300;
+      coverImg.classList.add('is-swapping');
+
+      let faded = false;
+      const onFadeOut = (event) => {
+        if (faded || !isCurrent()) return;
+        if (event && event.propertyName && event.propertyName !== 'opacity') return;
+        faded = true;
+        coverImg.removeEventListener('transitionend', onFadeOut);
+        setSrc();
+        revealWhenReady();
+      };
+
+      coverImg.addEventListener('transitionend', onFadeOut);
+      setTimeout(onFadeOut, FADE_MS + 60); // fallback se transitionend não disparar
+    }
+
+    // Reconstrói a lista de thumbnails a partir do array de URLs.
+    function buildThumbs(photos, coverUrl, baseAlt) {
+      thumbsList.innerHTML = '';
+
+      photos.forEach((url, i) => {
+        if (!url) return;
+
+        const li = document.createElement('li');
+        const button = document.createElement('button');
+
+        button.type = 'button';
+        button.className = 'gallery-thumb';
+        button.dataset.img = url;
+        button.setAttribute('aria-label', 'Ver foto: ' + (baseAlt || ('foto ' + (i + 1))));
+        button.setAttribute('aria-pressed', 'false');
+
+        if (url === coverUrl) {
+          button.classList.add('is-active');
+          button.setAttribute('aria-pressed', 'true');
+        }
+
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.className = 'w-20 h-16 object-cover rounded-lg';
+        img.alt = (baseAlt ? baseAlt + ' — ' : '') + 'miniatura ' + (i + 1);
+        img.src = url;
+
+        button.appendChild(img);
+        li.appendChild(button);
+        thumbsList.appendChild(li);
+      });
+
+      // Se nenhum thumb casou com a capa, ativa o primeiro por padrão.
+      if (!thumbsList.querySelector('.gallery-thumb.is-active')) {
+        const first = thumbsList.querySelector('.gallery-thumb');
+        if (first) {
+          first.classList.add('is-active');
+          first.setAttribute('aria-pressed', 'true');
+        }
+      }
+    }
+
+    // Reconstrói todo o palco a partir dos data-* do botão de grupo clicado.
+    function aplicarGrupo(btn) {
+      if (!btn) return;
+
+      // 1. Atualiza estados dos botões de grupo.
+      groupsList.querySelectorAll('.gallery-group-btn').forEach((b) => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-pressed', 'true');
+
+      // 2. Lê o dataset do botão.
+      const cover   = btn.dataset.cover   || '';
+      const title   = btn.dataset.title   || '';
+      const caption = btn.dataset.caption || '';
+
+      let photos = [];
+      try {
+        const parsed = JSON.parse(btn.dataset.photos || '[]');
+        if (Array.isArray(parsed)) photos = parsed;
+      } catch (err) {
+        photos = [];
+      }
+
+      const altText = (title + ' ' + caption).trim();
+
+      currentPhotos = photos.slice();
+      currentIndex  = Math.max(0, currentPhotos.indexOf(cover));
+      if (currentIndex >= currentPhotos.length) currentIndex = 0;
+
+      // 3. Troca a capa com crossfade.
+      swapCover(cover, altText || 'Foto da galeria');
+
+      // 4. Atualiza título e legenda do palco.
+      if (coverTitle)   coverTitle.textContent   = title;
+      if (coverCaption) coverCaption.textContent = caption;
+
+      // 5. Reconstrói os thumbnails.
+      buildThumbs(photos, cover, title || caption || altText);
+    }
+
+    // Troca somente a capa (mantém o grupo atual).
+    function aplicarThumb(thumbBtn) {
+      if (!thumbBtn) return;
+      const newSrc = thumbBtn.dataset.img || '';
+      if (!newSrc) return;
+
+      const idx = currentPhotos.indexOf(newSrc);
+      if (idx >= 0) currentIndex = idx;
+
+      thumbsList.querySelectorAll('.gallery-thumb').forEach((t) => {
+        t.classList.remove('is-active');
+        t.setAttribute('aria-pressed', 'false');
+      });
+      thumbBtn.classList.add('is-active');
+      thumbBtn.setAttribute('aria-pressed', 'true');
+
+      const t = coverTitle   ? coverTitle.textContent.trim()   : '';
+      const c = coverCaption ? coverCaption.textContent.trim() : '';
+      swapCover(newSrc, (t + ' ' + c).trim() || undefined);
+    }
+
+    // ---- Lightbox fullscreen ----
+    if (lbRoot && lbImg && coverWrap) {
+      const FOCUSABLE = () => lbRoot.querySelectorAll('button:not([disabled]), [href], input, [tabindex]:not([tabindex="-1"])');
+
+      function lbAltText() {
+        const t = coverTitle   ? coverTitle.textContent.trim()   : '';
+        const c = coverCaption ? coverCaption.textContent.trim() : '';
+        return (t + ' ' + c).trim() || 'Foto da galeria';
+      }
+
+      function renderCounter() {
+        if (!lbCounter) return;
+        if (currentPhotos.length <= 1) { lbCounter.textContent = ''; return; }
+        lbCounter.textContent = (currentIndex + 1) + ' / ' + currentPhotos.length;
+      }
+
+      function updateNavButtons() {
+        const single = currentPhotos.length <= 1;
+        if (lbPrev) lbPrev.disabled = single;
+        if (lbNext) lbNext.disabled = single;
+      }
+
+      // Mostra uma foto do grupo atual (atualiza lightbox E a capa do palco, em sync).
+      function showIndex(i) {
+        if (!currentPhotos.length) return;
+        const n = currentPhotos.length;
+        currentIndex = (i + n) % n;
+        const url = currentPhotos[currentIndex];
+        const alt = lbAltText();
+
+        if (prefersReduced.matches) {
+          lbImg.src = url;
+        } else {
+          lbRoot.classList.add('is-swapping');
+          setTimeout(() => {
+            lbImg.src = url;
+            lbImg.addEventListener('load',  () => lbRoot.classList.remove('is-swapping'), { once: true });
+            lbImg.addEventListener('error', () => lbRoot.classList.remove('is-swapping'), { once: true });
+          }, 150);
+        }
+        lbImg.alt = alt + ' — foto ' + (currentIndex + 1);
+
+        // Sincroniza a capa da galeria (reutiliza o crossfade existente).
+        swapCover(url, alt);
+
+        // Marca o thumb correspondente como ativo.
+        thumbsList.querySelectorAll('.gallery-thumb').forEach((t) => {
+          const on = t.dataset.img === url;
+          t.classList.toggle('is-active', on);
+          t.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+
+        renderCounter();
+        updateNavButtons();
+      }
+
+      function openLightbox() {
+        if (!currentPhotos.length) return;
+        lastFocused = document.activeElement;
+        lbRoot.classList.remove('hidden');
+        lbRoot.classList.add('flex');
+        lbRoot.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+
+        showIndex(currentIndex);
+        lbRoot.classList.add('is-open');
+
+        const f = FOCUSABLE();
+        if (f.length) f[0].focus({ preventScroll: true });
+      }
+
+      function closeLightbox() {
+        lbRoot.classList.remove('is-open');
+        document.body.style.overflow = '';
+        const done = () => {
+          lbRoot.classList.remove('flex');
+          lbRoot.classList.add('hidden');
+          lbRoot.setAttribute('aria-hidden', 'true');
+          lbRoot.removeEventListener('transitionend', done);
+          if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus({ preventScroll: true });
+        };
+        if (prefersReduced.matches) { done(); return; }
+        lbRoot.addEventListener('transitionend', done);
+        setTimeout(done, 260);
+      }
+
+      // Abertura: clique na capa ou no botão expandir.
+      coverWrap.addEventListener('click', openLightbox);
+
+      // Controles.
+      if (lbClose) lbClose.addEventListener('click', closeLightbox);
+      if (lbPrev)  lbPrev.addEventListener('click', () => showIndex(currentIndex - 1));
+      if (lbNext)  lbNext.addEventListener('click', () => showIndex(currentIndex + 1));
+
+      // Backdrop: clicar fora da imagem (no próprio overlay) fecha.
+      lbRoot.addEventListener('click', (e) => { if (e.target === lbRoot) closeLightbox(); });
+
+      // Teclado: ESC fecha, setas navegam, Tab fica preso no dialog.
+      document.addEventListener('keydown', (e) => {
+        if (lbRoot.classList.contains('hidden')) return;
+        if (e.key === 'Escape') { e.preventDefault(); closeLightbox(); }
+        else if (e.key === 'ArrowLeft')  { e.preventDefault(); showIndex(currentIndex - 1); }
+        else if (e.key === 'ArrowRight') { e.preventDefault(); showIndex(currentIndex + 1); }
+        else if (e.key === 'Tab') {
+          const f = Array.prototype.slice.call(FOCUSABLE());
+          if (!f.length) return;
+          const first = f[0], last = f[f.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      });
+    }
+
+    // Event delegation — um listener por container (sobrevive ao rebuild dos thumbs).
+    groupsList.addEventListener('click', (event) => {
+      const btn = event.target.closest('.gallery-group-btn');
+      if (!btn || !groupsList.contains(btn)) return;
+      aplicarGrupo(btn);
+    });
+
+    thumbsList.addEventListener('click', (event) => {
+      const btn = event.target.closest('.gallery-thumb');
+      if (!btn || !thumbsList.contains(btn)) return;
+      aplicarThumb(btn);
+    });
+
+    // init(): sincroniza o palco com o grupo ativo inicial.
+    function init() {
+      const activeBtn =
+        groupsList.querySelector('.gallery-group-btn.is-active') ||
+        groupsList.querySelector('.gallery-group-btn');
+      if (activeBtn) aplicarGrupo(activeBtn);
+    }
+
+    init();
+  });
+})();
+</script>
+
+</body></html>

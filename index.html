@@ -285,6 +285,120 @@
                         outline-offset: 2px;
                 }
 
+                /* ===== Localização Inteligente: categorias, lista e modo (master-detail) =====
+                   NOTA: usamos valores hex diretos (e nao theme('colors.*')) porque esta folha
+                   e um bloco style comum — theme() so e processado pelo Tailwind Play CDN em
+                   blocos style[type="text/tailwindcss"]. Valores retirados do DESIGN.md. */
+                .loc-cat-btn {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: .5rem;
+                        padding: .5rem 1rem;
+                        border-radius: .375rem;
+                        background: #ffffff;
+                        color: #444748;
+                        border: 1px solid #e2e2e2;
+                        white-space: nowrap;
+                        transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+                                border-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+                                color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+                        cursor: pointer;
+                }
+
+                .loc-cat-btn:hover {
+                        border-color: #c4c7c7;
+                        color: #1a1c1c;
+                }
+
+                .loc-cat-btn.is-active {
+                        background: #fed65b;
+                        color: #1a1c1c;
+                        border-color: #fed65b;
+                }
+
+                .loc-place-btn {
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                        gap: .75rem;
+                        width: 100%;
+                        padding: .875rem 1rem;
+                        background: transparent;
+                        border: none;
+                        border-bottom: 1px solid #eeeeee;
+                        text-align: left;
+                        transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+                        cursor: pointer;
+                }
+
+                .loc-place-btn:last-child {
+                        border-bottom: none;
+                }
+
+                /* Garante que a classe utilitária `hidden` (Tailwind) sempre vença o display:flex do botão,
+                   independentemente da ordem de injeção do Play CDN. */
+                .loc-place-btn.hidden,
+                .loc-place-btn[hidden] {
+                        display: none !important;
+                }
+
+                .loc-place-btn:hover {
+                        background: #f3f3f4;
+                }
+
+                .loc-place-btn.is-active {
+                        background: rgba(254, 214, 91, 0.15);
+                }
+
+                .loc-place-btn.is-active::before {
+                        content: "";
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        bottom: 0;
+                        width: 3px;
+                        background: #fed65b;
+                }
+
+                .loc-place-btn.is-active .loc-name {
+                        color: #1a1c1c;
+                        font-weight: 600;
+                }
+
+                .loc-mode-btn {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: .4rem;
+                        padding: .45rem .85rem;
+                        border-radius: .375rem;
+                        background: #ffffff;
+                        color: #444748;
+                        border: 1px solid #e2e2e2;
+                        transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+                                border-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+                                color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+                        cursor: pointer;
+                        font-size: 14px;
+                }
+
+                .loc-mode-btn:hover {
+                        color: #1a1c1c;
+                        border-color: #c4c7c7;
+                }
+
+                .loc-mode-btn.is-active {
+                        background: #fed65b;
+                        color: #1a1c1c;
+                        border-color: #fed65b;
+                }
+
+                .loc-cat-btn:focus-visible,
+                .loc-place-btn:focus-visible,
+                .loc-mode-btn:focus-visible {
+                        outline: 2px solid #fed65b;
+                        outline-offset: 2px;
+                }
+
                 /* ===== Lightbox fullscreen ===== */
                 #gallery-lightbox {
                         opacity: 0;
@@ -813,93 +927,359 @@
                                 Souza, 375, o Condomínio Ambiance 1 oferece a conveniência de estar perto de tudo o que
                                 Campinas tem de melhor.</p>
                 </div>
-                <div class="flex flex-col lg:flex-row gap-12">
-                        <div
-                                class="w-full lg:w-1/2 rounded-xl overflow-hidden glass-panel h-[400px] lg:h-auto reveal-up active">
-                                <img alt="Map Placeholder" class="w-full h-full object-cover"
-                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiTWRrNBRNsP_JJqBaBrXsEIcMNNUvHdj415itbG-iO8-3YKHu8sn-0ulwbZbuCs8hmRwxqNzBqHuVwJ-Fdbi2LahArZCfVioeSSRujsAMH4-Jz7PCLW9OAri9takjUYwSP9HwPOmDLKriixfBTs9pfeJcPKp1Fue4LZoTOPTBQhe80NfcwYMb-PuxWp9YQdOhqsQ_mLX62D9d38yvquI1hos-m0QC65vSZESqr9cZT0eesGK0Mw">
-                        </div>
-                        <div class="w-full lg:w-1/2 flex flex-col gap-8 reveal-up active"
-                                style="transition-delay: 200ms;">
-                                <div class="grid grid-cols-2 gap-4">
-                                        <div
-                                                class="glass-panel p-4 rounded-lg flex items-center gap-4 hover:shadow-md transition-shadow">
-                                                <span
-                                                        class="material-symbols-outlined text-secondary-container">bakery_dining</span>
-                                                <div>
-                                                        <p class="font-label-md text-on-surface">Padaria</p>
-                                                        <p class="font-body-md text-[14px] text-on-surface-variant">250m
-                                                                (3 min)</p>
-                                                </div>
-                                        </div>
-                                        <div
-                                                class="glass-panel p-4 rounded-lg flex items-center gap-4 hover:shadow-md transition-shadow">
-                                                <span
-                                                        class="material-symbols-outlined text-secondary-container">local_grocery_store</span>
-                                                <div>
-                                                        <p class="font-label-md text-on-surface">Mercado</p>
-                                                        <p class="font-body-md text-[14px] text-on-surface-variant">400m
-                                                                (5 min)</p>
-                                                </div>
-                                        </div>
-                                        <div
-                                                class="glass-panel p-4 rounded-lg flex items-center gap-4 hover:shadow-md transition-shadow">
-                                                <span
-                                                        class="material-symbols-outlined text-secondary-container">school</span>
-                                                <div>
-                                                        <p class="font-label-md text-on-surface">Escola</p>
-                                                        <p class="font-body-md text-[14px] text-on-surface-variant">800m
-                                                                (10 min)</p>
-                                                </div>
-                                        </div>
-                                        <div
-                                                class="glass-panel p-4 rounded-lg flex items-center gap-4 hover:shadow-md transition-shadow">
-                                                <span
-                                                        class="material-symbols-outlined text-secondary-container">local_hospital</span>
-                                                <div>
-                                                        <p class="font-label-md text-on-surface">Hospital</p>
-                                                        <p class="font-body-md text-[14px] text-on-surface-variant">
-                                                                1.2km (5 min carro)</p>
-                                                </div>
-                                        </div>
+                <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+                        <!-- COLUNA PRINCIPAL — mapa + filtros -->
+                        <div class="w-full lg:flex-1 min-w-0 flex flex-col gap-4 reveal-up active">
+                                <!-- Pills de categoria (scroll horizontal no mobile) -->
+                                <div id="loc-categories" class="flex flex-wrap gap-2"
+                                        role="group" aria-label="Categorias de estabelecimentos"
+                                        >
+                                        <button type="button" class="loc-cat-btn is-active" data-cat="academia"
+                                                aria-pressed="true">
+                                                <i class="bi bi-bicycle text-[18px]" aria-hidden="true"></i>
+                                                <span class="font-label-md">Academia</span>
+                                        </button>
+                                        <button type="button" class="loc-cat-btn" data-cat="acougue"
+                                                aria-pressed="false">
+                                                <i class="bi bi-basket3 text-[18px]" aria-hidden="true"></i>
+                                                <span class="font-label-md">Açougue</span>
+                                        </button>
+                                        <button type="button" class="loc-cat-btn" data-cat="animais"
+                                                aria-pressed="false">
+                                                <i class="bi bi-heart text-[18px]" aria-hidden="true"></i>
+                                                <span class="font-label-md">Pet Shop</span>
+                                        </button>
+                                        <button type="button" class="loc-cat-btn" data-cat="barbearia"
+                                                aria-pressed="false">
+                                                <i class="bi bi-scissors text-[18px]" aria-hidden="true"></i>
+                                                <span class="font-label-md">Barbearia</span>
+                                        </button>
+                                        <button type="button" class="loc-cat-btn"
+                                                data-cat="construcao-e-ferramentas" aria-pressed="false">
+                                                <i class="bi bi-tools text-[18px]" aria-hidden="true"></i>
+                                                <span class="font-label-md">Construção &amp; Ferramentas</span>
+                                        </button>
+                                        <button type="button" class="loc-cat-btn" data-cat="drogaria"
+                                                aria-pressed="false">
+                                                <i class="bi bi-capsule text-[18px]" aria-hidden="true"></i>
+                                                <span class="font-label-md">Drogaria</span>
+                                        </button>
+                                        <button type="button" class="loc-cat-btn" data-cat="mercado-varejo"
+                                                aria-pressed="false">
+                                                <i class="bi bi-cart3 text-[18px]" aria-hidden="true"></i>
+                                                <span class="font-label-md">Mercado &amp; Varejo</span>
+                                        </button>
+                                        <button type="button" class="loc-cat-btn" data-cat="padaria-e-doces"
+                                                aria-pressed="false">
+                                                <i class="bi bi-cake2 text-[18px]" aria-hidden="true"></i>
+                                                <span class="font-label-md">Padaria &amp; Doces</span>
+                                        </button>
+                                        <button type="button" class="loc-cat-btn"
+                                                data-cat="restaurante-hamburgeria" aria-pressed="false">
+                                                <i class="bi bi-egg-fried text-[18px]" aria-hidden="true"></i>
+                                                <span class="font-label-md">Restaurante &amp; Hamburgueria</span>
+                                        </button>
+                                        <button type="button" class="loc-cat-btn" data-cat="salao"
+                                                aria-pressed="false">
+                                                <i class="bi bi-palette text-[18px]" aria-hidden="true"></i>
+                                                <span class="font-label-md">Salão de Beleza</span>
+                                        </button>
                                 </div>
-                                <div>
-                                        <h3 class="font-headline-md text-[20px] text-on-surface mb-6">Tempo até pontos
-                                                importantes</h3>
-                                        <div class="relative border-l border-surface-variant ml-4 space-y-8">
-                                                <div class="relative pl-8">
-                                                        <span
-                                                                class="absolute -left-3 top-0 w-6 h-6 bg-surface rounded-full border-2 border-secondary-container flex items-center justify-center">
-                                                                <span
-                                                                        class="w-2 h-2 bg-secondary-container rounded-full"></span>
-                                                        </span>
-                                                        <h4 class="font-label-md text-on-surface">Parque da Cidade</h4>
-                                                        <p class="font-body-md text-[14px] text-on-surface-variant">10
-                                                                minutos de caminhada</p>
-                                                </div>
-                                                <div class="relative pl-8">
-                                                        <span
-                                                                class="absolute -left-3 top-0 w-6 h-6 bg-surface rounded-full border-2 border-secondary-container flex items-center justify-center">
-                                                                <span
-                                                                        class="w-2 h-2 bg-secondary-container rounded-full"></span>
-                                                        </span>
-                                                        <h4 class="font-label-md text-on-surface">Shopping Center</h4>
-                                                        <p class="font-body-md text-[14px] text-on-surface-variant">15
-                                                                minutos de carro</p>
-                                                </div>
-                                                <div class="relative pl-8">
-                                                        <span
-                                                                class="absolute -left-3 top-0 w-6 h-6 bg-surface rounded-full border-2 border-secondary-container flex items-center justify-center">
-                                                                <span
-                                                                        class="w-2 h-2 bg-secondary-container rounded-full"></span>
-                                                        </span>
-                                                        <h4 class="font-label-md text-on-surface">Aeroporto</h4>
-                                                        <p class="font-body-md text-[14px] text-on-surface-variant">25
-                                                                minutos de carro</p>
-                                                </div>
+
+                                <!-- Palco do mapa -->
+                                <div id="loc-stage"
+                                        class="glass-panel rounded-xl overflow-hidden relative reveal-up active bg-surface-container-lowest h-[380px] lg:h-[560px]">
+                                        <img id="loc-img" decoding="async"
+                                                class="block w-full h-full object-contain"
+                                                src="localidades/academia:pe:titans.png"
+                                                alt="Mapa do trajeto a pé até Titans">
+
+                                        <!-- Toggle de modo: overlay fixo no canto superior direito (mobile e desktop) -->
+                                        <div id="loc-mode"
+                                                class="absolute top-3 right-3 z-10 flex gap-1 p-1.5 rounded-lg bg-surface-container-lowest/85 shadow-sm backdrop-blur-sm border border-surface-variant/50"
+                                                role="group" aria-label="Modo de locomoção">
+                                                <button type="button" class="loc-mode-btn" data-mode="carro"
+                                                        aria-pressed="false">
+                                                        <i class="bi bi-car-front" aria-hidden="true"></i>
+                                                        <span class="font-label-md">Carro</span>
+                                                </button>
+                                                <button type="button" class="loc-mode-btn is-active" data-mode="pe"
+                                                        aria-pressed="true">
+                                                        <i class="bi bi-person-walking" aria-hidden="true"></i>
+                                                        <span class="font-label-md">A pé</span>
+                                                </button>
                                         </div>
                                 </div>
                         </div>
+
+                        <!-- COLUNA LATERAL — lista de estabelecimentos -->
+                        <aside class="w-full lg:w-[340px] min-w-0 shrink-0 reveal-up active" style="transition-delay: 120ms;">
+                                <div class="mb-5">
+                                        <span
+                                                class="block font-label-md uppercase tracking-wide text-on-surface-variant">Estabelecimentos</span>
+                                        <h3 id="loc-active-cat"
+                                                class="font-headline-md font-semibold text-on-surface text-[18px] leading-tight mt-1">Academia</h3>
+                                </div>
+                                <div id="loc-places" class="glass-panel rounded-xl overflow-hidden"
+                                        role="group" aria-label="Lista de estabelecimentos">
+                                        <!-- academia (visíveis por padrão) -->
+                                        <button type="button" class="loc-place-btn is-active" data-cat="academia"
+                                                data-name="Titans" data-img-pe="localidades/academia:pe:titans.png"
+                                                data-img-carro="localidades/academia:carro:titans.png"
+                                                aria-pressed="true">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Titans</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn" data-cat="academia"
+                                                data-name="Trooper" data-img-pe="localidades/academia:pe:trooper.png"
+                                                data-img-carro="localidades/academia:carro:trooper.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Trooper</span>
+                                        </button>
+
+                                        <!-- acougue -->
+                                        <button type="button" class="loc-place-btn hidden" data-cat="acougue"
+                                                data-name="Center Casa de Carnes"
+                                                data-img-pe="localidades/acougue:pe:center-casa-de-carnes.png"
+                                                data-img-carro="localidades/acougue:carro:center-casa-de-carnes.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Center Casa de
+                                                        Carnes</span>
+                                        </button>
+
+                                        <!-- animais -->
+                                        <button type="button" class="loc-place-btn hidden" data-cat="animais"
+                                                data-name="Ateliê dos Cães"
+                                                data-img-pe="localidades/animais:pe:Atelie-dos-caes.png"
+                                                data-img-carro="localidades/animais:carro:Atelie-dos-caes.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Ateliê dos
+                                                        Cães</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn hidden" data-cat="animais"
+                                                data-name="Let Banho e Tosa"
+                                                data-img-pe="localidades/animais:pe:let-banho-e-tosa.png"
+                                                data-img-carro="localidades/animais:carro:let-banho-e-tosa.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Let Banho e
+                                                        Tosa</span>
+                                        </button>
+
+                                        <!-- barbearia -->
+                                        <button type="button" class="loc-place-btn hidden" data-cat="barbearia"
+                                                data-name="Barbearia do Gregório"
+                                                data-img-pe="localidades/barbearia:pe:Barbearia-do-Gregorio.png"
+                                                data-img-carro="localidades/barbearia:carro:Barbearia-do-Gregorio.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Barbearia do
+                                                        Gregório</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn hidden" data-cat="barbearia"
+                                                data-name="Erik's Barbearia"
+                                                data-img-pe="localidades/barbearia:pe:Eriks-Barbearia.png"
+                                                data-img-carro="localidades/barbearia:carro:Eriks-Barbearia.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Erik's
+                                                        Barbearia</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn hidden" data-cat="barbearia"
+                                                data-name="Resenha" data-img-pe="localidades/barbearia:pe:Resenha.png"
+                                                data-img-carro="localidades/barbearia:carro:Resenha.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Resenha</span>
+                                        </button>
+
+                                        <!-- construcao-e-ferramentas -->
+                                        <button type="button" class="loc-place-btn hidden"
+                                                data-cat="construcao-e-ferramentas" data-name="Pedroso"
+                                                data-img-pe="localidades/construcao-e-ferramentas:pe:pedroso.png"
+                                                data-img-carro="localidades/construcao-e-ferramentas:carro:pedroso.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Pedroso</span>
+                                        </button>
+
+                                        <!-- drogaria -->
+                                        <button type="button" class="loc-place-btn hidden" data-cat="drogaria"
+                                                data-name="Drogaria Confiança"
+                                                data-img-pe="localidades/drogaria:pe:confianca.png"
+                                                data-img-carro="localidades/drogaria:carro:confianca.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Drogaria
+                                                        Confiança</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn hidden" data-cat="drogaria"
+                                                data-name="Drogaria Total"
+                                                data-img-pe="localidades/drogaria:pe:total.png"
+                                                data-img-carro="localidades/drogaria:carro:total.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Drogaria
+                                                        Total</span>
+                                        </button>
+
+                                        <!-- mercado-varejo -->
+                                        <button type="button" class="loc-place-btn hidden" data-cat="mercado-varejo"
+                                                data-name="Bardela"
+                                                data-img-pe="localidades/mercado-varejo:pe:bardela.png"
+                                                data-img-carro="localidades/mercado-varejo:carro:bardela.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Bardela</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn hidden" data-cat="mercado-varejo"
+                                                data-name="Bisa Mercato"
+                                                data-img-pe="localidades/mercado-varejo:pe:Bisa-Mercato.png"
+                                                data-img-carro="localidades/mercado-varejo:carro:Bisa-Mercato.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Bisa Mercato</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn hidden" data-cat="mercado-varejo"
+                                                data-name="Preço Certo"
+                                                data-img-pe="localidades/mercado-varejo:pe:Preco-Certo.png"
+                                                data-img-carro="localidades/mercado-varejo:carro:Preco-Certo.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Preço Certo</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn hidden" data-cat="mercado-varejo"
+                                                data-name="Quitanda da Roça"
+                                                data-img-pe="localidades/mercado-varejo:pe:quitanda-da-roca.png"
+                                                data-img-carro="localidades/mercado-varejo:carro:quitanda-da-roca.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Quitanda da
+                                                        Roça</span>
+                                        </button>
+
+                                        <!-- padaria-e-doces -->
+                                        <button type="button" class="loc-place-btn hidden"
+                                                data-cat="padaria-e-doces" data-name="Dimary"
+                                                data-img-pe="localidades/padaria-e-doces:pe:dimary.png"
+                                                data-img-carro="localidades/padaria-e-doces:carro:dimary.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Dimary</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn hidden"
+                                                data-cat="padaria-e-doces" data-name="Dona Deo"
+                                                data-img-pe="localidades/padaria-e-doces:pe:dona-deo.png"
+                                                data-img-carro="localidades/padaria-e-doces:carro:dona-deo.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Dona Deo</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn hidden"
+                                                data-cat="padaria-e-doces" data-name="Panificadora Jardim Myrian"
+                                                data-img-pe="localidades/padaria-e-doces:pe:Panificadora-Jd-Myrian.png"
+                                                data-img-carro="localidades/padaria-e-doces:carro:Panificadora-Jd-Myrian.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Panificadora
+                                                        Jardim Myrian</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn hidden"
+                                                data-cat="padaria-e-doces" data-name="Sorveteria e Cia"
+                                                data-img-pe="localidades/padaria-e-doces:pe:sorveteria-e-cia.png"
+                                                data-img-carro="localidades/padaria-e-doces:carro:sorveteria-e-cia.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Sorveteria e
+                                                        Cia</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn hidden"
+                                                data-cat="padaria-e-doces" data-name="Sorvetes Gelato Firenze"
+                                                data-img-pe="localidades/padaria-e-doces:pe:Sorvetes-Gelato-Firenze.png"
+                                                data-img-carro="localidades/padaria-e-doces:carro:Sorvetes-Gelato-Firenze.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Sorvetes Gelato
+                                                        Firenze</span>
+                                        </button>
+
+                                        <!-- restaurante-hamburgeria -->
+                                        <button type="button" class="loc-place-btn hidden"
+                                                data-cat="restaurante-hamburgeria"
+                                                data-name="Bon Appetit Delivery / Marmitaria &amp; Hamburgueria"
+                                                data-img-pe="localidades/restaurante-hamburgeria:pe:Bon-Appetit-delivery-Marmitaria-e-hamburgueria.png"
+                                                data-img-carro="localidades/restaurante-hamburgeria:carro:Bon-Appetit-delivery-Marmitaria-e-hamburgueria.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Bon Appetit
+                                                        Delivery / Marmitaria &amp; Hamburgueria</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn hidden"
+                                                data-cat="restaurante-hamburgeria" data-name="Bristt Burger"
+                                                data-img-pe="localidades/restaurante-hamburgeria:pe:Bristt-Burger.png"
+                                                data-img-carro="localidades/restaurante-hamburgeria:carro:Bristt-Burger.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Bristt
+                                                        Burger</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn hidden"
+                                                data-cat="restaurante-hamburgeria" data-name="Dudali"
+                                                data-img-pe="localidades/restaurante-hamburgeria:pe:dudali.png"
+                                                data-img-carro="localidades/restaurante-hamburgeria:carro:dudali.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Dudali</span>
+                                        </button>
+                                        <button type="button" class="loc-place-btn hidden"
+                                                data-cat="restaurante-hamburgeria" data-name="Gordão"
+                                                data-img-pe="localidades/restaurante-hamburgeria:pe:gordao.png"
+                                                data-img-carro="localidades/restaurante-hamburgeria:carro:gordao.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Gordão</span>
+                                        </button>
+
+                                        <!-- salao -->
+                                        <button type="button" class="loc-place-btn hidden" data-cat="salao"
+                                                data-name="Esmalteria Aline Pizzi"
+                                                data-img-pe="localidades/salao:pe:Esmalteria-Aline-Pizzi.png"
+                                                data-img-carro="localidades/salao:carro:Esmalteria-Aline-Pizzi.png"
+                                                aria-pressed="false">
+                                                <i class="bi bi-geo-alt text-[18px] text-on-surface-variant"
+                                                        aria-hidden="true"></i>
+                                                <span class="loc-name font-label-md text-on-surface">Esmalteria Aline
+                                                        Pizzi</span>
+                                        </button>
+                                </div>
+                        </aside>
                 </div>
         </section>
         <!-- Características & Diferenciais -->
@@ -1382,6 +1762,144 @@
                                         if (!wrap.querySelector('.planta-hotspot.is-open')) return;
                                         closeAll(null);
                                 });
+                        });
+                })();
+        </script>
+
+        <!-- Localização Inteligente — master-detail (categoria → estabelecimento → modo) por event delegation (JS vanilla) -->
+        <script>
+                (function () {
+                        document.addEventListener('DOMContentLoaded', () => {
+                                // Guarda inicial: se o palco da localização não existir, sai silenciosamente.
+                                const stage = document.getElementById('loc-stage');
+                                if (!stage) return;
+
+                                const categoriesList = document.getElementById('loc-categories');
+                                const placesList = document.getElementById('loc-places');
+                                const modeList = document.getElementById('loc-mode');
+                                const locImg = document.getElementById('loc-img');
+                                const activeCatLabel = document.getElementById('loc-active-cat');
+
+                                if (!categoriesList || !placesList || !modeList || !locImg) return;
+
+                                // Slug de modo → texto por extenso usado no alt da imagem.
+                                const MODE_LABEL = { carro: 'de carro', pe: 'a pé' };
+
+                                // Atualiza o rótulo da categoria ativa no cabeçalho da lista.
+                                function syncActiveCategoryLabel(catBtn) {
+                                        if (!catBtn || !activeCatLabel) return;
+                                        activeCatLabel.textContent = catBtn.textContent.trim();
+                                }
+
+                                // Devolve o .loc-place-btn ativo visível (ou o primeiro visível).
+                                function activePlace() {
+                                        const active = placesList.querySelector('.loc-place-btn.is-active:not(.hidden)');
+                                        if (active) return active;
+                                        return placesList.querySelector('.loc-place-btn:not(.hidden)');
+                                }
+
+                                // Devolve o modo atualmente ativo (fallback: "a pé").
+                                function activeMode() {
+                                        const m = modeList.querySelector('.loc-mode-btn.is-active');
+                                        return m ? m.dataset.mode : 'pe';
+                                }
+
+                                // Reconstrói o mapa a partir do lugar ativo + modo atual.
+                                function updateMap() {
+                                        const place = activePlace();
+                                        if (!place) return;
+                                        const mode = activeMode();
+                                        const key = mode === 'carro' ? 'imgCarro' : 'imgPe';
+                                        const src = place.dataset[key];
+                                        if (src) locImg.setAttribute('src', src);
+                                        const name = place.dataset.name || '';
+                                        const modoTexto = MODE_LABEL[mode] || 'a pé';
+                                        locImg.setAttribute('alt', 'Mapa do trajeto ' + modoTexto + ' até ' + name);
+                                }
+
+                                // Filtra a lista pela categoria e auto-seleciona o primeiro visível (preserva o modo).
+                                function applyCategory(catBtn) {
+                                        if (!catBtn) return;
+
+                                        // 1. Estados dos botões de categoria.
+                                        categoriesList.querySelectorAll('.loc-cat-btn').forEach((b) => {
+                                                b.classList.remove('is-active');
+                                                b.setAttribute('aria-pressed', 'false');
+                                        });
+                                        catBtn.classList.add('is-active');
+                                        catBtn.setAttribute('aria-pressed', 'true');
+                                        syncActiveCategoryLabel(catBtn);
+
+                                        // 2. Filtra os lugares por categoria.
+                                        const cat = catBtn.dataset.cat;
+                                        let firstVisible = null;
+                                        placesList.querySelectorAll('.loc-place-btn').forEach((b) => {
+                                                const match = b.dataset.cat === cat;
+                                                b.classList.toggle('hidden', !match);
+                                                b.classList.remove('is-active');
+                                                b.setAttribute('aria-pressed', 'false');
+                                                if (match && !firstVisible) firstVisible = b;
+                                        });
+
+                                        // 3. Auto-seleciona o primeiro lugar visível.
+                                        if (firstVisible) {
+                                                firstVisible.classList.add('is-active');
+                                                firstVisible.setAttribute('aria-pressed', 'true');
+                                        }
+
+                                        // 4. Atualiza o mapa (o modo atual é preservado).
+                                        updateMap();
+                                }
+
+                                function applyPlace(placeBtn) {
+                                        if (!placeBtn) return;
+                                        placesList.querySelectorAll('.loc-place-btn').forEach((b) => {
+                                                b.classList.remove('is-active');
+                                                b.setAttribute('aria-pressed', 'false');
+                                        });
+                                        placeBtn.classList.add('is-active');
+                                        placeBtn.setAttribute('aria-pressed', 'true');
+                                        updateMap();
+                                }
+
+                                function applyMode(modeBtn) {
+                                        if (!modeBtn) return;
+                                        modeList.querySelectorAll('.loc-mode-btn').forEach((b) => {
+                                                b.classList.remove('is-active');
+                                                b.setAttribute('aria-pressed', 'false');
+                                        });
+                                        modeBtn.classList.add('is-active');
+                                        modeBtn.setAttribute('aria-pressed', 'true');
+                                        updateMap();
+                                }
+
+                                // Event delegation — um listener por container (sobrevive à troca de categoria).
+                                categoriesList.addEventListener('click', (event) => {
+                                        const btn = event.target.closest('.loc-cat-btn');
+                                        if (!btn || !categoriesList.contains(btn)) return;
+                                        applyCategory(btn);
+                                });
+
+                                placesList.addEventListener('click', (event) => {
+                                        const btn = event.target.closest('.loc-place-btn');
+                                        if (!btn || !placesList.contains(btn)) return;
+                                        applyPlace(btn);
+                                });
+
+                                modeList.addEventListener('click', (event) => {
+                                        const btn = event.target.closest('.loc-mode-btn');
+                                        if (!btn || !modeList.contains(btn)) return;
+                                        applyMode(btn);
+                                });
+
+                                // init(): sincroniza o rótulo inicial (o restante do estado já vem do HTML estático).
+                                function init() {
+                                        const catBtn = categoriesList.querySelector('.loc-cat-btn.is-active') ||
+                                                categoriesList.querySelector('.loc-cat-btn');
+                                        syncActiveCategoryLabel(catBtn);
+                                }
+
+                                init();
                         });
                 })();
         </script>

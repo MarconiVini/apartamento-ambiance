@@ -415,35 +415,46 @@
                         color: #444748;
                         transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
                 }
+
                 .loc-loading[hidden] {
-                        display: none; /* necessário: display:grid acima sobrepõe o hidden padrão */
+                        display: none;
+                        /* necessário: display:grid acima sobrepõe o hidden padrão */
                 }
+
                 .loc-loading__spinner {
                         font-size: 30px;
                         color: #fed65b;
                         animation: loc-spin 0.85s linear infinite;
                 }
+
                 .loc-loading__text {
                         font-size: 13px;
                         letter-spacing: 0.02em;
                         color: #444748;
                 }
+
                 .loc-loading.is-error .loc-loading__spinner {
                         display: none;
                 }
+
                 .loc-loading.is-error .loc-loading__text {
                         color: #ba1a1a;
                 }
+
                 /* Esconde a imagem antiga enquanto o novo mapa baixa */
                 #loc-stage.is-loading #loc-img {
                         opacity: 0;
                         transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1);
                 }
+
                 #loc-img {
                         transition: opacity 220ms cubic-bezier(0.4, 0, 0.2, 1);
                 }
+
                 @keyframes loc-spin {
-                        to { transform: rotate(360deg); }
+                        to {
+                                transform: rotate(360deg);
+                        }
                 }
 
                 /* ===== Lightbox fullscreen ===== */
@@ -464,29 +475,49 @@
                         opacity: 0;
                 }
 
+                /* ===== Lightbox do mapa (fullscreen) — espelha o da galeria ===== */
+                #loc-lightbox {
+                        opacity: 0;
+                        transition: opacity 200ms ease;
+                }
+
+                #loc-lightbox.is-open {
+                        opacity: 1;
+                }
+
                 /* Honra usuários que preferem menos movimento */
                 @media (prefers-reduced-motion: reduce) {
 
                         #gallery-lightbox,
-                        #gallery-lightbox #lb-img {
+                        #gallery-lightbox #lb-img,
+                        #loc-lightbox {
                                 transition: none !important;
                         }
 
-                        .loc-loading__spinner { animation: none; }
-                        #loc-img { transition: none; }
+                        .loc-loading__spinner {
+                                animation: none;
+                        }
+
+                        #loc-img {
+                                transition: none;
+                        }
                 }
+
                 /* ===== Hotspots da planta: visibilidade por hover (desktop), foco (teclado) e tap (mobile) ===== */
                 .planta-hotspot:hover .planta-tooltip,
                 .planta-hotspot:focus-visible .planta-tooltip,
                 .planta-hotspot.is-open .planta-tooltip {
                         opacity: 1;
                 }
+
                 /* Honra usuários que preferem menos movimento */
                 @media (prefers-reduced-motion: reduce) {
+
                         .planta-hotspot,
                         .planta-ping {
                                 animation: none !important;
                         }
+
                         .planta-tooltip {
                                 transition: none !important;
                         }
@@ -598,7 +629,7 @@
                 <div class="mb-16 reveal-up active">
                         <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">
                                 Galeria</h2>
-                        <p class="font-body-lg text-on-surface-variant max-w-2xl">Conheça o Apt 36 no Bloco 3: um
+                        <p class="font-body-lg text-on-surface-variant">Conheça o Apt 36 no Bloco 3: um
                                 refúgio de 50m² no coração de Campinas, com 2 quartos, 1 banheiro, sacada e 1 vaga, além
                                 de acabamento de alto padrão. Navegue pelos ambientes e descubra a sofisticação de cada
                                 espaço.</p>
@@ -667,7 +698,7 @@
                                                         aria-pressed="true">
                                                         <span
                                                                 class="w-10 h-10 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant shrink-0"><i
-                                                                        class="bi bi-couch text-[20px]"></i></span>
+                                                                        class="bi bi-tv text-[20px]"></i></span>
                                                         <span class="flex-1 min-w-0">
                                                                 <span
                                                                         class="block font-headline-md text-[18px] text-on-surface">Sala
@@ -787,7 +818,7 @@
                                                         data-photos='["images/lavanteria.jpeg"]' aria-pressed="false">
                                                         <span
                                                                 class="w-10 h-10 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant shrink-0"><i
-                                                                        class="bi bi-washing-machine text-[20px]"></i></span>
+                                                                        class="bi bi-water text-[20px]"></i></span>
                                                         <span class="flex-1 min-w-0">
                                                                 <span
                                                                         class="block font-headline-md text-[18px] text-on-surface">Lavanderia</span>
@@ -841,11 +872,13 @@
                                         a fluidez espacial.</p>
                                 <ul class="space-y-4 font-body-md text-on-surface">
                                         <li class="flex items-center gap-3">
-                                                <i class="bi bi-volume-off text-secondary text-[20px]" aria-hidden="true"></i>
+                                                <i class="bi bi-volume-off text-secondary text-[20px]"
+                                                        aria-hidden="true"></i>
                                                 Bom isolamento acústico no imóvel
                                         </li>
                                         <li class="flex items-center gap-3">
-                                                <i class="bi bi-sunset text-secondary text-[20px]" aria-hidden="true"></i>
+                                                <i class="bi bi-sunset text-secondary text-[20px]"
+                                                        aria-hidden="true"></i>
                                                 Sol da tarde pela lateral
                                         </li>
                                         <li class="flex items-center gap-3">
@@ -857,11 +890,13 @@
                                                 Ar fresco da mata lateral
                                         </li>
                                         <li class="flex items-center gap-3">
-                                                <i class="bi bi-brush text-secondary text-[20px]" aria-hidden="true"></i>
+                                                <i class="bi bi-brush text-secondary text-[20px]"
+                                                        aria-hidden="true"></i>
                                                 Pintura nova em branco
                                         </li>
                                         <li class="flex items-center gap-3">
-                                                <i class="bi bi-thermometer-snow text-secondary text-[20px]" aria-hidden="true"></i>
+                                                <i class="bi bi-thermometer-snow text-secondary text-[20px]"
+                                                        aria-hidden="true"></i>
                                                 Possibilidade de instalação de ar-condicionado
                                         </li>
                                 </ul>
@@ -877,98 +912,157 @@
                                                 <!-- Hotspots da planta (um por ambiente) -->
                                                 <button type="button"
                                                         class="planta-hotspot absolute top-[44%] left-[13%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
-                                                        aria-label="Dormitório principal: ver equipamentos" aria-expanded="false">
-                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50" aria-hidden="true"></span>
-                                                        <span role="tooltip" class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 bottom-full mb-2 left-0">
+                                                        aria-label="Dormitório principal: ver equipamentos"
+                                                        aria-expanded="false">
+                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
+                                                                aria-hidden="true"></span>
+                                                        <span role="tooltip"
+                                                                class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 bottom-full mb-2 left-0">
                                                                 <span class="flex items-center gap-2 mb-1">
-                                                                        <i class="bi bi-moon-stars text-secondary text-[16px]" aria-hidden="true"></i>
-                                                                        <span class="font-label-md text-on-surface">DORMITÓRIO PRINCIPAL</span>
+                                                                        <i class="bi bi-moon-stars text-secondary text-[16px]"
+                                                                                aria-hidden="true"></i>
+                                                                        <span class="font-label-md text-on-surface">DORMITÓRIO
+                                                                                PRINCIPAL</span>
                                                                 </span>
-                                                                <span class="block font-body-md text-[13px] text-on-surface-variant">Com armário embutido espelhado e criado-mudo.</span>
+                                                                <span
+                                                                        class="block font-body-md text-[13px] text-on-surface-variant">Com
+                                                                        armário embutido espelhado e criado-mudo.</span>
                                                         </span>
                                                 </button>
                                                 <button type="button"
                                                         class="planta-hotspot absolute top-[46%] left-[30%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
                                                         aria-label="Banheiro: ver detalhes" aria-expanded="false">
-                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50" aria-hidden="true"></span>
-                                                        <span role="tooltip" class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 bottom-full mb-2 left-1/2 -translate-x-1/2">
+                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
+                                                                aria-hidden="true"></span>
+                                                        <span role="tooltip"
+                                                                class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 bottom-full mb-2 left-1/2 -translate-x-1/2">
                                                                 <span class="flex items-center gap-2 mb-1">
-                                                                        <i class="bi bi-droplet-half text-secondary text-[16px]" aria-hidden="true"></i>
-                                                                        <span class="font-label-md text-on-surface">BANHEIRO</span>
+                                                                        <i class="bi bi-droplet-half text-secondary text-[16px]"
+                                                                                aria-hidden="true"></i>
+                                                                        <span
+                                                                                class="font-label-md text-on-surface">BANHEIRO</span>
                                                                 </span>
-                                                                <span class="block font-body-md text-[13px] text-on-surface-variant">Revestimento premium e acabamento impecável, com armários planejados, metais renovados e chuveiro Lorenzetti.</span>
+                                                                <span
+                                                                        class="block font-body-md text-[13px] text-on-surface-variant">Revestimento
+                                                                        premium e acabamento impecável, com armários
+                                                                        planejados, metais renovados e chuveiro
+                                                                        Lorenzetti.</span>
                                                         </span>
                                                 </button>
                                                 <button type="button"
                                                         class="planta-hotspot absolute top-[40%] left-[45%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
-                                                        aria-label="Dormitório secundário: ver equipamentos" aria-expanded="false">
-                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50" aria-hidden="true"></span>
-                                                        <span role="tooltip" class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 bottom-full mb-2 left-1/2 -translate-x-1/2">
+                                                        aria-label="Dormitório secundário: ver equipamentos"
+                                                        aria-expanded="false">
+                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
+                                                                aria-hidden="true"></span>
+                                                        <span role="tooltip"
+                                                                class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 bottom-full mb-2 left-1/2 -translate-x-1/2">
                                                                 <span class="flex items-center gap-2 mb-1">
-                                                                        <i class="bi bi-moon-stars text-secondary text-[16px]" aria-hidden="true"></i>
-                                                                        <span class="font-label-md text-on-surface">DORMITÓRIO SECUNDÁRIO</span>
+                                                                        <i class="bi bi-moon-stars text-secondary text-[16px]"
+                                                                                aria-hidden="true"></i>
+                                                                        <span class="font-label-md text-on-surface">DORMITÓRIO
+                                                                                SECUNDÁRIO</span>
                                                                 </span>
-                                                                <span class="block font-body-md text-[13px] text-on-surface-variant">Versátil, ideal para hóspedes ou home office, com boa iluminação e ventilação natural.</span>
+                                                                <span
+                                                                        class="block font-body-md text-[13px] text-on-surface-variant">Versátil,
+                                                                        ideal para hóspedes ou home office, com boa
+                                                                        iluminação e ventilação natural.</span>
                                                         </span>
                                                 </button>
                                                 <button type="button"
                                                         class="planta-hotspot absolute top-[22%] left-[68%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
                                                         aria-label="Área externa: ver detalhes" aria-expanded="false">
-                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50" aria-hidden="true"></span>
-                                                        <span role="tooltip" class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 top-full mt-2 left-1/2 -translate-x-1/2">
+                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
+                                                                aria-hidden="true"></span>
+                                                        <span role="tooltip"
+                                                                class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 top-full mt-2 left-1/2 -translate-x-1/2">
                                                                 <span class="flex items-center gap-2 mb-1">
-                                                                        <i class="bi bi-tree text-secondary text-[16px]" aria-hidden="true"></i>
-                                                                        <span class="font-label-md text-on-surface">ÁREA EXTERNA</span>
+                                                                        <i class="bi bi-tree text-secondary text-[16px]"
+                                                                                aria-hidden="true"></i>
+                                                                        <span class="font-label-md text-on-surface">ÁREA
+                                                                                EXTERNA</span>
                                                                 </span>
-                                                                <span class="block font-body-md text-[13px] text-on-surface-variant">Tranquila e sem barulho, voltada para o estacionamento e a mata ao lado.</span>
+                                                                <span
+                                                                        class="block font-body-md text-[13px] text-on-surface-variant">Tranquila
+                                                                        e sem barulho, voltada para o estacionamento e a
+                                                                        mata ao lado.</span>
                                                         </span>
                                                 </button>
                                                 <button type="button"
                                                         class="planta-hotspot absolute top-[42%] left-[66%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
-                                                        aria-label="Sala de estar: ver equipamentos" aria-expanded="false">
-                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50" aria-hidden="true"></span>
-                                                        <span role="tooltip" class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 bottom-full mb-2 left-1/2 -translate-x-1/2">
+                                                        aria-label="Sala de estar: ver equipamentos"
+                                                        aria-expanded="false">
+                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
+                                                                aria-hidden="true"></span>
+                                                        <span role="tooltip"
+                                                                class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 bottom-full mb-2 left-1/2 -translate-x-1/2">
                                                                 <span class="flex items-center gap-2 mb-1">
-                                                                        <i class="bi bi-couch text-secondary text-[16px]" aria-hidden="true"></i>
-                                                                        <span class="font-label-md text-on-surface">SALA DE ESTAR</span>
+                                                                        <i class="bi bi-tv text-secondary text-[16px]"
+                                                                                aria-hidden="true"></i>
+                                                                        <span class="font-label-md text-on-surface">SALA
+                                                                                DE ESTAR</span>
                                                                 </span>
-                                                                <span class="block font-body-md text-[13px] text-on-surface-variant">Com sofá de dois lugares, rack de TV e estante de gesso embutida na parede.</span>
+                                                                <span
+                                                                        class="block font-body-md text-[13px] text-on-surface-variant">Com
+                                                                        sofá de dois lugares, rack de TV e estante de
+                                                                        gesso embutida na parede.</span>
                                                         </span>
                                                 </button>
                                                 <button type="button"
                                                         class="planta-hotspot absolute top-[70%] left-[64%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
                                                         aria-label="Sala de jantar: ver detalhes" aria-expanded="false">
-                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50" aria-hidden="true"></span>
-                                                        <span role="tooltip" class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 bottom-full mb-2 left-1/2 -translate-x-1/2">
+                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
+                                                                aria-hidden="true"></span>
+                                                        <span role="tooltip"
+                                                                class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 bottom-full mb-2 left-1/2 -translate-x-1/2">
                                                                 <span class="flex items-center gap-2 mb-1">
-                                                                        <i class="bi bi-utensils text-secondary text-[16px]" aria-hidden="true"></i>
-                                                                        <span class="font-label-md text-on-surface">SALA DE JANTAR</span>
+                                                                        <i class="bi bi-egg-fried text-secondary text-[16px]"
+                                                                                aria-hidden="true"></i>
+                                                                        <span class="font-label-md text-on-surface">SALA
+                                                                                DE JANTAR</span>
                                                                 </span>
-                                                                <span class="block font-body-md text-[13px] text-on-surface-variant">Espaço para refeições integrado à sala, com conjunto de espelhos que amplia o ambiente.</span>
+                                                                <span
+                                                                        class="block font-body-md text-[13px] text-on-surface-variant">Espaço
+                                                                        para refeições integrado à sala, com conjunto de
+                                                                        espelhos que amplia o ambiente.</span>
                                                         </span>
                                                 </button>
                                                 <button type="button"
                                                         class="planta-hotspot absolute top-[70%] left-[85%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
                                                         aria-label="Cozinha: ver equipamentos" aria-expanded="false">
-                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50" aria-hidden="true"></span>
-                                                        <span role="tooltip" class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 bottom-full mb-2 right-0">
+                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
+                                                                aria-hidden="true"></span>
+                                                        <span role="tooltip"
+                                                                class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 bottom-full mb-2 right-0">
                                                                 <span class="flex items-center gap-2 mb-1">
-                                                                        <i class="bi bi-cup-hot text-secondary text-[16px]" aria-hidden="true"></i>
-                                                                        <span class="font-label-md text-on-surface">COZINHA</span>
+                                                                        <i class="bi bi-cup-hot text-secondary text-[16px]"
+                                                                                aria-hidden="true"></i>
+                                                                        <span
+                                                                                class="font-label-md text-on-surface">COZINHA</span>
                                                                 </span>
-                                                                <span class="block font-body-md text-[13px] text-on-surface-variant">Com geladeira Brastemp, fogão elétrico embutido, coifa e armários planejados.</span>
+                                                                <span
+                                                                        class="block font-body-md text-[13px] text-on-surface-variant">Com
+                                                                        geladeira Brastemp, fogão elétrico embutido,
+                                                                        coifa e armários planejados.</span>
                                                         </span>
                                                 </button>
                                                 <button type="button"
                                                         class="planta-hotspot absolute top-[40%] left-[86%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
                                                         aria-label="Lavanderia: ver equipamentos" aria-expanded="false">
-                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50" aria-hidden="true"></span>
-                                                        <span role="tooltip" class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 bottom-full mb-2 right-0">
+                                                        <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
+                                                                aria-hidden="true"></span>
+                                                        <span role="tooltip"
+                                                                class="planta-tooltip absolute w-48 p-4 rounded-lg border border-surface-variant bg-surface-container-lowest shadow-lg opacity-0 transition-opacity duration-200 pointer-events-none z-20 bottom-full mb-2 right-0">
                                                                 <span class="flex items-center gap-2 mb-1">
-                                                                        <i class="bi bi-washing-machine text-secondary text-[16px]" aria-hidden="true"></i>
-                                                                        <span class="font-label-md text-on-surface">LAVANDERIA</span>
+                                                                        <i class="bi bi-water text-secondary text-[16px]"
+                                                                                aria-hidden="true"></i>
+                                                                        <span
+                                                                                class="font-label-md text-on-surface">LAVANDERIA</span>
                                                                 </span>
-                                                                <span class="block font-body-md text-[13px] text-on-surface-variant">Com máquina de lavar Electrolux, varal retrátil e armário planejado.</span>
+                                                                <span
+                                                                        class="block font-body-md text-[13px] text-on-surface-variant">Com
+                                                                        máquina de lavar Electrolux, varal retrátil e
+                                                                        armário planejado.</span>
                                                         </span>
                                                 </button>
                                         </div>
@@ -982,7 +1076,7 @@
                 <div class="mb-16 reveal-up active">
                         <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">
                                 Localização Inteligente</h2>
-                        <p class="font-body-lg text-on-surface-variant max-w-2xl">Localizado na Rua Luís Dionísio de
+                        <p class="font-body-lg text-on-surface-variant">Localizado na Rua Luís Dionísio de
                                 Souza, 375, o Condomínio Ambiance 1 oferece a conveniência de estar perto de tudo o que
                                 Campinas tem de melhor.</p>
                 </div>
@@ -990,9 +1084,8 @@
                         <!-- COLUNA PRINCIPAL — mapa + filtros -->
                         <div class="w-full lg:flex-1 min-w-0 flex flex-col gap-4 reveal-up active">
                                 <!-- Pills de categoria (scroll horizontal no mobile) -->
-                                <div id="loc-categories" class="flex flex-wrap gap-2"
-                                        role="group" aria-label="Categorias de estabelecimentos"
-                                        >
+                                <div id="loc-categories" class="flex flex-wrap gap-2" role="group"
+                                        aria-label="Categorias de estabelecimentos">
                                         <button type="button" class="loc-cat-btn is-active" data-cat="academia"
                                                 aria-pressed="true">
                                                 <i class="bi bi-bicycle text-[18px]" aria-hidden="true"></i>
@@ -1013,8 +1106,8 @@
                                                 <i class="bi bi-scissors text-[18px]" aria-hidden="true"></i>
                                                 <span class="font-label-md">Barbearia</span>
                                         </button>
-                                        <button type="button" class="loc-cat-btn"
-                                                data-cat="construcao-e-ferramentas" aria-pressed="false">
+                                        <button type="button" class="loc-cat-btn" data-cat="construcao-e-ferramentas"
+                                                aria-pressed="false">
                                                 <i class="bi bi-tools text-[18px]" aria-hidden="true"></i>
                                                 <span class="font-label-md">Construção &amp; Ferramentas</span>
                                         </button>
@@ -1033,13 +1126,12 @@
                                                 <i class="bi bi-cake2 text-[18px]" aria-hidden="true"></i>
                                                 <span class="font-label-md">Padaria &amp; Doces</span>
                                         </button>
-                                        <button type="button" class="loc-cat-btn"
-                                                data-cat="restaurante-hamburgeria" aria-pressed="false">
+                                        <button type="button" class="loc-cat-btn" data-cat="restaurante-hamburgeria"
+                                                aria-pressed="false">
                                                 <i class="bi bi-egg-fried text-[18px]" aria-hidden="true"></i>
                                                 <span class="font-label-md">Restaurante &amp; Hamburgueria</span>
                                         </button>
-                                        <button type="button" class="loc-cat-btn" data-cat="salao"
-                                                aria-pressed="false">
+                                        <button type="button" class="loc-cat-btn" data-cat="salao" aria-pressed="false">
                                                 <i class="bi bi-palette text-[18px]" aria-hidden="true"></i>
                                                 <span class="font-label-md">Salão de Beleza</span>
                                         </button>
@@ -1047,11 +1139,17 @@
 
                                 <!-- Palco do mapa -->
                                 <div id="loc-stage"
-                                        class="glass-panel rounded-xl overflow-hidden relative reveal-up active bg-surface-container-lowest h-[380px] lg:h-[560px]">
-                                        <img id="loc-img" decoding="async"
-                                                class="block w-full h-full object-contain"
+                                        class="glass-panel rounded-xl overflow-hidden relative reveal-up active bg-surface-container-lowest h-[380px] lg:h-[560px] group/locstage">
+                                        <img id="loc-img" decoding="async" class="block w-full h-full object-contain cursor-zoom-in"
                                                 src="localidades/academia:pe:titans.png"
                                                 alt="Mapa do trajeto a pé até Titans">
+
+                                        <!-- Botão ampliar: abre o mapa em tela cheia -->
+                                        <button type="button" id="loc-zoom-btn"
+                                                class="absolute top-3 left-3 z-10 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm opacity-0 group-hover/locstage:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-secondary-container transition-opacity"
+                                                aria-label="Ampliar mapa em tela cheia">
+                                                <i class="bi bi-arrows-fullscreen text-[18px]" aria-hidden="true"></i>
+                                        </button>
 
                                         <!-- Toggle de modo: overlay fixo no canto superior direito (mobile e desktop) -->
                                         <div id="loc-mode"
@@ -1070,23 +1168,27 @@
                                         </div>
 
                                         <!-- Overlay de carregamento do explorador de localização -->
-                                        <div id="loc-loading" class="loc-loading" hidden role="status" aria-live="polite" aria-label="Carregando mapa">
-                                                <i class="bi bi-arrow-repeat loc-loading__spinner" aria-hidden="true"></i>
+                                        <div id="loc-loading" class="loc-loading" hidden role="status"
+                                                aria-live="polite" aria-label="Carregando mapa">
+                                                <i class="bi bi-arrow-repeat loc-loading__spinner"
+                                                        aria-hidden="true"></i>
                                                 <span class="loc-loading__text">Carregando mapa…</span>
                                         </div>
                                 </div>
                         </div>
 
                         <!-- COLUNA LATERAL — lista de estabelecimentos -->
-                        <aside class="w-full lg:w-[340px] min-w-0 shrink-0 reveal-up active" style="transition-delay: 120ms;">
+                        <aside class="w-full lg:w-[340px] min-w-0 shrink-0 reveal-up active"
+                                style="transition-delay: 120ms;">
                                 <div class="mb-5">
                                         <span
                                                 class="block font-label-md uppercase tracking-wide text-on-surface-variant">Estabelecimentos</span>
                                         <h3 id="loc-active-cat"
-                                                class="font-headline-md font-semibold text-on-surface text-[18px] leading-tight mt-1">Academia</h3>
+                                                class="font-headline-md font-semibold text-on-surface text-[18px] leading-tight mt-1">
+                                                Academia</h3>
                                 </div>
-                                <div id="loc-places" class="glass-panel rounded-xl overflow-hidden"
-                                        role="group" aria-label="Lista de estabelecimentos">
+                                <div id="loc-places" class="glass-panel rounded-xl overflow-hidden" role="group"
+                                        aria-label="Lista de estabelecimentos">
                                         <!-- academia (visíveis por padrão) -->
                                         <button type="button" class="loc-place-btn is-active" data-cat="academia"
                                                 data-name="Titans" data-img-pe="localidades/academia:pe:titans.png"
@@ -1242,8 +1344,8 @@
                                         </button>
 
                                         <!-- padaria-e-doces -->
-                                        <button type="button" class="loc-place-btn hidden"
-                                                data-cat="padaria-e-doces" data-name="Dimary"
+                                        <button type="button" class="loc-place-btn hidden" data-cat="padaria-e-doces"
+                                                data-name="Dimary"
                                                 data-img-pe="localidades/padaria-e-doces:pe:dimary.png"
                                                 data-img-carro="localidades/padaria-e-doces:carro:dimary.png"
                                                 aria-pressed="false">
@@ -1251,8 +1353,8 @@
                                                         aria-hidden="true"></i>
                                                 <span class="loc-name font-label-md text-on-surface">Dimary</span>
                                         </button>
-                                        <button type="button" class="loc-place-btn hidden"
-                                                data-cat="padaria-e-doces" data-name="Dona Deo"
+                                        <button type="button" class="loc-place-btn hidden" data-cat="padaria-e-doces"
+                                                data-name="Dona Deo"
                                                 data-img-pe="localidades/padaria-e-doces:pe:dona-deo.png"
                                                 data-img-carro="localidades/padaria-e-doces:carro:dona-deo.png"
                                                 aria-pressed="false">
@@ -1260,8 +1362,8 @@
                                                         aria-hidden="true"></i>
                                                 <span class="loc-name font-label-md text-on-surface">Dona Deo</span>
                                         </button>
-                                        <button type="button" class="loc-place-btn hidden"
-                                                data-cat="padaria-e-doces" data-name="Panificadora Jardim Myrian"
+                                        <button type="button" class="loc-place-btn hidden" data-cat="padaria-e-doces"
+                                                data-name="Panificadora Jardim Myrian"
                                                 data-img-pe="localidades/padaria-e-doces:pe:Panificadora-Jd-Myrian.png"
                                                 data-img-carro="localidades/padaria-e-doces:carro:Panificadora-Jd-Myrian.png"
                                                 aria-pressed="false">
@@ -1270,8 +1372,8 @@
                                                 <span class="loc-name font-label-md text-on-surface">Panificadora
                                                         Jardim Myrian</span>
                                         </button>
-                                        <button type="button" class="loc-place-btn hidden"
-                                                data-cat="padaria-e-doces" data-name="Sorveteria e Cia"
+                                        <button type="button" class="loc-place-btn hidden" data-cat="padaria-e-doces"
+                                                data-name="Sorveteria e Cia"
                                                 data-img-pe="localidades/padaria-e-doces:pe:sorveteria-e-cia.png"
                                                 data-img-carro="localidades/padaria-e-doces:carro:sorveteria-e-cia.png"
                                                 aria-pressed="false">
@@ -1280,8 +1382,8 @@
                                                 <span class="loc-name font-label-md text-on-surface">Sorveteria e
                                                         Cia</span>
                                         </button>
-                                        <button type="button" class="loc-place-btn hidden"
-                                                data-cat="padaria-e-doces" data-name="Sorvetes Gelato Firenze"
+                                        <button type="button" class="loc-place-btn hidden" data-cat="padaria-e-doces"
+                                                data-name="Sorvetes Gelato Firenze"
                                                 data-img-pe="localidades/padaria-e-doces:pe:Sorvetes-Gelato-Firenze.png"
                                                 data-img-carro="localidades/padaria-e-doces:carro:Sorvetes-Gelato-Firenze.png"
                                                 aria-pressed="false">
@@ -1357,49 +1459,293 @@
                                         Diferenciais</h2>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                <div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active" style="transition-delay: 0ms;">
-                                        <div class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
+                                <div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active"
+                                        style="transition-delay: 0ms;">
+                                        <div
+                                                class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
                                                 <i class="bi bi-geo-alt text-[28px]" aria-hidden="true"></i>
                                         </div>
-                                        <h3 class="font-headline-md text-on-surface mb-4 text-xl">Localização Estratégica</h3>
-                                        <p class="font-body-md text-on-surface-variant">A poucos minutos da Unicamp, CPQD, Sirius, CNPEM, Alphaville Campinas e da Rodovia Dom Pedro I. Ideal para quem busca mobilidade sem abrir mão da tranquilidade.</p>
+                                        <h3 class="font-headline-md text-on-surface mb-4 text-xl">Localização
+                                                Estratégica</h3>
+                                        <p class="font-body-md text-on-surface-variant">A poucos minutos da Unicamp,
+                                                CPQD, Sirius, CNPEM, Alphaville Campinas e da Rodovia Dom Pedro I. Ideal
+                                                para quem busca mobilidade sem abrir mão da tranquilidade.</p>
                                 </div>
-                                <div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active" style="transition-delay: 100ms;">
-                                        <div class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
+                                <div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active"
+                                        style="transition-delay: 100ms;">
+                                        <div
+                                                class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
                                                 <i class="bi bi-shield-check text-[28px]" aria-hidden="true"></i>
                                         </div>
-                                        <h3 class="font-headline-md text-on-surface mb-4 text-xl">Condomínio Completo e Seguro</h3>
-                                        <p class="font-body-md text-on-surface-variant">Portaria 24 horas, salão de festas, churrasqueira, quadra esportiva, playground, brinquedoteca e elevador para mais conforto no dia a dia.</p>
+                                        <h3 class="font-headline-md text-on-surface mb-4 text-xl">Condomínio Completo e
+                                                Seguro</h3>
+                                        <p class="font-body-md text-on-surface-variant">Portaria 24 horas, salão de
+                                                festas, churrasqueira, quadra esportiva, playground, brinquedoteca e
+                                                elevador para mais conforto no dia a dia.</p>
                                 </div>
-                                <div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active" style="transition-delay: 200ms;">
-                                        <div class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
+                                <div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active"
+                                        style="transition-delay: 200ms;">
+                                        <div
+                                                class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
                                                 <i class="bi bi-sun text-[28px]" aria-hidden="true"></i>
                                         </div>
                                         <h3 class="font-headline-md text-on-surface mb-4 text-xl">Qualidade de Vida</h3>
-                                        <p class="font-body-md text-on-surface-variant">Um bairro residencial tranquilo, cercado por áreas verdes e com comércio essencial próximo, perfeito para famílias, casais e profissionais que trabalham na região.</p>
+                                        <p class="font-body-md text-on-surface-variant">Um bairro residencial tranquilo,
+                                                cercado por áreas verdes e com comércio essencial próximo, perfeito para
+                                                famílias, casais e profissionais que trabalham na região.</p>
                                 </div>
-                                <div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active" style="transition-delay: 300ms;">
-                                        <div class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
+                                <div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active"
+                                        style="transition-delay: 300ms;">
+                                        <div
+                                                class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
                                                 <i class="bi bi-signpost-split text-[28px]" aria-hidden="true"></i>
                                         </div>
-                                        <h3 class="font-headline-md text-on-surface mb-4 text-xl">Mobilidade Inteligente</h3>
-                                        <p class="font-body-md text-on-surface-variant">Acesso rápido às principais rodovias e aos polos tecnológico e universitário de Campinas. Menos tempo no trânsito, mais tempo para viver.</p>
+                                        <h3 class="font-headline-md text-on-surface mb-4 text-xl">Mobilidade Inteligente
+                                        </h3>
+                                        <p class="font-body-md text-on-surface-variant">Acesso rápido às principais
+                                                rodovias e aos polos tecnológico e universitário de Campinas. Menos
+                                                tempo no trânsito, mais tempo para viver.</p>
                                 </div>
-                                <div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active" style="transition-delay: 400ms;">
-                                        <div class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
+                                <div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active"
+                                        style="transition-delay: 400ms;">
+                                        <div
+                                                class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
                                                 <i class="bi bi-tree text-[28px]" aria-hidden="true"></i>
                                         </div>
-                                        <h3 class="font-headline-md text-on-surface mb-4 text-xl">Tranquilidade para Morar</h3>
-                                        <p class="font-body-md text-on-surface-variant">O Ambiance oferece o equilíbrio entre uma região calma e toda a conveniência de Campinas a poucos minutos de distância.</p>
+                                        <h3 class="font-headline-md text-on-surface mb-4 text-xl">Tranquilidade para
+                                                Morar</h3>
+                                        <p class="font-body-md text-on-surface-variant">O Ambiance oferece o equilíbrio
+                                                entre uma região calma e toda a conveniência de Campinas a poucos
+                                                minutos de distância.</p>
                                 </div>
-                                <div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active" style="transition-delay: 500ms;">
-                                        <div class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
+                                <div class="glass-panel p-8 rounded-xl flex flex-col items-center text-center reveal-up hover:-translate-y-2 transition-transform duration-300 active"
+                                        style="transition-delay: 500ms;">
+                                        <div
+                                                class="w-16 h-16 rounded-full bg-surface flex items-center justify-center mb-6 text-secondary-container shadow-sm border border-surface-variant">
                                                 <i class="bi bi-shop text-[28px]" aria-hidden="true"></i>
                                         </div>
-                                        <h3 class="font-headline-md text-on-surface mb-4 text-xl">Bairro com Tudo que Precisa</h3>
-                                        <p class="font-body-md text-on-surface-variant">O bairro do Jardim Myriam já tem todos os estabelecimentos que um bairro completo precisa: padarias, mercados, barbearias, material de construção e acesso rápido à rodovia.</p>
+                                        <h3 class="font-headline-md text-on-surface mb-4 text-xl">Bairro com Tudo que
+                                                Precisa</h3>
+                                        <p class="font-body-md text-on-surface-variant">O bairro do Jardim Myriam já tem
+                                                todos os estabelecimentos que um bairro completo precisa: padarias,
+                                                mercados, barbearias, material de construção e acesso rápido à rodovia.
+                                        </p>
                                 </div>
                         </div>
+                </div>
+        </section>
+        <!-- Detalhes do Imóvel -->
+        <section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto scroll-mt-24"
+                id="detalhes-financas">
+                <div class="mb-16 reveal-up active">
+                        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">
+                                Detalhes do Imóvel</h2>
+                        <p class="font-body-lg text-on-surface-variant">Composição completa dos ambientes e informações
+                                financeiras do apartamento.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                        <!-- Composição do Imóvel -->
+                        <div class="glass-panel rounded-xl p-8 reveal-up active">
+                                <div class="flex items-center justify-between mb-6 gap-4">
+                                        <h3 class="font-headline-md text-on-surface text-xl">Composição do Imóvel</h3>
+                                        <span class="font-label-md text-on-surface-variant whitespace-nowrap">8
+                                                cômodos</span>
+                                </div>
+                                <ul class="space-y-4 font-body-md text-on-surface">
+                                        <li class="flex items-center gap-3">
+                                                <i class="bi bi-door-closed text-secondary text-[20px]"
+                                                        aria-hidden="true"></i>
+                                                <span>2 dormitórios</span>
+                                        </li>
+                                        <li class="flex items-center gap-3">
+                                                <i class="bi bi-droplet-half text-secondary text-[20px]"
+                                                        aria-hidden="true"></i>
+                                                <span>1 banheiro</span>
+                                        </li>
+                                        <li class="flex items-center gap-3">
+                                                <i class="bi bi-tv text-secondary text-[20px]" aria-hidden="true"></i>
+                                                <span>Sala de estar</span>
+                                        </li>
+                                        <li class="flex items-center gap-3">
+                                                <i class="bi bi-egg-fried text-secondary text-[20px]"
+                                                        aria-hidden="true"></i>
+                                                <span>Sala de jantar</span>
+                                        </li>
+                                        <li class="flex items-center gap-3">
+                                                <i class="bi bi-cup-hot text-secondary text-[20px]"
+                                                        aria-hidden="true"></i>
+                                                <span>Cozinha</span>
+                                        </li>
+                                        <li class="flex items-center gap-3">
+                                                <i class="bi bi-water text-secondary text-[20px]"
+                                                        aria-hidden="true"></i>
+                                                <span>Área de serviço</span>
+                                        </li>
+                                        <li class="flex items-center gap-3">
+                                                <i class="bi bi-tree text-secondary text-[20px]" aria-hidden="true"></i>
+                                                <span>Sacada</span>
+                                        </li>
+                                        <li class="flex items-center gap-3">
+                                                <i class="bi bi-car-front text-secondary text-[20px]"
+                                                        aria-hidden="true"></i>
+                                                <span>1 vaga de garagem</span>
+                                        </li>
+                                </ul>
+                        </div>
+                        <!-- Informações Financeiras -->
+                        <div class="glass-panel rounded-xl p-8 reveal-up active" style="transition-delay: 150ms;">
+                                <h3 class="font-headline-md text-on-surface mb-6 text-xl">Informações Financeiras</h3>
+                                <dl>
+                                        <div
+                                                class="flex items-center justify-between py-4 border-b border-surface-variant">
+                                                <dt
+                                                        class="flex items-center gap-3 font-body-md text-on-surface-variant">
+                                                        <i class="bi bi-house text-secondary text-[20px]"
+                                                                aria-hidden="true"></i>
+                                                        <span>Valor do imóvel</span>
+                                                </dt>
+                                                <dd class="font-label-md text-on-surface">R$ 370.000,00</dd>
+                                        </div>
+                                        <div
+                                                class="flex items-center justify-between py-4 border-b border-surface-variant">
+                                                <dt
+                                                        class="flex items-center gap-3 font-body-md text-on-surface-variant">
+                                                        <i class="bi bi-receipt text-secondary text-[20px]"
+                                                                aria-hidden="true"></i>
+                                                        <span>Condomínio</span>
+                                                </dt>
+                                                <dd class="text-right">
+                                                        <span class="block font-label-md text-on-surface">R$ 477,77</span>
+                                                        <span class="block text-[12px] text-on-surface-variant">Cota
+                                                                condominial · Ago/26</span>
+                                                </dd>
+                                        </div>
+                                        <div
+                                                class="flex items-center justify-between py-4 border-b border-surface-variant">
+                                                <dt
+                                                        class="flex items-center gap-3 font-body-md text-on-surface-variant">
+                                                        <i class="bi bi-bank text-secondary text-[20px]"
+                                                                aria-hidden="true"></i>
+                                                        <span>IPTU</span>
+                                                </dt>
+                                                <dd class="text-right">
+                                                        <span class="block font-label-md text-on-surface">R$ 917,00</span>
+                                                        <span class="block text-[12px] text-on-surface-variant">Pago
+                                                                integralmente em 2026</span>
+                                                </dd>
+                                        </div>
+                                        <div class="flex items-center justify-between py-4">
+                                                <dt
+                                                        class="flex items-center gap-3 font-body-md text-on-surface-variant">
+                                                        <i class="bi bi-graph-up-arrow text-secondary text-[20px]"
+                                                                aria-hidden="true"></i>
+                                                        <span>Valorização em 5 anos</span>
+                                                </dt>
+                                                <dd class="text-right">
+                                                        <span class="block font-label-md text-secondary-container">+57,4%</span>
+                                                        <span class="block text-[12px] text-on-surface-variant">de R$ 235 mil
+                                                                → R$ 370 mil</span>
+                                                </dd>
+                                        </div>
+                                </dl>
+                                <p class="text-[12px] text-on-surface-variant mt-6">Valores ilustrativos — confirme com
+                                        o
+                                        corretor.</p>
+                        </div>
+                </div>
+        </section>
+        <!-- Estrutura do Condomínio -->
+        <section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low max-w-none w-full scroll-mt-24"
+                id="estrutura-condominio">
+                <div class="max-w-container-max mx-auto">
+                        <div class="text-center mb-16 reveal-up active">
+                                <h2
+                                        class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">
+                                        Estrutura do Condomínio</h2>
+                                <p class="font-body-lg text-on-surface-variant">Infraestrutura completa de lazer e
+                                        conveniência para o seu dia a dia.</p>
+                        </div>
+                        <ul class="border-t border-surface-variant max-w-4xl mx-auto reveal-up active" role="list">
+                                <li class="flex items-start gap-4 py-5 md:py-6 border-b border-surface-variant">
+                                        <i class="bi bi-check-circle-fill text-secondary-container text-[22px] mt-1 shrink-0"
+                                                aria-hidden="true"></i>
+                                        <div
+                                                class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-8 flex-1">
+                                                <span class="font-headline-md text-on-surface text-lg md:text-xl">Vaga Coberta</span>
+                                                <span class="font-body-md text-on-surface-variant md:text-right">1 vaga de garagem
+                                                        coberta para o seu veículo.</span>
+                                        </div>
+                                </li>
+                                <li class="flex items-start gap-4 py-5 md:py-6 border-b border-surface-variant">
+                                        <i class="bi bi-check-circle-fill text-secondary-container text-[22px] mt-1 shrink-0"
+                                                aria-hidden="true"></i>
+                                        <div
+                                                class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-8 flex-1">
+                                                <span class="font-headline-md text-on-surface text-lg md:text-xl">Duas
+                                                        Churrasqueiras</span>
+                                                <span class="font-body-md text-on-surface-variant md:text-right">Espaços de
+                                                        churrasqueira para confraternizações.</span>
+                                        </div>
+                                </li>
+                                <li class="flex items-start gap-4 py-5 md:py-6 border-b border-surface-variant">
+                                        <i class="bi bi-check-circle-fill text-secondary-container text-[22px] mt-1 shrink-0"
+                                                aria-hidden="true"></i>
+                                        <div
+                                                class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-8 flex-1">
+                                                <span class="font-headline-md text-on-surface text-lg md:text-xl">Salão de Festas</span>
+                                                <span class="font-body-md text-on-surface-variant md:text-right">Ambiente amplo
+                                                        para comemorar datas especiais.</span>
+                                        </div>
+                                </li>
+                                <li class="flex items-start gap-4 py-5 md:py-6 border-b border-surface-variant">
+                                        <i class="bi bi-check-circle-fill text-secondary-container text-[22px] mt-1 shrink-0"
+                                                aria-hidden="true"></i>
+                                        <div
+                                                class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-8 flex-1">
+                                                <span class="font-headline-md text-on-surface text-lg md:text-xl">Banheiros
+                                                        Externos</span>
+                                                <span class="font-body-md text-on-surface-variant md:text-right">Banheiros de
+                                                        apoio nas áreas de lazer.</span>
+                                        </div>
+                                </li>
+                                <li class="flex items-start gap-4 py-5 md:py-6 border-b border-surface-variant">
+                                        <i class="bi bi-check-circle-fill text-secondary-container text-[22px] mt-1 shrink-0"
+                                                aria-hidden="true"></i>
+                                        <div
+                                                class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-8 flex-1">
+                                                <span class="font-headline-md text-on-surface text-lg md:text-xl">Brinquedoteca</span>
+                                                <span class="font-body-md text-on-surface-variant md:text-right">Espaço lúdico e
+                                                        seguro para as crianças.</span>
+                                        </div>
+                                </li>
+                                <li class="flex items-start gap-4 py-5 md:py-6 border-b border-surface-variant">
+                                        <i class="bi bi-check-circle-fill text-secondary-container text-[22px] mt-1 shrink-0"
+                                                aria-hidden="true"></i>
+                                        <div
+                                                class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-8 flex-1">
+                                                <span class="font-headline-md text-on-surface text-lg md:text-xl">Salão de Jogos</span>
+                                                <span class="font-body-md text-on-surface-variant md:text-right">Sala dedicada a
+                                                        jogos para todas as idades.</span>
+                                        </div>
+                                </li>
+                                <li class="flex items-start gap-4 py-5 md:py-6 border-b border-surface-variant">
+                                        <i class="bi bi-check-circle-fill text-secondary-container text-[22px] mt-1 shrink-0"
+                                                aria-hidden="true"></i>
+                                        <div
+                                                class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-8 flex-1">
+                                                <span class="font-headline-md text-on-surface text-lg md:text-xl">Mercadinho
+                                                        Interno</span>
+                                                <span class="font-body-md text-on-surface-variant md:text-right">Conveniência
+                                                        dentro do condomínio para o dia a dia.</span>
+                                        </div>
+                                </li>
+                        </ul>
+                        <p
+                                class="text-[12px] text-on-surface-variant text-center mt-10 flex items-center justify-center gap-2 reveal-up active">
+                                <i class="bi bi-check-circle-fill text-secondary-container text-[14px]" aria-hidden="true"></i>
+                                <span>Aluguel da churrasqueira e do salão de festas incluso; paga-se apenas a taxa de
+                                        limpeza.</span>
+                        </p>
                 </div>
         </section>
         <!-- Footer -->
@@ -1446,6 +1792,18 @@
                 <p id="lb-counter"
                         class="absolute bottom-5 left-1/2 -translate-x-1/2 font-label-md text-white/80 text-[12px] uppercase tracking-widest"
                         aria-live="polite"></p>
+        </div>
+
+        <!-- Lightbox do mapa (fullscreen) -->
+        <div id="loc-lightbox"
+                class="fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-black/90 backdrop-blur-sm px-4"
+                role="dialog" aria-modal="true" aria-label="Visualização ampliada do mapa" aria-hidden="true">
+                <button type="button" id="loc-lb-close"
+                        class="absolute top-4 right-4 md:top-6 md:right-6 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-secondary-container"
+                        aria-label="Fechar visualização ampliada">
+                        <i class="bi bi-x-lg text-[22px]" aria-hidden="true"></i>
+                </button>
+                <img id="loc-lb-img" class="max-w-[92vw] max-h-[80vh] object-contain shadow-2xl select-none" alt="" />
         </div>
 
         <!-- Reveal Animation Script -->
@@ -2020,6 +2378,72 @@
                                         if (!btn || !modeList.contains(btn)) return;
                                         applyMode(btn);
                                 });
+
+                                // ---- Lightbox do mapa (fullscreen) — espelha o da galeria ----
+                                (function setupLocLightbox() {
+                                        const locLb = document.getElementById('loc-lightbox');
+                                        const locLbImg = document.getElementById('loc-lb-img');
+                                        const locLbClose = document.getElementById('loc-lb-close');
+                                        if (!stage || !locImg || !locLb || !locLbImg || !locLbClose) return;
+
+                                        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+                                        const FOCUSABLE = () => locLb.querySelectorAll('button:not([disabled]), [href], input, [tabindex]:not([tabindex="-1"])');
+                                        let lastFocused = null;
+
+                                        function openLocLightbox() {
+                                                // Mapa em carregamento? Não amplia.
+                                                if (stage.classList.contains('is-loading')) return;
+                                                lastFocused = document.activeElement;
+                                                locLbImg.src = locImg.src;
+                                                locLbImg.alt = locImg.alt || 'Mapa do trajeto';
+                                                locLb.classList.remove('hidden');
+                                                locLb.classList.add('flex');
+                                                locLb.setAttribute('aria-hidden', 'false');
+                                                document.body.style.overflow = 'hidden';
+                                                locLb.classList.add('is-open');
+                                                const f = FOCUSABLE();
+                                                if (f.length) f[0].focus({ preventScroll: true });
+                                        }
+
+                                        function closeLocLightbox() {
+                                                locLb.classList.remove('is-open');
+                                                document.body.style.overflow = '';
+                                                const done = () => {
+                                                        locLb.classList.remove('flex');
+                                                        locLb.classList.add('hidden');
+                                                        locLb.setAttribute('aria-hidden', 'true');
+                                                        locLb.removeEventListener('transitionend', done);
+                                                        if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus({ preventScroll: true });
+                                                };
+                                                if (prefersReduced.matches) { done(); return; }
+                                                locLb.addEventListener('transitionend', done);
+                                                setTimeout(done, 260);
+                                        }
+
+                                        // Abertura: clique no palco (exceto no toggle de modo e no overlay de carregamento).
+                                        stage.addEventListener('click', (event) => {
+                                                if (event.target.closest('#loc-mode') || event.target.closest('#loc-loading')) return;
+                                                openLocLightbox();
+                                        });
+
+                                        locLbClose.addEventListener('click', closeLocLightbox);
+
+                                        // Backdrop: clicar fora da imagem fecha.
+                                        locLb.addEventListener('click', (event) => { if (event.target === locLb) closeLocLightbox(); });
+
+                                        // Teclado: ESC fecha; Tab fica preso no dialog.
+                                        document.addEventListener('keydown', (event) => {
+                                                if (locLb.classList.contains('hidden')) return;
+                                                if (event.key === 'Escape') { event.preventDefault(); closeLocLightbox(); }
+                                                else if (event.key === 'Tab') {
+                                                        const f = Array.prototype.slice.call(FOCUSABLE());
+                                                        if (!f.length) return;
+                                                        const first = f[0], last = f[f.length - 1];
+                                                        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+                                                        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+                                                }
+                                        });
+                                })();
 
                                 // init(): sincroniza o rótulo inicial (o restante do estado já vem do HTML estático).
                                 function init() {

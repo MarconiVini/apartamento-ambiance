@@ -1864,6 +1864,9 @@
 
                                 // Contador de geração: invalida callbacks de carregamentos anteriores (cliques rápidos).
                                 let loadToken = 0;
+                                // Tempo mínimo (ms) de exibição do loading: garante feedback perceptível mesmo
+                                // em cargas instantâneas (cache do navegador ou disco local).
+                                const LOAD_MIN_MS = 450;
 
                                 // Atualiza o rótulo da categoria ativa no cabeçalho da lista.
                                 function syncActiveCategoryLabel(catBtn) {
@@ -1919,20 +1922,26 @@
                                         }
 
                                         // Pré-carrega via Image() e só troca/revela ao concluir o download.
-                                        // Os handlers são anexados ANTES de definir .src (evita race com cache).
+                                        // Handlers anexados ANTES de .src (evita race com cache).
+                                        // Garante um tempo mínimo de exibição do loading (LOAD_MIN_MS) para que o
+                                        // feedback seja perceptível mesmo em cargas instantâneas (cache/disco local).
                                         const token = ++loadToken;
+                                        const startedAt = performance.now();
                                         setLoading(true);
-                                        const pre = new Image();
-                                        pre.onload = function () {
-                                                if (token !== loadToken) return; // um clique mais novo invalidou este carregamento
-                                                locImg.setAttribute('src', src);
-                                                setLoading(false);
+                                        const reveal = function (applySrc) {
+                                                if (token !== loadToken) return; // clique mais novo invalidou este carregamento
+                                                if (applySrc) locImg.setAttribute('src', src);
+                                                const wait = Math.max(0, LOAD_MIN_MS - (performance.now() - startedAt));
+                                                window.setTimeout(function () {
+                                                        if (token === loadToken) setLoading(false);
+                                                }, wait);
                                         };
+                                        const pre = new Image();
+                                        pre.onload = function () { reveal(true); };
                                         pre.onerror = function () {
-                                                if (token !== loadToken) return;
-                                                // Falha: encerra o loading para não travar a UI; mantém a imagem anterior visível.
+                                                // Falha: encerra o loading para não travar a UI; mantém a imagem anterior.
                                                 console.warn('[loc] Falha ao carregar o mapa:', src);
-                                                setLoading(false);
+                                                reveal(false);
                                         };
                                         pre.src = src;
                                 }

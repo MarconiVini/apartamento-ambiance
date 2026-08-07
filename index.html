@@ -399,6 +399,53 @@
                         outline-offset: 2px;
                 }
 
+                /* ===== Loading do explorador de localização =====
+                   Hex diretos (style comum; ver nota no bloco acima). Cores do DESIGN.md. */
+                .loc-loading {
+                        position: absolute;
+                        inset: 0;
+                        z-index: 20;
+                        display: grid;
+                        place-content: center;
+                        justify-items: center;
+                        gap: 10px;
+                        background: rgba(249, 249, 249, 0.92);
+                        -webkit-backdrop-filter: blur(2px);
+                        backdrop-filter: blur(2px);
+                        color: #444748;
+                        transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+                }
+                .loc-loading[hidden] {
+                        display: none; /* necessário: display:grid acima sobrepõe o hidden padrão */
+                }
+                .loc-loading__spinner {
+                        font-size: 30px;
+                        color: #fed65b;
+                        animation: loc-spin 0.85s linear infinite;
+                }
+                .loc-loading__text {
+                        font-size: 13px;
+                        letter-spacing: 0.02em;
+                        color: #444748;
+                }
+                .loc-loading.is-error .loc-loading__spinner {
+                        display: none;
+                }
+                .loc-loading.is-error .loc-loading__text {
+                        color: #ba1a1a;
+                }
+                /* Esconde a imagem antiga enquanto o novo mapa baixa */
+                #loc-stage.is-loading #loc-img {
+                        opacity: 0;
+                        transition: opacity 180ms cubic-bezier(0.4, 0, 0.2, 1);
+                }
+                #loc-img {
+                        transition: opacity 220ms cubic-bezier(0.4, 0, 0.2, 1);
+                }
+                @keyframes loc-spin {
+                        to { transform: rotate(360deg); }
+                }
+
                 /* ===== Lightbox fullscreen ===== */
                 #gallery-lightbox {
                         opacity: 0;
@@ -424,6 +471,9 @@
                         #gallery-lightbox #lb-img {
                                 transition: none !important;
                         }
+
+                        .loc-loading__spinner { animation: none; }
+                        #loc-img { transition: none; }
                 }
                 /* ===== Hotspots da planta: visibilidade por hover (desktop), foco (teclado) e tap (mobile) ===== */
                 .planta-hotspot:hover .planta-tooltip,
@@ -1017,6 +1067,12 @@
                                                         <i class="bi bi-person-walking" aria-hidden="true"></i>
                                                         <span class="font-label-md">A pé</span>
                                                 </button>
+                                        </div>
+
+                                        <!-- Overlay de carregamento do explorador de localização -->
+                                        <div id="loc-loading" class="loc-loading" hidden role="status" aria-live="polite" aria-label="Carregando mapa">
+                                                <i class="bi bi-arrow-repeat loc-loading__spinner" aria-hidden="true"></i>
+                                                <span class="loc-loading__text">Carregando mapa…</span>
                                         </div>
                                 </div>
                         </div>
@@ -1806,6 +1862,9 @@
                                 // Slug de modo → texto por extenso usado no alt da imagem.
                                 const MODE_LABEL = { carro: 'de carro', pe: 'a pé' };
 
+                                // Contador de geração: invalida callbacks de carregamentos anteriores (cliques rápidos).
+                                let loadToken = 0;
+
                                 // Atualiza o rótulo da categoria ativa no cabeçalho da lista.
                                 function syncActiveCategoryLabel(catBtn) {
                                         if (!catBtn || !activeCatLabel) return;
@@ -1825,6 +1884,21 @@
                                         return m ? m.dataset.mode : 'pe';
                                 }
 
+                                // Liga/desliga o overlay de loading no palco (#loc-stage) e o atributo aria-busy.
+                                function setLoading(on, isError) {
+                                        if (!stage) return;
+                                        stage.classList.toggle('is-loading', !!on);
+                                        stage.setAttribute('aria-busy', on ? 'true' : 'false');
+                                        const overlay = document.getElementById('loc-loading');
+                                        if (!overlay) return;
+                                        overlay.classList.toggle('is-error', !!isError);
+                                        if (on) {
+                                                overlay.removeAttribute('hidden');
+                                        } else {
+                                                overlay.setAttribute('hidden', '');
+                                        }
+                                }
+
                                 // Reconstrói o mapa a partir do lugar ativo + modo atual.
                                 function updateMap() {
                                         const place = activePlace();
@@ -1832,10 +1906,35 @@
                                         const mode = activeMode();
                                         const key = mode === 'carro' ? 'imgCarro' : 'imgPe';
                                         const src = place.dataset[key];
-                                        if (src) locImg.setAttribute('src', src);
                                         const name = place.dataset.name || '';
                                         const modoTexto = MODE_LABEL[mode] || 'a pé';
                                         locImg.setAttribute('alt', 'Mapa do trajeto ' + modoTexto + ' até ' + name);
+
+                                        if (!src) { setLoading(false); return; }
+
+                                        // Mesma imagem já exibida? Não há download novo → sem loading.
+                                        if (locImg.getAttribute('src') === src) {
+                                                setLoading(false);
+                                                return;
+                                        }
+
+                                        // Pré-carrega via Image() e só troca/revela ao concluir o download.
+                                        // Os handlers são anexados ANTES de definir .src (evita race com cache).
+                                        const token = ++loadToken;
+                                        setLoading(true);
+                                        const pre = new Image();
+                                        pre.onload = function () {
+                                                if (token !== loadToken) return; // um clique mais novo invalidou este carregamento
+                                                locImg.setAttribute('src', src);
+                                                setLoading(false);
+                                        };
+                                        pre.onerror = function () {
+                                                if (token !== loadToken) return;
+                                                // Falha: encerra o loading para não travar a UI; mantém a imagem anterior visível.
+                                                console.warn('[loc] Falha ao carregar o mapa:', src);
+                                                setLoading(false);
+                                        };
+                                        pre.src = src;
                                 }
 
                                 // Filtra a lista pela categoria e auto-seleciona o primeiro visível (preserva o modo).

@@ -1,8 +1,83 @@
-Na sessao de galeria, gostaria de agrupar as imagens por comodo.
+Baseado na imagem da planta, crie hotspots para cada ambiante.
 
-gostaria que a sessao de galeria fosse diferente
-do lado esquedo as imagens aparecendo com uma imagem principal por agrupamento
-e do lado direito textos que mostram os grupos diferentes de imagens
+Em cada hotspot coloque as seguintes informacoes adicionais
+Cozinha
+- Com geladeira (marca X)
+
+Lavanderia
+- Com maquina de lavar roupa (marca Y)
+
+Quarto
+- Com cama Ortobom (marca Z)
+
+Sala
+- Com sofá 2 lugares
+
+
+Na sessao "Localização Inteligente"
+
+gostaria de colocar todas as localidades onde eu tenho imagens salvas do bairro.
+O funcionamento da nomenclatura é a seguinte:
+localidades/academia:carro:titans.png
+
+dentro do nome da imagem temos o seguinte formato:
+academia -> é a categoria
+: -> separador
+carro -> tipo de locomocao
+: -> separador
+titans -> nome do estabelecimento
+
+Com base nisso reconstrua essa sessao do site. de forma a poder selecionar a categoria e aparecer todos os estabelecimentos da categoria. E ele tambem ao selecionar um estabelecimento, vai poder alternar clicando, entre carro e a pé.
+
+
+Alterar em Planta Inteligente com os textos a seguir (pode melhora-los para parecer mais profissional)
+o Dormitorio 1 -> mudar titulo para Dormitorio principal. Armario embutido espelhado e criado mudo incluso
+o Dormitorio 2 -> mudar titulo para Dormitorio secundario. Remover o cama ortobom desse item
+Terraço -> mudar para "Area externa tranquila e sem barulho voltado para o estacionamento e a mata ao lado"
+lavanderia -> adicionar que tem um varal retratil e armario planejado
+cozinha -> adicionar que tem fogao eletrico embutido, suga-ar, armarios planejados
+sala de estar -> hack de televisao incluso, estante de gesso embutida na parede
+sala de jantar -> conjunto de espelhos para melhorar a amplitude do local
+banheiro -> Armarios planejados, metais para banheiro trocados e novos. Chuveiro lorenzetti incluso 
+
+na parte
+Fluxo circular otimizado
+Ventilação cruzada
+Isolamento acústico premium
+
+trocar para 
+Bom isolamento acústico no imóvel
+Sol da tarde lateral
+Ventilação natural boa
+Ar fresco da mata lateral
+pintura nova branca
+possibilidade de instalação de ar-condicionado
+--------------------
+
+alterar a sessao de Diferenciais para o seguinte:
+
+🌳 Localização Estratégica
+
+A poucos minutos da Unicamp, CPQD, Sirius, CNPEM, Alphaville Campinas e Rodovia Dom Pedro I. Ideal para quem busca mobilidade sem abrir mão da tranquilidade.
+
+🛡️ Condomínio Completo e Seguro
+
+Portaria 24 horas, salão de festas, churrasqueira, quadra esportiva, playground, brinquedoteca e elevador para mais conforto no dia a dia.
+
+🌅 Qualidade de Vida
+
+Um bairro residencial tranquilo, cercado por áreas verdes e com comércio essencial próximo, perfeito para famílias, casais e profissionais que trabalham na região.
+
+
+Mobilidade Inteligente
+
+Acesso rápido às principais rodovias e aos polos tecnológico e universitário de Campinas. Menos tempo no trânsito, mais tempo para viver.
+
+Tranquilidade para Morar
+O Ambiance oferece o equilíbrio entre uma região calma e toda a conveniência de Campinas a poucos minutos de distância.
+
+Bairro com tudo que precisa
+O Bairro do jardim myriam já tem todos os estabelecimentos que um bairro completo precisa, padarias, marcados, barbearias, material de construção e acesso rapido a rodovia
 
 se necessario para cores e estilos use o DESIGN.md
 
@@ -80,6 +155,5 @@ REGRAS DE QUALIDADE:
 - Não assumir decisões não justificadas
 - Sempre preferir clareza a concisão
 - Se algo não puder ser feito, explique o motivo explicitamente
-- Caso algum codigo tenha sido alterado, rodar no final "bin/rails quality:check" e verificar e ajustar qualquer problema que encontre
 
 Sempre que o problema for complexo, grande ou ambíguo, a criação de sub-agents NÃO é opcional — é obrigatória.

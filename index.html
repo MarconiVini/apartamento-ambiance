@@ -285,6 +285,23 @@
                         outline-offset: 2px;
                 }
 
+                /* ===== Móveis & Eletrodomésticos — section expansível (toggle do cabeçalho) =====
+                   NOTA: valores hex diretos (não theme('colors.*')) porque esta folha é um bloco
+                   style comum — theme() só é processado pelo Tailwind Play CDN em blocos
+                   style[type="text/tailwindcss"]. Valores retirados do DESIGN.md. */
+                #extras-toggle .extras-chevron {
+                        transition: transform 250ms ease;
+                }
+
+                #extras-toggle.is-open .extras-chevron {
+                        transform: rotate(180deg);
+                }
+
+                #extras-toggle:focus-visible {
+                        outline: 2px solid #fed65b;
+                        outline-offset: 4px;
+                }
+
                 /* ===== Localização Inteligente: categorias, lista e modo (master-detail) =====
                    NOTA: usamos valores hex diretos (e nao theme('colors.*')) porque esta folha
                    e um bloco style comum — theme() so e processado pelo Tailwind Play CDN em
@@ -485,12 +502,32 @@
                         opacity: 1;
                 }
 
+                /* ===== Lightbox dos Móveis & Eletrodomésticos (fullscreen) — espelha o da galeria ===== */
+                #extras-lightbox {
+                        opacity: 0;
+                        transition: opacity 200ms ease;
+                }
+
+                #extras-lightbox.is-open {
+                        opacity: 1;
+                }
+
+                #extras-lightbox #extras-lb-img {
+                        transition: opacity 150ms ease;
+                }
+
+                #extras-lightbox.is-swapping #extras-lb-img {
+                        opacity: 0;
+                }
+
                 /* Honra usuários que preferem menos movimento */
                 @media (prefers-reduced-motion: reduce) {
 
                         #gallery-lightbox,
                         #gallery-lightbox #lb-img,
-                        #loc-lightbox {
+                        #loc-lightbox,
+                        #extras-lightbox,
+                        #extras-lightbox #extras-lb-img {
                                 transition: none !important;
                         }
 
@@ -572,7 +609,7 @@
         <section
                 class="relative min-h-screen flex items-center justify-center pt-24 pb-section-gap px-margin-mobile md:px-margin-desktop overflow-hidden">
                 <!-- Background Asset (Image + Wash) -->
-                <img src="ambiance.jpg" alt="" role="presentation"
+                <img src="ambiance1.jpg" alt="" role="presentation"
                         class="absolute inset-0 w-full h-full object-cover object-center opacity-40 select-none pointer-events-none z-0"
                         loading="eager" decoding="async">
                 <!-- Velo branco uniforme: garante fundo efetivo claro e contraste AA do texto escuro -->
@@ -859,6 +896,189 @@
                 </div>
         </section>
 
+        <!-- Móveis & Eletrodomésticos (galeria expansível) -->
+        <section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto scroll-mt-24"
+                id="moveis-eletrodomesticos">
+                <!-- HEADER clicável (botão toggle) -->
+                <div class="mb-16 reveal-up active">
+                        <button id="extras-toggle" type="button" aria-expanded="false" aria-controls="extras-content"
+                                class="w-full text-left flex items-start justify-between gap-4 group">
+                                <div>
+                                        <h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">
+                                                Móveis &amp; Eletrodomésticos</h2>
+                                        <p class="font-body-lg text-on-surface-variant">Detalhes dos móveis e
+                                                equipamentos que permanecem no apartamento.</p>
+                                </div>
+                                <span class="shrink-0 w-12 h-12 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant group-hover:text-on-surface transition-colors">
+                                        <i class="bi bi-chevron-down text-[24px] extras-chevron"></i>
+                                </span>
+                        </button>
+                </div>
+
+                <!-- CONTEÚDO COLAPSÁVEL (oculto por padrão) -->
+                <div id="extras-content" class="hidden">
+                        <div class="flex flex-col lg:flex-row gap-10 lg:gap-16">
+                                <!-- COLUNA ESQUERDA — Palco (imagem principal do item selecionado) -->
+                                <div class="w-full lg:w-3/5">
+                                        <figure class="glass-panel rounded-xl overflow-hidden"
+                                                id="extras-gallery-stage">
+                                                <div class="relative group/cover" id="extras-cover-wrap">
+                                                        <img id="extras-cover-img"
+                                                                class="w-full aspect-[4/3] object-cover cursor-zoom-in"
+                                                                src="moveis-eletrodomesticos/maquina-de-lavar-freente.jpg"
+                                                                alt="Máquina de Lavar"
+                                                                loading="lazy" decoding="async">
+                                                        <button type="button" id="extras-zoom-btn"
+                                                                class="absolute top-3 right-3 w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 text-white flex items-center justify-center backdrop-blur-sm opacity-0 group-hover/cover:opacity-100 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-secondary-container transition-opacity"
+                                                                aria-label="Ampliar imagem em tela cheia">
+                                                                <i class="bi bi-arrows-fullscreen text-[18px]"></i>
+                                                        </button>
+                                                </div>
+                                                <figcaption class="p-6">
+                                                        <h3 id="extras-cover-title"
+                                                                class="font-headline-md text-headline-md text-on-surface"></h3>
+                                                        <p id="extras-cover-caption"
+                                                                class="font-label-md text-on-secondary-container mt-2"></p>
+                                                </figcaption>
+                                                <ul id="extras-gallery-thumbs" class="flex flex-wrap gap-3 px-6 pb-6"
+                                                        aria-label="Fotos deste item">
+                                                </ul>
+                                        </figure>
+                                </div>
+                                <!-- COLUNA DIREITA — Lista de grupos (itens) -->
+                                <div class="w-full lg:w-2/5">
+                                        <p class="font-label-md text-on-surface-variant uppercase mb-6">Itens</p>
+                                        <ul id="extras-gallery-groups" class="space-y-3" aria-label="Itens de móveis e eletrodomésticos">
+                                                <li class="reveal-up active">
+                                                        <button type="button"
+                                                                class="gallery-group-btn is-active w-full text-left p-5 rounded-xl flex items-center gap-4"
+                                                                data-group="maquina-de-lavar"
+                                                                data-cover="moveis-eletrodomesticos/maquina-de-lavar-freente.jpg"
+                                                                data-title="Máquina de Lavar" data-caption="CAPACIDADE E FUNCIONALIDADE"
+                                                                data-photos='["moveis-eletrodomesticos/maquina-de-lavar-freente.jpg","moveis-eletrodomesticos/maquina-de-lavar-aberta.jpg","moveis-eletrodomesticos/maquina-de-lavar-detalhes.jpg","moveis-eletrodomesticos/maquina-de-lavar-lateral.jpg"]'
+                                                                aria-pressed="true">
+                                                                <span
+                                                                        class="w-10 h-10 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant shrink-0"><i
+                                                                                class="bi bi-water text-[20px]"></i></span>
+                                                                <span class="flex-1 min-w-0">
+                                                                        <span
+                                                                                class="block font-headline-md text-[18px] text-on-surface">Máquina
+                                                                                de Lavar</span>
+                                                                        <span
+                                                                                class="block font-body-md text-[14px] text-on-surface-variant">Lavadora
+                                                                                com múltiplos ciclos e acabamento
+                                                                                conservado.</span>
+                                                                </span>
+                                                                <span
+                                                                        class="shrink-0 inline-flex items-center gap-1 font-label-md text-on-surface-variant text-[12px]"><i
+                                                                                class="bi bi-images"></i> 4</span>
+                                                        </button>
+                                                </li>
+                                                <li class="reveal-up active">
+                                                        <button type="button"
+                                                                class="gallery-group-btn w-full text-left p-5 rounded-xl flex items-center gap-4"
+                                                                data-group="fogao"
+                                                                data-cover="moveis-eletrodomesticos/fogao-emcima.jpg"
+                                                                data-title="Fogão" data-caption="ACABAMENTO E BOCAS"
+                                                                data-photos='["moveis-eletrodomesticos/fogao-emcima.jpg","moveis-eletrodomesticos/fogao-aberto.jpg"]'
+                                                                aria-pressed="false">
+                                                                <span
+                                                                        class="w-10 h-10 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant shrink-0"><i
+                                                                                class="bi bi-fire text-[20px]"></i></span>
+                                                                <span class="flex-1 min-w-0">
+                                                                        <span
+                                                                                class="block font-headline-md text-[18px] text-on-surface">Fogão</span>
+                                                                        <span
+                                                                                class="block font-body-md text-[14px] text-on-surface-variant">Fogão
+                                                                                com bocas e forno em bom estado de
+                                                                                conservação.</span>
+                                                                </span>
+                                                                <span
+                                                                        class="shrink-0 inline-flex items-center gap-1 font-label-md text-on-surface-variant text-[12px]"><i
+                                                                                class="bi bi-images"></i> 2</span>
+                                                        </button>
+                                                </li>
+                                                <li class="reveal-up active">
+                                                        <button type="button"
+                                                                class="gallery-group-btn w-full text-left p-5 rounded-xl flex items-center gap-4"
+                                                                data-group="mesa-cozinha"
+                                                                data-cover="moveis-eletrodomesticos/mesa-cozinha-fechada.jpg"
+                                                                data-title="Mesa da Cozinha" data-caption="SUPERFÍCIE E ESTRUTURA"
+                                                                data-photos='["moveis-eletrodomesticos/mesa-cozinha-fechada.jpg","moveis-eletrodomesticos/mesa-cozinha-lateral.jpg","moveis-eletrodomesticos/mesa-cozinha-embaixo.jpg"]'
+                                                                aria-pressed="false">
+                                                                <span
+                                                                        class="w-10 h-10 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant shrink-0"><i
+                                                                                class="bi bi-table text-[20px]"></i></span>
+                                                                <span class="flex-1 min-w-0">
+                                                                        <span
+                                                                                class="block font-headline-md text-[18px] text-on-surface">Mesa
+                                                                                da Cozinha</span>
+                                                                        <span
+                                                                                class="block font-body-md text-[14px] text-on-surface-variant">Mesa
+                                                                                com estrutura robusta e superfície
+                                                                                preservada.</span>
+                                                                </span>
+                                                                <span
+                                                                        class="shrink-0 inline-flex items-center gap-1 font-label-md text-on-surface-variant text-[12px]"><i
+                                                                                class="bi bi-images"></i> 3</span>
+                                                        </button>
+                                                </li>
+                                                <li class="reveal-up active">
+                                                        <button type="button"
+                                                                class="gallery-group-btn w-full text-left p-5 rounded-xl flex items-center gap-4"
+                                                                data-group="depurador"
+                                                                data-cover="moveis-eletrodomesticos/sugar-frente.jpg"
+                                                                data-title="Depurador de Ar" data-caption="FILTRAGEM E VENTILAÇÃO"
+                                                                data-photos='["moveis-eletrodomesticos/sugar-frente.jpg","moveis-eletrodomesticos/sugar-lateral.jpg","moveis-eletrodomesticos/sugar-embaixo.jpg"]'
+                                                                aria-pressed="false">
+                                                                <span
+                                                                        class="w-10 h-10 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant shrink-0"><i
+                                                                                class="bi bi-wind text-[20px]"></i></span>
+                                                                <span class="flex-1 min-w-0">
+                                                                        <span
+                                                                                class="block font-headline-md text-[18px] text-on-surface">Depurador
+                                                                                de Ar</span>
+                                                                        <span
+                                                                                class="block font-body-md text-[14px] text-on-surface-variant">Depurador
+                                                                                de ar de cozinha para exaustão e
+                                                                                filtragem.</span>
+                                                                </span>
+                                                                <span
+                                                                        class="shrink-0 inline-flex items-center gap-1 font-label-md text-on-surface-variant text-[12px]"><i
+                                                                                class="bi bi-images"></i> 3</span>
+                                                        </button>
+                                                </li>
+                                                <li class="reveal-up active">
+                                                        <button type="button"
+                                                                class="gallery-group-btn w-full text-left p-5 rounded-xl flex items-center gap-4"
+                                                                data-group="rack-sala"
+                                                                data-cover="moveis-eletrodomesticos/hack-sala-lateral.jpg"
+                                                                data-title="Rack da Sala" data-caption="ORGANIZAÇÃO SOB MEDIDA"
+                                                                data-photos='["moveis-eletrodomesticos/hack-sala-lateral.jpg","moveis-eletrodomesticos/hack-sala-gavetas-abertas.jpg"]'
+                                                                aria-pressed="false">
+                                                                <span
+                                                                        class="w-10 h-10 rounded-[9999px] bg-surface flex items-center justify-center text-on-surface-variant shrink-0"><i
+                                                                                class="bi bi-bookshelf text-[20px]"></i></span>
+                                                                <span class="flex-1 min-w-0">
+                                                                        <span
+                                                                                class="block font-headline-md text-[18px] text-on-surface">Rack
+                                                                                da Sala</span>
+                                                                        <span
+                                                                                class="block font-body-md text-[14px] text-on-surface-variant">Rack
+                                                                                com gavetas e nichos para a sala de
+                                                                                estar.</span>
+                                                                </span>
+                                                                <span
+                                                                        class="shrink-0 inline-flex items-center gap-1 font-label-md text-on-surface-variant text-[12px]"><i
+                                                                                class="bi bi-images"></i> 2</span>
+                                                        </button>
+                                                </li>
+                                        </ul>
+                                </div>
+                        </div>
+                </div>
+        </section>
+
         <!-- Planta & Interatividade -->
         <section class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low relative"
                 id="planta">
@@ -1140,7 +1360,8 @@
                                 <!-- Palco do mapa -->
                                 <div id="loc-stage"
                                         class="glass-panel rounded-xl overflow-hidden relative reveal-up active bg-surface-container-lowest h-[380px] lg:h-[560px] group/locstage">
-                                        <img id="loc-img" decoding="async" class="block w-full h-full object-contain cursor-zoom-in"
+                                        <img id="loc-img" decoding="async"
+                                                class="block w-full h-full object-contain cursor-zoom-in"
                                                 src="localidades/academia:pe:titans.png"
                                                 alt="Mapa do trajeto a pé até Titans">
 
@@ -1479,7 +1700,7 @@
                                         </div>
                                         <h3 class="font-headline-md text-on-surface mb-4 text-xl">Condomínio Completo e
                                                 Seguro</h3>
-                                        <p class="font-body-md text-on-surface-variant">Portaria 24 horas, salão de
+                                        <p class="font-body-md text-on-surface-variant">Portaria 24 horas, salões de
                                                 festas, churrasqueira, quadra esportiva, playground, brinquedoteca e
                                                 elevador para mais conforto no dia a dia.</p>
                                 </div>
@@ -1615,7 +1836,8 @@
                                                         <span>Condomínio</span>
                                                 </dt>
                                                 <dd class="text-right">
-                                                        <span class="block font-label-md text-on-surface">R$ 477,77</span>
+                                                        <span class="block font-label-md text-on-surface">R$
+                                                                477,77</span>
                                                         <span class="block text-[12px] text-on-surface-variant">Cota
                                                                 condominial · Ago/26</span>
                                                 </dd>
@@ -1629,7 +1851,8 @@
                                                         <span>IPTU</span>
                                                 </dt>
                                                 <dd class="text-right">
-                                                        <span class="block font-label-md text-on-surface">R$ 917,00</span>
+                                                        <span class="block font-label-md text-on-surface">R$
+                                                                917,00</span>
                                                         <span class="block text-[12px] text-on-surface-variant">Pago
                                                                 integralmente em 2026</span>
                                                 </dd>
@@ -1642,9 +1865,11 @@
                                                         <span>Valorização em 5 anos</span>
                                                 </dt>
                                                 <dd class="text-right">
-                                                        <span class="block font-label-md text-secondary-container">+57,4%</span>
-                                                        <span class="block text-[12px] text-on-surface-variant">de R$ 235 mil
-                                                                → R$ 370 mil</span>
+                                                        <span
+                                                                class="block font-label-md text-secondary-container">+57,4%</span>
+                                                        <span class="block text-[12px] text-on-surface-variant">Região em
+                                                                franca
+                                                                valorização</span>
                                                 </dd>
                                         </div>
                                 </dl>
@@ -1671,8 +1896,10 @@
                                                 aria-hidden="true"></i>
                                         <div
                                                 class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-8 flex-1">
-                                                <span class="font-headline-md text-on-surface text-lg md:text-xl">Vaga Coberta</span>
-                                                <span class="font-body-md text-on-surface-variant md:text-right">1 vaga de garagem
+                                                <span class="font-headline-md text-on-surface text-lg md:text-xl">Vaga
+                                                        Coberta</span>
+                                                <span class="font-body-md text-on-surface-variant md:text-right">1 vaga
+                                                        de garagem
                                                         coberta para o seu veículo.</span>
                                         </div>
                                 </li>
@@ -1683,7 +1910,8 @@
                                                 class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-8 flex-1">
                                                 <span class="font-headline-md text-on-surface text-lg md:text-xl">Duas
                                                         Churrasqueiras</span>
-                                                <span class="font-body-md text-on-surface-variant md:text-right">Espaços de
+                                                <span class="font-body-md text-on-surface-variant md:text-right">Espaços
+                                                        de
                                                         churrasqueira para confraternizações.</span>
                                         </div>
                                 </li>
@@ -1692,9 +1920,11 @@
                                                 aria-hidden="true"></i>
                                         <div
                                                 class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-8 flex-1">
-                                                <span class="font-headline-md text-on-surface text-lg md:text-xl">Salão de Festas</span>
-                                                <span class="font-body-md text-on-surface-variant md:text-right">Ambiente amplo
-                                                        para comemorar datas especiais.</span>
+                                                <span class="font-headline-md text-on-surface text-lg md:text-xl">Salões
+                                                        de Festas</span>
+                                                <span class="font-body-md text-on-surface-variant md:text-right">Dois salões
+                                                        de festas em conjunto
+                                                        com churrasqueiras.</span>
                                         </div>
                                 </li>
                                 <li class="flex items-start gap-4 py-5 md:py-6 border-b border-surface-variant">
@@ -1704,7 +1934,8 @@
                                                 class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-8 flex-1">
                                                 <span class="font-headline-md text-on-surface text-lg md:text-xl">Banheiros
                                                         Externos</span>
-                                                <span class="font-body-md text-on-surface-variant md:text-right">Banheiros de
+                                                <span class="font-body-md text-on-surface-variant md:text-right">Banheiros
+                                                        de
                                                         apoio nas áreas de lazer.</span>
                                         </div>
                                 </li>
@@ -1713,8 +1944,10 @@
                                                 aria-hidden="true"></i>
                                         <div
                                                 class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-8 flex-1">
-                                                <span class="font-headline-md text-on-surface text-lg md:text-xl">Brinquedoteca</span>
-                                                <span class="font-body-md text-on-surface-variant md:text-right">Espaço lúdico e
+                                                <span
+                                                        class="font-headline-md text-on-surface text-lg md:text-xl">Brinquedoteca</span>
+                                                <span class="font-body-md text-on-surface-variant md:text-right">Espaço
+                                                        lúdico e
                                                         seguro para as crianças.</span>
                                         </div>
                                 </li>
@@ -1723,9 +1956,11 @@
                                                 aria-hidden="true"></i>
                                         <div
                                                 class="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-8 flex-1">
-                                                <span class="font-headline-md text-on-surface text-lg md:text-xl">Salão de Jogos</span>
-                                                <span class="font-body-md text-on-surface-variant md:text-right">Sala dedicada a
-                                                        jogos para todas as idades.</span>
+                                                <span class="font-headline-md text-on-surface text-lg md:text-xl">Salão
+                                                        de Jogos</span>
+                                                <span class="font-body-md text-on-surface-variant md:text-right">Sala com pimbolim,
+                                                        sinuca e mesa de
+                                                        cartas.</span>
                                         </div>
                                 </li>
                                 <li class="flex items-start gap-4 py-5 md:py-6 border-b border-surface-variant">
@@ -1742,8 +1977,9 @@
                         </ul>
                         <p
                                 class="text-[12px] text-on-surface-variant text-center mt-10 flex items-center justify-center gap-2 reveal-up active">
-                                <i class="bi bi-check-circle-fill text-secondary-container text-[14px]" aria-hidden="true"></i>
-                                <span>Aluguel da churrasqueira e do salão de festas incluso; paga-se apenas a taxa de
+                                <i class="bi bi-check-circle-fill text-secondary-container text-[14px]"
+                                        aria-hidden="true"></i>
+                                <span>Aluguel da churrasqueira e dos salões de festas incluso; paga-se apenas a taxa de
                                         limpeza.</span>
                         </p>
                 </div>
@@ -1790,6 +2026,31 @@
                         <i class="bi bi-chevron-right text-[28px]"></i>
                 </button>
                 <p id="lb-counter"
+                        class="absolute bottom-5 left-1/2 -translate-x-1/2 font-label-md text-white/80 text-[12px] uppercase tracking-widest"
+                        aria-live="polite"></p>
+        </div>
+
+        <!-- Lightbox dos Móveis & Eletrodomésticos (fullscreen) — espelha o da galeria -->
+        <div id="extras-lightbox"
+                class="fixed inset-0 z-[100] hidden flex-col items-center justify-center bg-black/90 backdrop-blur-sm px-4"
+                role="dialog" aria-modal="true" aria-label="Visualização ampliada de móveis e eletrodomésticos" aria-hidden="true">
+                <button type="button" id="extras-lb-close"
+                        class="absolute top-4 right-4 md:top-6 md:right-6 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-secondary-container"
+                        aria-label="Fechar visualização ampliada">
+                        <i class="bi bi-x-lg text-[22px]"></i>
+                </button>
+                <button type="button" id="extras-lb-prev"
+                        class="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-secondary-container disabled:opacity-25 disabled:cursor-not-allowed disabled:hover:bg-white/10"
+                        aria-label="Imagem anterior">
+                        <i class="bi bi-chevron-left text-[28px]"></i>
+                </button>
+                <img id="extras-lb-img" class="max-w-[92vw] max-h-[80vh] object-contain shadow-2xl select-none" alt="" />
+                <button type="button" id="extras-lb-next"
+                        class="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-colors focus:outline-none focus:ring-2 focus:ring-secondary-container disabled:opacity-25 disabled:cursor-not-allowed disabled:hover:bg-white/10"
+                        aria-label="Próxima imagem">
+                        <i class="bi bi-chevron-right text-[28px]"></i>
+                </button>
+                <p id="extras-lb-counter"
                         class="absolute bottom-5 left-1/2 -translate-x-1/2 font-label-md text-white/80 text-[12px] uppercase tracking-widest"
                         aria-live="polite"></p>
         </div>
@@ -2065,6 +2326,354 @@
                                                 lbImg.alt = alt + ' — foto ' + (currentIndex + 1);
 
                                                 // Sincroniza a capa da galeria (reutiliza o crossfade existente).
+                                                swapCover(url, alt);
+
+                                                // Marca o thumb correspondente como ativo.
+                                                thumbsList.querySelectorAll('.gallery-thumb').forEach((t) => {
+                                                        const on = t.dataset.img === url;
+                                                        t.classList.toggle('is-active', on);
+                                                        t.setAttribute('aria-pressed', on ? 'true' : 'false');
+                                                });
+
+                                                renderCounter();
+                                                updateNavButtons();
+                                        }
+
+                                        function openLightbox() {
+                                                if (!currentPhotos.length) return;
+                                                lastFocused = document.activeElement;
+                                                lbRoot.classList.remove('hidden');
+                                                lbRoot.classList.add('flex');
+                                                lbRoot.setAttribute('aria-hidden', 'false');
+                                                document.body.style.overflow = 'hidden';
+
+                                                showIndex(currentIndex);
+                                                lbRoot.classList.add('is-open');
+
+                                                const f = FOCUSABLE();
+                                                if (f.length) f[0].focus({ preventScroll: true });
+                                        }
+
+                                        function closeLightbox() {
+                                                lbRoot.classList.remove('is-open');
+                                                document.body.style.overflow = '';
+                                                const done = () => {
+                                                        lbRoot.classList.remove('flex');
+                                                        lbRoot.classList.add('hidden');
+                                                        lbRoot.setAttribute('aria-hidden', 'true');
+                                                        lbRoot.removeEventListener('transitionend', done);
+                                                        if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus({ preventScroll: true });
+                                                };
+                                                if (prefersReduced.matches) { done(); return; }
+                                                lbRoot.addEventListener('transitionend', done);
+                                                setTimeout(done, 260);
+                                        }
+
+                                        // Abertura: clique na capa ou no botão expandir.
+                                        coverWrap.addEventListener('click', openLightbox);
+
+                                        // Controles.
+                                        if (lbClose) lbClose.addEventListener('click', closeLightbox);
+                                        if (lbPrev) lbPrev.addEventListener('click', () => showIndex(currentIndex - 1));
+                                        if (lbNext) lbNext.addEventListener('click', () => showIndex(currentIndex + 1));
+
+                                        // Backdrop: clicar fora da imagem (no próprio overlay) fecha.
+                                        lbRoot.addEventListener('click', (e) => { if (e.target === lbRoot) closeLightbox(); });
+
+                                        // Teclado: ESC fecha, setas navegam, Tab fica preso no dialog.
+                                        document.addEventListener('keydown', (e) => {
+                                                if (lbRoot.classList.contains('hidden')) return;
+                                                if (e.key === 'Escape') { e.preventDefault(); closeLightbox(); }
+                                                else if (e.key === 'ArrowLeft') { e.preventDefault(); showIndex(currentIndex - 1); }
+                                                else if (e.key === 'ArrowRight') { e.preventDefault(); showIndex(currentIndex + 1); }
+                                                else if (e.key === 'Tab') {
+                                                        const f = Array.prototype.slice.call(FOCUSABLE());
+                                                        if (!f.length) return;
+                                                        const first = f[0], last = f[f.length - 1];
+                                                        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                                                        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+                                                }
+                                        });
+                                }
+
+                                // Event delegation — um listener por container (sobrevive ao rebuild dos thumbs).
+                                groupsList.addEventListener('click', (event) => {
+                                        const btn = event.target.closest('.gallery-group-btn');
+                                        if (!btn || !groupsList.contains(btn)) return;
+                                        aplicarGrupo(btn);
+                                });
+
+                                thumbsList.addEventListener('click', (event) => {
+                                        const btn = event.target.closest('.gallery-thumb');
+                                        if (!btn || !thumbsList.contains(btn)) return;
+                                        aplicarThumb(btn);
+                                });
+
+                                // init(): sincroniza o palco com o grupo ativo inicial.
+                                function init() {
+                                        const activeBtn =
+                                                groupsList.querySelector('.gallery-group-btn.is-active') ||
+                                                groupsList.querySelector('.gallery-group-btn');
+                                        if (activeBtn) aplicarGrupo(activeBtn);
+                                }
+
+                                init();
+                        });
+                })();
+        </script>
+
+        <!-- Móveis & Eletrodomésticos — toggle do cabeçalho expansível (JS vanilla) -->
+        <script>
+                (function () {
+                        document.addEventListener('DOMContentLoaded', () => {
+                                const toggle = document.getElementById('extras-toggle');
+                                const content = document.getElementById('extras-content');
+                                if (!toggle || !content) return;
+
+                                toggle.addEventListener('click', () => {
+                                        const nowHidden = content.classList.toggle('hidden');
+                                        const open = !nowHidden;
+                                        toggle.classList.toggle('is-open', open);
+                                        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                                });
+                        });
+                })();
+        </script>
+
+        <!-- Móveis & Eletrodomésticos — master-detail + lightbox namespaced extras-* (JS vanilla) -->
+        <script>
+                (function () {
+                        document.addEventListener('DOMContentLoaded', () => {
+                                // Guarda inicial: se o palco não existir, sai silenciosamente.
+                                const stage = document.getElementById('extras-gallery-stage');
+                                if (!stage) return;
+
+                                // Cache dos elementos do contrato.
+                                const coverImg = document.getElementById('extras-cover-img');
+                                const coverTitle = document.getElementById('extras-cover-title');
+                                const coverCaption = document.getElementById('extras-cover-caption');
+                                const thumbsList = document.getElementById('extras-gallery-thumbs');
+                                const groupsList = document.getElementById('extras-gallery-groups');
+
+                                const lbRoot = document.getElementById('extras-lightbox');
+                                const lbImg = document.getElementById('extras-lb-img');
+                                const lbClose = document.getElementById('extras-lb-close');
+                                const lbPrev = document.getElementById('extras-lb-prev');
+                                const lbNext = document.getElementById('extras-lb-next');
+                                const lbCounter = document.getElementById('extras-lb-counter');
+                                const coverWrap = document.getElementById('extras-cover-wrap');
+
+                                // Elementos essenciais — sem eles não há o que fazer.
+                                if (!coverImg || !groupsList || !thumbsList) return;
+
+                                // Respeita a preferência do usuário por menos movimento.
+                                const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+                                // Token que serializa trocas concorrentes: só a mais recente prospera.
+                                let swapToken = 0;
+
+                                // Estado atual do grupo visível no palco (usado pelo lightbox).
+                                let currentPhotos = [];
+                                let currentIndex = 0;
+                                let lastFocused = null; // elemento que abriu o lightbox (para devolver o foco)
+
+                                // Crossfade robusto da capa: fade-out -> troca src/alt -> fade-in ao carregar.
+                                function swapCover(newSrc, newAlt) {
+                                        if (!newSrc || coverImg.getAttribute('src') === newSrc) return;
+
+                                        const myToken = ++swapToken;
+                                        const isCurrent = () => myToken === swapToken;
+
+                                        const setSrc = () => {
+                                                coverImg.setAttribute('src', newSrc);
+                                                if (newAlt) coverImg.setAttribute('alt', newAlt);
+                                        };
+
+                                        const revealWhenReady = () => {
+                                                if (!isCurrent()) return;
+                                                const reveal = () => {
+                                                        if (!isCurrent()) return;
+                                                        coverImg.classList.remove('is-swapping');
+                                                };
+                                                coverImg.addEventListener('load', reveal, { once: true });
+                                                coverImg.addEventListener('error', reveal, { once: true });
+                                                if (coverImg.complete && coverImg.naturalWidth > 0) reveal();
+                                                setTimeout(reveal, 1500); // fallback caso load/error não disparem
+                                        };
+
+                                        // Caminho reduzido: sem fade, troca direta.
+                                        if (prefersReduced.matches) {
+                                                setSrc();
+                                                revealWhenReady();
+                                                return;
+                                        }
+
+                                        const FADE_MS = 300;
+                                        coverImg.classList.add('is-swapping');
+
+                                        let faded = false;
+                                        const onFadeOut = (event) => {
+                                                if (faded || !isCurrent()) return;
+                                                if (event && event.propertyName && event.propertyName !== 'opacity') return;
+                                                faded = true;
+                                                coverImg.removeEventListener('transitionend', onFadeOut);
+                                                setSrc();
+                                                revealWhenReady();
+                                        };
+
+                                        coverImg.addEventListener('transitionend', onFadeOut);
+                                        setTimeout(onFadeOut, FADE_MS + 60); // fallback se transitionend não disparar
+                                }
+
+                                // Reconstrói a lista de thumbnails a partir do array de URLs.
+                                function buildThumbs(photos, coverUrl, baseAlt) {
+                                        thumbsList.innerHTML = '';
+
+                                        photos.forEach((url, i) => {
+                                                if (!url) return;
+
+                                                const li = document.createElement('li');
+                                                const button = document.createElement('button');
+
+                                                button.type = 'button';
+                                                button.className = 'gallery-thumb';
+                                                button.dataset.img = url;
+                                                button.setAttribute('aria-label', 'Ver foto: ' + (baseAlt || ('foto ' + (i + 1))));
+                                                button.setAttribute('aria-pressed', 'false');
+
+                                                if (url === coverUrl) {
+                                                        button.classList.add('is-active');
+                                                        button.setAttribute('aria-pressed', 'true');
+                                                }
+
+                                                const img = document.createElement('img');
+                                                img.loading = 'lazy';
+                                                img.decoding = 'async';
+                                                img.className = 'w-20 h-16 object-cover rounded-lg';
+                                                img.alt = (baseAlt ? baseAlt + ' — ' : '') + 'miniatura ' + (i + 1);
+                                                img.src = url;
+
+                                                button.appendChild(img);
+                                                li.appendChild(button);
+                                                thumbsList.appendChild(li);
+                                        });
+
+                                        // Se nenhum thumb casou com a capa, ativa o primeiro por padrão.
+                                        if (!thumbsList.querySelector('.gallery-thumb.is-active')) {
+                                                const first = thumbsList.querySelector('.gallery-thumb');
+                                                if (first) {
+                                                        first.classList.add('is-active');
+                                                        first.setAttribute('aria-pressed', 'true');
+                                                }
+                                        }
+                                }
+
+                                // Reconstrói todo o palco a partir dos data-* do botão de grupo clicado.
+                                function aplicarGrupo(btn) {
+                                        if (!btn) return;
+
+                                        // 1. Atualiza estados dos botões de grupo.
+                                        groupsList.querySelectorAll('.gallery-group-btn').forEach((b) => {
+                                                b.classList.remove('is-active');
+                                                b.setAttribute('aria-pressed', 'false');
+                                        });
+                                        btn.classList.add('is-active');
+                                        btn.setAttribute('aria-pressed', 'true');
+
+                                        // 2. Lê o dataset do botão.
+                                        const cover = btn.dataset.cover || '';
+                                        const title = btn.dataset.title || '';
+                                        const caption = btn.dataset.caption || '';
+
+                                        let photos = [];
+                                        try {
+                                                const parsed = JSON.parse(btn.dataset.photos || '[]');
+                                                if (Array.isArray(parsed)) photos = parsed;
+                                        } catch (err) {
+                                                photos = [];
+                                        }
+
+                                        const altText = (title + ' ' + caption).trim();
+
+                                        currentPhotos = photos.slice();
+                                        currentIndex = Math.max(0, currentPhotos.indexOf(cover));
+                                        if (currentIndex >= currentPhotos.length) currentIndex = 0;
+
+                                        // 3. Troca a capa com crossfade.
+                                        swapCover(cover, altText || 'Foto do item');
+
+                                        // 4. Atualiza título e legenda do palco.
+                                        if (coverTitle) coverTitle.textContent = title;
+                                        if (coverCaption) coverCaption.textContent = caption;
+
+                                        // 5. Reconstrói os thumbnails.
+                                        buildThumbs(photos, cover, title || caption || altText);
+                                }
+
+                                // Troca somente a capa (mantém o grupo atual).
+                                function aplicarThumb(thumbBtn) {
+                                        if (!thumbBtn) return;
+                                        const newSrc = thumbBtn.dataset.img || '';
+                                        if (!newSrc) return;
+
+                                        const idx = currentPhotos.indexOf(newSrc);
+                                        if (idx >= 0) currentIndex = idx;
+
+                                        thumbsList.querySelectorAll('.gallery-thumb').forEach((t) => {
+                                                t.classList.remove('is-active');
+                                                t.setAttribute('aria-pressed', 'false');
+                                        });
+                                        thumbBtn.classList.add('is-active');
+                                        thumbBtn.setAttribute('aria-pressed', 'true');
+
+                                        const t = coverTitle ? coverTitle.textContent.trim() : '';
+                                        const c = coverCaption ? coverCaption.textContent.trim() : '';
+                                        swapCover(newSrc, (t + ' ' + c).trim() || undefined);
+                                }
+
+                                // ---- Lightbox fullscreen ----
+                                if (lbRoot && lbImg && coverWrap) {
+                                        const FOCUSABLE = () => lbRoot.querySelectorAll('button:not([disabled]), [href], input, [tabindex]:not([tabindex="-1"])');
+
+                                        function lbAltText() {
+                                                const t = coverTitle ? coverTitle.textContent.trim() : '';
+                                                const c = coverCaption ? coverCaption.textContent.trim() : '';
+                                                return (t + ' ' + c).trim() || 'Foto do item';
+                                        }
+
+                                        function renderCounter() {
+                                                if (!lbCounter) return;
+                                                if (currentPhotos.length <= 1) { lbCounter.textContent = ''; return; }
+                                                lbCounter.textContent = (currentIndex + 1) + ' / ' + currentPhotos.length;
+                                        }
+
+                                        function updateNavButtons() {
+                                                const single = currentPhotos.length <= 1;
+                                                if (lbPrev) lbPrev.disabled = single;
+                                                if (lbNext) lbNext.disabled = single;
+                                        }
+
+                                        // Mostra uma foto do grupo atual (atualiza lightbox E a capa do palco, em sync).
+                                        function showIndex(i) {
+                                                if (!currentPhotos.length) return;
+                                                const n = currentPhotos.length;
+                                                currentIndex = (i + n) % n;
+                                                const url = currentPhotos[currentIndex];
+                                                const alt = lbAltText();
+
+                                                if (prefersReduced.matches) {
+                                                        lbImg.src = url;
+                                                } else {
+                                                        lbRoot.classList.add('is-swapping');
+                                                        setTimeout(() => {
+                                                                lbImg.src = url;
+                                                                lbImg.addEventListener('load', () => lbRoot.classList.remove('is-swapping'), { once: true });
+                                                                lbImg.addEventListener('error', () => lbRoot.classList.remove('is-swapping'), { once: true });
+                                                        }, 150);
+                                                }
+                                                lbImg.alt = alt + ' — foto ' + (currentIndex + 1);
+
+                                                // Sincroniza a capa do palco (reutiliza o crossfade existente).
                                                 swapCover(url, alt);
 
                                                 // Marca o thumb correspondente como ativo.

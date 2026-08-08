@@ -78,6 +78,17 @@ O Ambiance oferece o equilíbrio entre uma região calma e toda a conveniência 
 
 Bairro com tudo que precisa
 O Bairro do jardim myriam já tem todos os estabelecimentos que um bairro completo precisa, padarias, marcados, barbearias, material de construção e acesso rapido a rodovia
+------------------------
+
+Crie uma sessao abaixo de detalhes tecnicos do imovel. Nele liste quantos comodos tem, deixe uma sessao para discriminacao do valor do condominio, valor do iptu, valor da casa e valorizacao ao longo de x anos (vou decidir depois o que colocar em x)
+
+abaixo desse item quero uma sessao para detalhes do condominio em si, aqui vou listar o que tem. como Vaga coberta, duas churrasqueiras, salao de festas (com valor de churrasqueira e salao inclusos), banheiros externos, brinquedoteca, salacao de jogos e tambem mercadinho interno do condominio
+]
+
+-------------
+
+Ao clicar
+
 
 se necessario para cores e estilos use o DESIGN.md
 

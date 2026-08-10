@@ -529,6 +529,14 @@
                 }
 
                 /* ===== Hotspots da planta: visibilidade por hover (desktop), foco (teclado) e tap (mobile) ===== */
+                .planta-hotspot:hover,
+                .planta-hotspot:focus-visible,
+                .planta-hotspot.is-open {
+                        /* Garante que o hotspot ativo (e seu tooltip) pinte acima dos irmãos,
+                           cujos pings pulsantes poderiam cobrir o texto do tooltip. */
+                        z-index: 30;
+                }
+
                 .planta-hotspot:hover .planta-tooltip,
                 .planta-hotspot:focus-visible .planta-tooltip,
                 .planta-hotspot.is-open .planta-tooltip {

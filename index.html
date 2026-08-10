@@ -4,6 +4,19 @@
 <head>
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <!-- Anti-FOUC: aplica o tema (light/dark) antes da primeira pintura.
+             Prioridade: localStorage > prefers-color-scheme. -->
+        <script>
+                (function () {
+                        try {
+                                var stored = localStorage.getItem('theme');
+                                var dark = stored
+                                        ? stored === 'dark'
+                                        : window.matchMedia('(prefers-color-scheme: dark)').matches;
+                                document.documentElement.classList.toggle('dark', dark);
+                        } catch (e) { /* ignore */ }
+                })();
+        </script>
         <title>Lumina Estates - Viva o Extraordinário</title>
         <!-- Material Symbols -->
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
@@ -24,54 +37,57 @@
                         darkMode: "class",
                         theme: {
                                 extend: {
+                                        // Cores baseadas em variáveis CSS (rgb channels) para suportar
+                                        // light/dark sem precisar de variantes dark: em cada elemento.
+                                        // Definições em :root (light) e .dark abaixo, no bloco <style>.
                                         "colors": {
-                                                "on-surface": "#1a1c1c",
-                                                "on-surface-variant": "#444748",
-                                                "surface-bright": "#f9f9f9",
-                                                "on-background": "#1a1c1c",
-                                                "secondary": "#735c00",
-                                                "error": "#ba1a1a",
-                                                "on-secondary-fixed": "#241a00",
-                                                "inverse-on-surface": "#f0f1f1",
-                                                "secondary-container": "#fed65b",
-                                                "on-error-container": "#93000a",
-                                                "surface-tint": "#5f5e5e",
-                                                "on-secondary-fixed-variant": "#574500",
-                                                "inverse-surface": "#2f3131",
-                                                "surface-variant": "#e2e2e2",
-                                                "outline": "#747878",
-                                                "tertiary": "#000000",
-                                                "inverse-primary": "#c8c6c5",
-                                                "on-secondary-container": "#745c00",
-                                                "surface-container-lowest": "#ffffff",
-                                                "surface-dim": "#dadada",
-                                                "surface-container": "#eeeeee",
-                                                "on-primary-container": "#858383",
-                                                "on-primary-fixed-variant": "#474746",
-                                                "error-container": "#ffdad6",
-                                                "primary-container": "#1c1b1b",
-                                                "primary-fixed": "#e5e2e1",
-                                                "tertiary-fixed-dim": "#c6c6c7",
-                                                "surface-container-high": "#e8e8e8",
-                                                "outline-variant": "#c4c7c7",
-                                                "on-tertiary-fixed": "#1a1c1c",
-                                                "on-error": "#ffffff",
-                                                "surface-container-low": "#f3f3f4",
-                                                "tertiary-container": "#1a1c1c",
-                                                "secondary-fixed-dim": "#e9c349",
-                                                "on-tertiary-fixed-variant": "#454747",
-                                                "on-tertiary-container": "#838484",
-                                                "secondary-fixed": "#ffe088",
-                                                "surface": "#f9f9f9",
-                                                "on-tertiary": "#ffffff",
-                                                "on-primary-fixed": "#1c1b1b",
-                                                "tertiary-fixed": "#e2e2e2",
-                                                "on-secondary": "#ffffff",
-                                                "background": "#f9f9f9",
-                                                "surface-container-highest": "#e2e2e2",
-                                                "on-primary": "#ffffff",
-                                                "primary": "#000000",
-                                                "primary-fixed-dim": "#c8c6c5"
+                                                "on-surface": "rgb(var(--on-surface) / <alpha-value>)",
+                                                "on-surface-variant": "rgb(var(--on-surface-variant) / <alpha-value>)",
+                                                "surface-bright": "rgb(var(--surface-bright) / <alpha-value>)",
+                                                "on-background": "rgb(var(--on-background) / <alpha-value>)",
+                                                "secondary": "rgb(var(--secondary) / <alpha-value>)",
+                                                "error": "rgb(var(--error) / <alpha-value>)",
+                                                "on-secondary-fixed": "rgb(var(--on-secondary-fixed) / <alpha-value>)",
+                                                "inverse-on-surface": "rgb(var(--inverse-on-surface) / <alpha-value>)",
+                                                "secondary-container": "rgb(var(--secondary-container) / <alpha-value>)",
+                                                "on-error-container": "rgb(var(--on-error-container) / <alpha-value>)",
+                                                "surface-tint": "rgb(var(--surface-tint) / <alpha-value>)",
+                                                "on-secondary-fixed-variant": "rgb(var(--on-secondary-fixed-variant) / <alpha-value>)",
+                                                "inverse-surface": "rgb(var(--inverse-surface) / <alpha-value>)",
+                                                "surface-variant": "rgb(var(--surface-variant) / <alpha-value>)",
+                                                "outline": "rgb(var(--outline) / <alpha-value>)",
+                                                "tertiary": "rgb(var(--tertiary) / <alpha-value>)",
+                                                "inverse-primary": "rgb(var(--inverse-primary) / <alpha-value>)",
+                                                "on-secondary-container": "rgb(var(--on-secondary-container) / <alpha-value>)",
+                                                "surface-container-lowest": "rgb(var(--surface-container-lowest) / <alpha-value>)",
+                                                "surface-dim": "rgb(var(--surface-dim) / <alpha-value>)",
+                                                "surface-container": "rgb(var(--surface-container) / <alpha-value>)",
+                                                "on-primary-container": "rgb(var(--on-primary-container) / <alpha-value>)",
+                                                "on-primary-fixed-variant": "rgb(var(--on-primary-fixed-variant) / <alpha-value>)",
+                                                "error-container": "rgb(var(--error-container) / <alpha-value>)",
+                                                "primary-container": "rgb(var(--primary-container) / <alpha-value>)",
+                                                "primary-fixed": "rgb(var(--primary-fixed) / <alpha-value>)",
+                                                "tertiary-fixed-dim": "rgb(var(--tertiary-fixed-dim) / <alpha-value>)",
+                                                "surface-container-high": "rgb(var(--surface-container-high) / <alpha-value>)",
+                                                "outline-variant": "rgb(var(--outline-variant) / <alpha-value>)",
+                                                "on-tertiary-fixed": "rgb(var(--on-tertiary-fixed) / <alpha-value>)",
+                                                "on-error": "rgb(var(--on-error) / <alpha-value>)",
+                                                "surface-container-low": "rgb(var(--surface-container-low) / <alpha-value>)",
+                                                "tertiary-container": "rgb(var(--tertiary-container) / <alpha-value>)",
+                                                "secondary-fixed-dim": "rgb(var(--secondary-fixed-dim) / <alpha-value>)",
+                                                "on-tertiary-fixed-variant": "rgb(var(--on-tertiary-fixed-variant) / <alpha-value>)",
+                                                "on-tertiary-container": "rgb(var(--on-tertiary-container) / <alpha-value>)",
+                                                "secondary-fixed": "rgb(var(--secondary-fixed) / <alpha-value>)",
+                                                "surface": "rgb(var(--surface) / <alpha-value>)",
+                                                "on-tertiary": "rgb(var(--on-tertiary) / <alpha-value>)",
+                                                "on-primary-fixed": "rgb(var(--on-primary-fixed) / <alpha-value>)",
+                                                "tertiary-fixed": "rgb(var(--tertiary-fixed) / <alpha-value>)",
+                                                "on-secondary": "rgb(var(--on-secondary) / <alpha-value>)",
+                                                "background": "rgb(var(--background) / <alpha-value>)",
+                                                "surface-container-highest": "rgb(var(--surface-container-highest) / <alpha-value>)",
+                                                "on-primary": "rgb(var(--on-primary) / <alpha-value>)",
+                                                "primary": "rgb(var(--primary) / <alpha-value>)",
+                                                "primary-fixed-dim": "rgb(var(--primary-fixed-dim) / <alpha-value>)"
                                         },
                                         "borderRadius": {
                                                 "DEFAULT": "0.125rem",
@@ -179,15 +195,126 @@
                 }
         </script>
         <style>
+                /* ===== Tokens de cor (rgb channels) — light (padrão) e dark (.dark no <html>) =====
+                   Acessados via rgb(var(--token) / <alpha>) tanto pelo Tailwind (config) quanto
+                   por este CSS customizado. Trocar o tema = adicionar/remover .dark no <html>. */
+                :root {
+                        --on-surface: 26 28 28;
+                        --on-surface-variant: 68 71 72;
+                        --surface-bright: 249 249 249;
+                        --on-background: 26 28 28;
+                        --secondary: 115 92 0;
+                        --error: 186 26 26;
+                        --on-secondary-fixed: 36 26 0;
+                        --inverse-on-surface: 240 241 241;
+                        --secondary-container: 254 214 91;
+                        --on-error-container: 147 0 10;
+                        --surface-tint: 95 94 94;
+                        --on-secondary-fixed-variant: 87 69 0;
+                        --inverse-surface: 47 49 49;
+                        --surface-variant: 226 226 226;
+                        --outline: 116 120 120;
+                        --tertiary: 0 0 0;
+                        --inverse-primary: 200 198 197;
+                        --on-secondary-container: 116 92 0;
+                        --surface-container-lowest: 255 255 255;
+                        --surface-dim: 218 218 218;
+                        --surface-container: 238 238 238;
+                        --on-primary-container: 133 131 131;
+                        --on-primary-fixed-variant: 71 71 70;
+                        --error-container: 255 218 214;
+                        --primary-container: 28 27 27;
+                        --primary-fixed: 229 226 225;
+                        --tertiary-fixed-dim: 198 198 199;
+                        --surface-container-high: 232 232 232;
+                        --outline-variant: 196 199 199;
+                        --on-tertiary-fixed: 26 28 28;
+                        --on-error: 255 255 255;
+                        --surface-container-low: 243 243 244;
+                        --tertiary-container: 26 28 28;
+                        --secondary-fixed-dim: 233 195 73;
+                        --on-tertiary-fixed-variant: 69 71 71;
+                        --on-tertiary-container: 131 132 132;
+                        --secondary-fixed: 255 224 136;
+                        --surface: 249 249 249;
+                        --on-tertiary: 255 255 255;
+                        --on-primary-fixed: 28 27 27;
+                        --tertiary-fixed: 226 226 226;
+                        --on-secondary: 255 255 255;
+                        --background: 249 249 249;
+                        --surface-container-highest: 226 226 226;
+                        --on-primary: 255 255 255;
+                        --primary: 0 0 0;
+                        --primary-fixed-dim: 200 198 197;
+                        color-scheme: light;
+                }
+
+                .dark {
+                        --on-surface: 227 226 226;
+                        --on-surface-variant: 196 199 199;
+                        --surface-bright: 47 49 49;
+                        --on-background: 227 226 226;
+                        --secondary: 254 214 91;
+                        --error: 255 180 171;
+                        --on-secondary-fixed: 254 214 91;
+                        --inverse-on-surface: 47 49 49;
+                        --secondary-container: 254 214 91;
+                        --on-error-container: 255 218 214;
+                        --surface-tint: 196 199 199;
+                        --on-secondary-fixed-variant: 254 214 91;
+                        --inverse-surface: 240 241 241;
+                        --surface-variant: 68 71 72;
+                        --outline: 141 145 145;
+                        --tertiary: 227 226 226;
+                        --inverse-primary: 95 94 94;
+                        --on-secondary-container: 254 214 91;
+                        --surface-container-lowest: 15 15 15;
+                        --surface-dim: 19 20 20;
+                        --surface-container: 31 32 32;
+                        --on-primary-container: 200 198 197;
+                        --on-primary-fixed-variant: 200 198 197;
+                        --error-container: 147 0 10;
+                        --primary-container: 227 226 226;
+                        --primary-fixed: 229 226 225;
+                        --tertiary-fixed-dim: 198 198 199;
+                        --surface-container-high: 38 39 39;
+                        --outline-variant: 68 71 72;
+                        --on-tertiary-fixed: 227 226 226;
+                        --on-error: 26 28 28;
+                        --surface-container-low: 25 26 26;
+                        --tertiary-container: 227 226 226;
+                        --secondary-fixed-dim: 233 195 73;
+                        --on-tertiary-fixed-variant: 196 199 199;
+                        --on-tertiary-container: 200 198 197;
+                        --secondary-fixed: 255 224 136;
+                        --surface: 26 28 28;
+                        --on-tertiary: 26 28 28;
+                        --on-primary-fixed: 229 226 225;
+                        --tertiary-fixed: 226 226 226;
+                        --on-secondary: 26 28 28;
+                        --background: 19 20 20;
+                        --surface-container-highest: 48 49 49;
+                        --on-primary: 26 28 28;
+                        --primary: 227 226 226;
+                        --primary-fixed-dim: 200 198 197;
+                        color-scheme: dark;
+                }
+
                 .glass-panel {
-                        background: theme('colors.surface-container-lowest');
+                        background: rgb(var(--surface-container-lowest));
                         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-                        border: 1px solid theme('colors.surface-variant');
+                        border: 1px solid rgb(var(--surface-variant));
+                }
+
+                /* Em dark mode, sombras neutras quase não aparecem; reforçamos a elevação. */
+                .dark .glass-panel {
+                        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
                 }
 
                 .luxury-button-primary {
-                        background-color: theme('colors.secondary-container');
-                        color: theme('colors.on-secondary-container');
+                        background-color: rgb(var(--secondary-container));
+                        /* Texto sempre escuro sobre o dourado (contraste AA em ambos os temas) */
+                        color: #1a1c1c;
                         transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
                 }
 
@@ -197,19 +324,19 @@
                 }
 
                 .luxury-button-ghost {
-                        border: 1px solid theme('colors.outline');
+                        border: 1px solid rgb(var(--outline));
                         background: transparent;
-                        color: theme('colors.on-surface');
+                        color: rgb(var(--on-surface));
                         transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
                 }
 
                 .luxury-button-ghost:hover {
-                        background: theme('colors.surface-variant');
+                        background: rgb(var(--surface-variant));
                 }
 
                 /* Foco visível para os CTAs/links de conversão (WhatsApp) */
                 .wa-cta:focus-visible {
-                        outline: 2px solid theme('colors.secondary-container');
+                        outline: 2px solid rgb(var(--secondary-container));
                         outline-offset: 2px;
                 }
 
@@ -232,8 +359,8 @@
                 /* ===== Galeria (master-detail): grupos, thumbnails e crossfade ===== */
                 .gallery-group-btn {
                         background: transparent;
-                        border: 1px solid theme('colors.surface-variant');
-                        color: theme('colors.on-surface-variant');
+                        border: 1px solid rgb(var(--surface-variant));
+                        color: rgb(var(--on-surface-variant));
                         transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
                                 border-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
                                 color 250ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -241,19 +368,19 @@
                 }
 
                 .gallery-group-btn:hover {
-                        background: theme('colors.surface-container-lowest');
-                        border-color: theme('colors.outline-variant');
-                        color: theme('colors.on-surface');
+                        background: rgb(var(--surface-container-lowest));
+                        border-color: rgb(var(--outline-variant));
+                        color: rgb(var(--on-surface));
                 }
 
                 .gallery-group-btn.is-active {
-                        border-left: 3px solid theme('colors.secondary-container');
-                        background: rgba(254, 214, 91, 0.15);
-                        color: theme('colors.on-surface');
+                        border-left: 3px solid rgb(var(--secondary-container));
+                        background: rgb(var(--secondary-container) / 0.15);
+                        color: rgb(var(--on-surface));
                 }
 
                 .gallery-group-btn.is-active i {
-                        color: theme('colors.secondary');
+                        color: rgb(var(--secondary));
                 }
 
                 .gallery-thumb {
@@ -268,7 +395,7 @@
 
                 .gallery-thumb.is-active {
                         opacity: 1;
-                        box-shadow: 0 0 0 2px theme('colors.secondary-container');
+                        box-shadow: 0 0 0 2px rgb(var(--secondary-container));
                 }
 
                 #gallery-cover-img {
@@ -281,14 +408,11 @@
 
                 .gallery-group-btn:focus-visible,
                 .gallery-thumb:focus-visible {
-                        outline: 2px solid theme('colors.secondary-container');
+                        outline: 2px solid rgb(var(--secondary-container));
                         outline-offset: 2px;
                 }
 
-                /* ===== Móveis & Eletrodomésticos — section expansível (toggle do cabeçalho) =====
-                   NOTA: valores hex diretos (não theme('colors.*')) porque esta folha é um bloco
-                   style comum — theme() só é processado pelo Tailwind Play CDN em blocos
-                   style[type="text/tailwindcss"]. Valores retirados do DESIGN.md. */
+                /* ===== Móveis & Eletrodomésticos — section expansível (toggle do cabeçalho) ===== */
                 #extras-toggle .extras-chevron {
                         transition: transform 250ms ease;
                 }
@@ -298,23 +422,20 @@
                 }
 
                 #extras-toggle:focus-visible {
-                        outline: 2px solid #fed65b;
+                        outline: 2px solid rgb(var(--secondary-container));
                         outline-offset: 4px;
                 }
 
-                /* ===== Localização Inteligente: categorias, lista e modo (master-detail) =====
-                   NOTA: usamos valores hex diretos (e nao theme('colors.*')) porque esta folha
-                   e um bloco style comum — theme() so e processado pelo Tailwind Play CDN em
-                   blocos style[type="text/tailwindcss"]. Valores retirados do DESIGN.md. */
+                /* ===== Localização Inteligente: categorias, lista e modo (master-detail) ===== */
                 .loc-cat-btn {
                         display: inline-flex;
                         align-items: center;
                         gap: .5rem;
                         padding: .5rem 1rem;
                         border-radius: .375rem;
-                        background: #ffffff;
-                        color: #444748;
-                        border: 1px solid #e2e2e2;
+                        background: rgb(var(--surface-container-lowest));
+                        color: rgb(var(--on-surface-variant));
+                        border: 1px solid rgb(var(--surface-variant));
                         white-space: nowrap;
                         transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
                                 border-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -323,14 +444,15 @@
                 }
 
                 .loc-cat-btn:hover {
-                        border-color: #c4c7c7;
-                        color: #1a1c1c;
+                        border-color: rgb(var(--outline-variant));
+                        color: rgb(var(--on-surface));
                 }
 
                 .loc-cat-btn.is-active {
-                        background: #fed65b;
+                        background: rgb(var(--secondary-container));
+                        /* Texto sempre escuro sobre o dourado (contraste AA em ambos os temas) */
                         color: #1a1c1c;
-                        border-color: #fed65b;
+                        border-color: rgb(var(--secondary-container));
                 }
 
                 .loc-place-btn {
@@ -342,7 +464,7 @@
                         padding: .875rem 1rem;
                         background: transparent;
                         border: none;
-                        border-bottom: 1px solid #eeeeee;
+                        border-bottom: 1px solid rgb(var(--surface-container));
                         text-align: left;
                         transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
                         cursor: pointer;
@@ -360,11 +482,11 @@
                 }
 
                 .loc-place-btn:hover {
-                        background: #f3f3f4;
+                        background: rgb(var(--surface-container-low));
                 }
 
                 .loc-place-btn.is-active {
-                        background: rgba(254, 214, 91, 0.15);
+                        background: rgb(var(--secondary-container) / 0.15);
                 }
 
                 .loc-place-btn.is-active::before {
@@ -374,11 +496,11 @@
                         top: 0;
                         bottom: 0;
                         width: 3px;
-                        background: #fed65b;
+                        background: rgb(var(--secondary-container));
                 }
 
                 .loc-place-btn.is-active .loc-name {
-                        color: #1a1c1c;
+                        color: rgb(var(--on-surface));
                         font-weight: 600;
                 }
 
@@ -388,9 +510,9 @@
                         gap: .4rem;
                         padding: .45rem .85rem;
                         border-radius: .375rem;
-                        background: #ffffff;
-                        color: #444748;
-                        border: 1px solid #e2e2e2;
+                        background: rgb(var(--surface-container-lowest));
+                        color: rgb(var(--on-surface-variant));
+                        border: 1px solid rgb(var(--surface-variant));
                         transition: background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
                                 border-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
                                 color 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -399,25 +521,24 @@
                 }
 
                 .loc-mode-btn:hover {
-                        color: #1a1c1c;
-                        border-color: #c4c7c7;
+                        color: rgb(var(--on-surface));
+                        border-color: rgb(var(--outline-variant));
                 }
 
                 .loc-mode-btn.is-active {
-                        background: #fed65b;
+                        background: rgb(var(--secondary-container));
                         color: #1a1c1c;
-                        border-color: #fed65b;
+                        border-color: rgb(var(--secondary-container));
                 }
 
                 .loc-cat-btn:focus-visible,
                 .loc-place-btn:focus-visible,
                 .loc-mode-btn:focus-visible {
-                        outline: 2px solid #fed65b;
+                        outline: 2px solid rgb(var(--secondary-container));
                         outline-offset: 2px;
                 }
 
-                /* ===== Loading do explorador de localização =====
-                   Hex diretos (style comum; ver nota no bloco acima). Cores do DESIGN.md. */
+                /* ===== Loading do explorador de localização ===== */
                 .loc-loading {
                         position: absolute;
                         inset: 0;
@@ -426,10 +547,10 @@
                         place-content: center;
                         justify-items: center;
                         gap: 10px;
-                        background: rgba(249, 249, 249, 0.92);
+                        background: rgb(var(--surface) / 0.92);
                         -webkit-backdrop-filter: blur(2px);
                         backdrop-filter: blur(2px);
-                        color: #444748;
+                        color: rgb(var(--on-surface-variant));
                         transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
                 }
 
@@ -440,14 +561,14 @@
 
                 .loc-loading__spinner {
                         font-size: 30px;
-                        color: #fed65b;
+                        color: rgb(var(--secondary-container));
                         animation: loc-spin 0.85s linear infinite;
                 }
 
                 .loc-loading__text {
                         font-size: 13px;
                         letter-spacing: 0.02em;
-                        color: #444748;
+                        color: rgb(var(--on-surface-variant));
                 }
 
                 .loc-loading.is-error .loc-loading__spinner {
@@ -455,7 +576,7 @@
                 }
 
                 .loc-loading.is-error .loc-loading__text {
-                        color: #ba1a1a;
+                        color: rgb(var(--error));
                 }
 
                 /* Esconde a imagem antiga enquanto o novo mapa baixa */
@@ -592,8 +713,9 @@
                                         aria-label="Agendar visita pelo WhatsApp (abre em nova aba)">
                                         Agendar Visita
                                 </a>
-                                <button
-                                        class="text-on-surface-variant hover:text-on-surface transition-colors duration-300">
+                                <button type="button" id="theme-toggle"
+                                        class="text-on-surface-variant hover:text-on-surface transition-colors duration-300 rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container"
+                                        aria-label="Alternar tema claro e escuro" aria-pressed="false" title="Alternar tema">
                                         <span class="material-symbols-outlined"
                                                 style="font-variation-settings: 'FILL' 0;">light_mode</span>
                                 </button>
@@ -2089,6 +2211,31 @@
                                 observer.observe(el);
                         });
                 });
+        </script>
+
+        <!-- Theme Toggle (light/dark) — alterna .dark no <html>, persiste e sincroniza o ícone -->
+        <script>
+                (function () {
+                        var btn = document.getElementById('theme-toggle');
+                        if (!btn) return;
+                        var icon = btn.querySelector('.material-symbols-outlined');
+
+                        function sync() {
+                                var dark = document.documentElement.classList.contains('dark');
+                                // Ícone mostra o destino do clique: no escuro -> sol (clarear); no claro -> lua (escurecer).
+                                if (icon) icon.textContent = dark ? 'light_mode' : 'dark_mode';
+                                btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+                                btn.setAttribute('aria-label', dark ? 'Ativar tema claro' : 'Ativar tema escuro');
+                        }
+
+                        btn.addEventListener('click', function () {
+                                var dark = document.documentElement.classList.toggle('dark');
+                                try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) { /* ignore */ }
+                                sync();
+                        });
+
+                        sync();
+                })();
         </script>
 
 

@@ -26,6 +26,21 @@
                         } catch (e) { /* ignore */ }
                 })();
         </script>
+        <!-- Anti-FOUC WhatsApp: CTAs já nascem ocultos via CSS.
+             Só são habilitados se a URL contiver ?magic=awesome.
+             O parâmetro é removido da URL (sem reload) após uso. -->
+        <script>
+                (function () {
+                        try {
+                                var url = new URL(window.location.href);
+                                if (url.searchParams.get('magic') === 'awesome') {
+                                        url.searchParams.delete('magic');
+                                        window.history.replaceState(null, '', url.toString());
+                                        document.documentElement.classList.add('wa-enabled');
+                                }
+                        } catch (e) { /* ignore — estado padrão (oculto) já é o fallback */ }
+                })();
+        </script>
         <title>Condomínio Ambiance 1 | 50m² · 2 quartos · Campinas</title>
         <meta name="description"
                 content="Apartamento de 50m² com 2 quartos, 1 vaga, sacada e acabamento de alto padrão no Condomínio Ambiance 1 (Apt 36, Bloco 3) em Campinas. Próximo à Unicamp, CPQD e CNPEM. Agende sua visita.">
@@ -368,6 +383,15 @@
                 .wa-cta:focus-visible {
                         outline: 2px solid rgb(var(--secondary-container));
                         outline-offset: 2px;
+                }
+
+                /* === Modo demo: CTAs de WhatsApp ocultos por padrão (CSS-first,
+                     evita FOUC mesmo antes do JS rodar). Só são exibidos se o
+                     script no <head> detectar ?magic=awesome e adicionar a classe
+                     .wa-enabled ao <html>. Em caso de JS falho/bloqueado, o estado
+                     restritivo (oculto) prevalece como fail-safe. === */
+                html:not(.wa-enabled) .wa-cta {
+                        display: none !important;
                 }
 
                 .reveal-up {
@@ -733,7 +757,7 @@
                                                         href="#planta">Planta</a></li>
                                         <li class=""><a class="text-on-surface-variant hover:scale-105 hover:text-on-surface transition-all duration-300"
                                                         href="#localizacao">Localização</a></li>
-                                        <li class=""><a class="text-on-surface-variant hover:scale-105 hover:text-on-surface transition-all duration-300"
+                                        <li class="wa-cta"><a class="text-on-surface-variant hover:scale-105 hover:text-on-surface transition-all duration-300"
                                                         href="#contato">Contato</a></li>
                                 </ul>
                                 <!-- Actions -->

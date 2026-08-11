@@ -607,7 +607,7 @@
         </header>
         <main>
                 <!-- Hero Section -->
-                <section class="relative min-h-screen flex items-end overflow-hidden">
+                <section id="hero" class="relative min-h-screen flex items-end overflow-hidden">
                         <!-- Foto em força total (hero editorial) -->
                         <img src="ambiance1.jpg" alt="" role="presentation"
                                 class="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none z-0"
@@ -1182,7 +1182,7 @@
                                                         <!-- Hotspots da planta (um por ambiente) -->
                                                         <button type="button"
                                                                 class="planta-hotspot absolute top-[44%] left-[13%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
-                                                                aria-label="Dormitório principal: ver equipamentos"
+                                                                data-room="dormitorio-principal" aria-label="Dormitório principal: ver equipamentos"
                                                                 aria-expanded="false">
                                                                 <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
                                                                         aria-hidden="true"></span>
@@ -1203,7 +1203,7 @@
                                                         </button>
                                                         <button type="button"
                                                                 class="planta-hotspot absolute top-[46%] left-[30%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
-                                                                aria-label="Banheiro: ver detalhes"
+                                                                data-room="banheiro" aria-label="Banheiro: ver detalhes"
                                                                 aria-expanded="false">
                                                                 <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
                                                                         aria-hidden="true"></span>
@@ -1225,7 +1225,7 @@
                                                         </button>
                                                         <button type="button"
                                                                 class="planta-hotspot absolute top-[40%] left-[45%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
-                                                                aria-label="Dormitório secundário: ver equipamentos"
+                                                                data-room="dormitorio-secundario" aria-label="Dormitório secundário: ver equipamentos"
                                                                 aria-expanded="false">
                                                                 <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
                                                                         aria-hidden="true"></span>
@@ -1247,7 +1247,7 @@
                                                         </button>
                                                         <button type="button"
                                                                 class="planta-hotspot absolute top-[22%] left-[68%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
-                                                                aria-label="Área externa: ver detalhes"
+                                                                data-room="area-externa" aria-label="Área externa: ver detalhes"
                                                                 aria-expanded="false">
                                                                 <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
                                                                         aria-hidden="true"></span>
@@ -1269,7 +1269,7 @@
                                                         </button>
                                                         <button type="button"
                                                                 class="planta-hotspot absolute top-[42%] left-[66%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
-                                                                aria-label="Sala de estar: ver equipamentos"
+                                                                data-room="sala-estar" aria-label="Sala de estar: ver equipamentos"
                                                                 aria-expanded="false">
                                                                 <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
                                                                         aria-hidden="true"></span>
@@ -1291,7 +1291,7 @@
                                                         </button>
                                                         <button type="button"
                                                                 class="planta-hotspot absolute top-[70%] left-[64%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
-                                                                aria-label="Sala de jantar: ver detalhes"
+                                                                data-room="sala-jantar" aria-label="Sala de jantar: ver detalhes"
                                                                 aria-expanded="false">
                                                                 <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
                                                                         aria-hidden="true"></span>
@@ -1313,7 +1313,7 @@
                                                         </button>
                                                         <button type="button"
                                                                 class="planta-hotspot absolute top-[70%] left-[85%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
-                                                                aria-label="Cozinha: ver equipamentos"
+                                                                data-room="cozinha" aria-label="Cozinha: ver equipamentos"
                                                                 aria-expanded="false">
                                                                 <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
                                                                         aria-hidden="true"></span>
@@ -1334,7 +1334,7 @@
                                                         </button>
                                                         <button type="button"
                                                                 class="planta-hotspot absolute top-[40%] left-[86%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 bg-secondary-container rounded-full animate-pulse cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary-container focus-visible:ring-offset-2"
-                                                                aria-label="Lavanderia: ver equipamentos"
+                                                                data-room="lavanderia" aria-label="Lavanderia: ver equipamentos"
                                                                 aria-expanded="false">
                                                                 <span class="planta-ping absolute inset-0 -z-10 rounded-full bg-secondary-container animate-ping opacity-50"
                                                                         aria-hidden="true"></span>
@@ -1765,7 +1765,7 @@
                 </section>
                 <!-- Características & Diferenciais -->
                 <section
-                        class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low max-w-none w-full">
+                        id="diferenciais" class="py-section-gap px-margin-mobile md:px-margin-desktop bg-surface-container-low max-w-none w-full">
                         <div class="max-w-container-max mx-auto">
                                 <div class="text-center mb-16 reveal-up active">
                                         <h2

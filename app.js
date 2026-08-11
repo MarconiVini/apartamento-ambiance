@@ -233,6 +233,154 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ============================================================================
+// Google Analytics 4 - tracking de secao (visualizacao + tempo) e cliques.
+// ID de medicao: G-R40NFZHCLM (snippet no <head> do index.html).
+//
+// Eventos disparados:
+//   - section_view        : uma secao fica "ativa" (linha central do viewport).
+//   - section_engagement  : ao sair/trocar de secao ou aba ficar oculta, com
+//                           section_engagement_msec (tempo de permanencia).
+//   - select_content      : cliques em hotspots, mapa, galeria, lightbox,
+//                           WhatsApp e contato (content_type + content_id).
+//
+// Nao quebra nada se o GA estiver bloqueado/indisponivel (guarda em gaTrack).
+// Requer dimensoes/metrica personalizadas no Admin do GA4:
+//   section_name, content_type, content_id (dimensoes) e
+//   section_engagement_msec (metrica, em milissegundos).
+// ============================================================================
+
+(function () {
+	function gaTrack(event, params) {
+		if (typeof gtag !== 'function') return; // GA ausente/bloqueado: silencioso
+		try { gtag('event', event, params || {}); } catch (e) { /* ignore */ }
+	}
+
+	// ---- (1) Secao ativa + tempo de permanencia (dwell) ------------------
+	// rootMargin central (-50%/-50%) cria uma linha fina no meio do viewport;
+	// a secao esta "ativa" quando essa linha cruza ela. Garante uma unica
+	// secao ativa por vez, mesmo em secoes mais altas que a tela (Planta,
+	// Localizacao) - threshold 0.5 nao serviria nesses casos.
+	var activeSection = null; // id da secao ativa
+	var activeSince = 0;      // performance.now() de quando ficou ativa
+
+	function emitDwell(id, since) {
+		var dwell = Math.round(performance.now() - since);
+		if (id && dwell > 0) {
+			gaTrack('section_engagement', {
+				section_name: id,
+				section_engagement_msec: dwell
+			});
+		}
+	}
+
+	function setActive(id) {
+		if (id === activeSection) return;
+		if (activeSection) emitDwell(activeSection, activeSince);
+		activeSection = id;
+		activeSince = performance.now();
+		if (id) gaTrack('section_view', { section_name: id });
+	}
+
+	document.addEventListener('DOMContentLoaded', function () {
+		var sections = document.querySelectorAll('main section[id], footer[id]');
+		if (!sections.length || !('IntersectionObserver' in window)) return;
+
+		var io = new IntersectionObserver(function (entries) {
+			// A linha central cruza no maximo uma secao por vez; achar a que
+			// acabou de entrar. Se nenhuma entrou nesta remessa, mantem a ativa.
+			var entering = null;
+			for (var i = 0; i < entries.length; i++) {
+				if (entries[i].isIntersecting) { entering = entries[i].target.id; break; }
+			}
+			if (entering !== null) setActive(entering);
+		}, { root: null, rootMargin: '-50% 0px -50% 0px', threshold: 0 });
+
+		sections.forEach(function (s) { io.observe(s); });
+
+		// Tempo com a aba em background NAO conta (espelha o engagement time do
+		// GA4): ao ocultar, emite o dwell acumulado; ao exibir, zera o relogio.
+		document.addEventListener('visibilitychange', function () {
+			if (document.visibilityState === 'hidden') {
+				if (activeSection) emitDwell(activeSection, activeSince);
+			} else if (activeSection) {
+				activeSince = performance.now();
+			}
+		});
+		window.addEventListener('pagehide', function () {
+			if (activeSection) emitDwell(activeSection, activeSince);
+		});
+	});
+
+	// ---- (2) Cliques / interacoes -> select_content ----------------------
+	// Um unico listener por delegacao. Resolve content_type + content_id a
+	// partir de seletores/atributos ja existentes no HTML (sem data-ga-* extra,
+	// exceto data-room nos hotspots da Planta).
+	function closestSectionName(el) {
+		var sec = el && el.closest ? el.closest('section[id], footer[id]') : null;
+		return sec ? sec.id : (activeSection || '(desconhecida)');
+	}
+
+	function basename(path) {
+		return String(path || '').split('/').pop() || path;
+	}
+
+	function slugText(el) {
+		return (el.getAttribute('aria-label') || el.textContent || '')
+			.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
+	}
+
+	var RULES = [
+		{ sel: '.planta-hotspot',    type: 'hotspot',       id: function (el) { return el.getAttribute('data-room'); } },
+		{ sel: '.loc-cat-btn',       type: 'map_category',  id: function (el) { return el.getAttribute('data-cat'); } },
+		{ sel: '.loc-place-btn',     type: 'map_place',     id: function (el) { return el.getAttribute('data-name'); } },
+		{ sel: '.loc-mode-btn',      type: 'map_mode',      id: function (el) { return el.getAttribute('data-mode'); } },
+		{ sel: '.gallery-group-btn', type: 'gallery_group', id: function (el) { return el.getAttribute('data-group'); } },
+		{ sel: '.gallery-thumb',     type: 'gallery_thumb', id: function (el) { return basename(el.getAttribute('data-img')); } },
+		{ sel: '.wa-cta',            type: 'whatsapp',      id: slugText },
+		{ sel: 'a[href="#contato"]', type: 'contact',       id: function () { return 'nav-contato'; } }
+	];
+
+	function lightboxFromEl(el) {
+		if (!el || !el.id) return null;
+		if (el.id === 'gallery-zoom-btn') return 'gallery';
+		if (el.id === 'extras-zoom-btn') return 'extras';
+		if (el.id === 'loc-zoom-btn') return 'localizacao';
+		return null;
+	}
+
+	document.addEventListener('click', function (e) {
+		var el = e.target;
+		if (!el || el.nodeType !== 1) return;
+		var ctx = el.closest('button, a') || el;
+
+		var content_type = null, content_id = null;
+
+		var lb = lightboxFromEl(ctx);
+		if (lb) {
+			content_type = 'lightbox';
+			content_id = lb;
+		} else {
+			for (var i = 0; i < RULES.length; i++) {
+				var matched = ctx.closest(RULES[i].sel);
+				if (matched) {
+					content_type = RULES[i].type;
+					content_id = RULES[i].id(matched);
+					break;
+				}
+			}
+		}
+
+		if (!content_type) return; // clique em elemento nao rastreado
+
+		gaTrack('select_content', {
+			section_name: closestSectionName(ctx),
+			content_type: content_type,
+			content_id: content_id || '(sem-id)'
+		});
+	});
+})();
+
+// ============================================================================
 // Theme Toggle (light/dark) - alterna .dark no <html>, persiste e sincroniza o icone.
 // ============================================================================
 

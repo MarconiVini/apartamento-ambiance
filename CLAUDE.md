@@ -65,42 +65,45 @@ Neste projeto (sem suíte de testes), verificação = abrir a página no navegad
 
 # Projeto: Ambiance 1 (landing page)
 
-Landing page estática de venda de apartamento (Condomínio Ambiance 1, Campinas). **Não é Rails** — é um mockup/estático puro:
+Landing page estática de venda de apartamento (Condomínio Ambiance 1, Campinas). **Não é Rails** — é um mockup/estático puro. A raiz do repo é um hub; o site completo (HTML, JS, assets) vive em `ambiance-1/`:
 
-- `index.html` — arquivo único (~185 KB) com toda a página (hero, galeria, móveis/eletrodomésticos, planta, localização, diferenciais, finanças, estrutura, contato/footer). Tudo em pt-BR.
-- `app.js` — toda a lógica UI em vanilla JS (Anti-FOUC, config do Tailwind, galeria, lightboxes, localização, tracking GA4).
-- `DESIGN.md` — design system (tokens de cor, tipografia Hanken Grotesk + Inter, spacing, componentes). É a fonte da verdade visual.
+- `index.html` (raiz) — stub mínimo: só um link de texto apontando para `ambiance-1/`, sem JS nem GA4.
+- `ambiance-1/index.html` — arquivo único (~185 KB) com toda a página (hero, galeria, móveis/eletrodomésticos, planta, localização, diferenciais, finanças, estrutura, contato/footer). Tudo em pt-BR.
+- `ambiance-1/app.js` — toda a lógica UI em vanilla JS (Anti-FOUC, config do Tailwind, galeria, lightboxes, localização, tracking GA4). É path-agnostic.
+- `ambiance-1/DESIGN.md` — design system (tokens de cor, tipografia Hanken Grotesk + Inter, spacing, componentes). É a fonte da verdade visual.
 
 **Não existe** build, bundler, package.json, testes ou `bin/rails quality:check`. Não crie essa estrutura sem pedido.
 
 ## Stack
 
-- **Tailwind via Play CDN** (`https://cdn.tailwindcss.com?plugins=forms,container-queries`) — plugins `forms` e `container-queries` ativos. A config do Tailwind (cores/tokens mapeados) vive **dentro de `app.js`**, não no HTML.
+- **Tailwind via Play CDN** (`https://cdn.tailwindcss.com?plugins=forms,container-queries`) — plugins `forms` e `container-queries` ativos. A config do Tailwind (cores/tokens mapeados) vive **dentro de `ambiance-1/app.js`**, não no HTML.
 - Ícones: **Bootstrap Icons 1.11.3** + Material Symbols + Google Fonts (Hanken Grotesk, Inter).
-- GA4 `G-R40NFZHCLM` (gtag no `<head>`; eventos de visualização/permanência/cliques por seção no `app.js`).
-- Deploy: Vercel (`https://ambiance1-campinas.vercel.app/`, URL canônica já no HTML).
+- GA4 `G-R40NFZHCLM` (gtag no `<head>`; eventos de visualização/permanência/cliques por seção no `ambiance-1/app.js`).
+- Deploy: Vercel — a raiz (`https://ambiance1-campinas.vercel.app/`) serve o stub; o site está em `https://ambiance1-campinas.vercel.app/ambiance-1/` (URL canônica do site, já no HTML).
 
 ## Ordem de carregamento importa
 
-`app.js` é carregado **de forma síncrona no `<head>`**, logo após o Play CDN, para que os scripts Anti-FOUC (tema, WhatsApp) rodem antes da primeira pintura e a config do Tailwind seja aplicada a tempo. Não transforme em `defer`/`async` nem mova para o fim do body.
+`ambiance-1/app.js` é carregado **de forma síncrona no `<head>`** do `ambiance-1/index.html`, logo após o Play CDN, para que os scripts Anti-FOUC (tema, WhatsApp) rodem antes da primeira pintura e a config do Tailwind seja aplicada a tempo. Não transforme em `defer`/`async` nem mova para o fim do body.
 
 ## Tema (light/dark)
 
-- Tokens de cor são **canais rgb** (`--on-surface: 26 28 28`) definidos no `<style>` inline do `index.html`, acessados via `rgb(var(--token) / <alpha>)` tanto pelo Tailwind quanto pelo CSS customizado.
+- Tokens de cor são **canais rgb** (`--on-surface: 26 28 28`) definidos no `<style>` inline do `ambiance-1/index.html`, acessados via `rgb(var(--token) / <alpha>)` tanto pelo Tailwind quanto pelo CSS customizado.
 - Troca de tema = adicionar/remover classe `.dark` no `<html>` (prioridade: `localStorage` > `prefers-color-scheme`).
-- **Gotcha:** o `<style>` do index.html é um bloco comum, **não** processado pelo Tailwind — `theme()` ali é ignorado. Use os hex/rgb do `DESIGN.md`.
+- **Gotcha:** o `<style>` do `ambiance-1/index.html` é um bloco comum, **não** processado pelo Tailwind — `theme()` ali é ignorado. Use os hex/rgb do `ambiance-1/DESIGN.md`.
 
 ## Gotchas conhecidos
 
 - **Bootstrap Icons 1.11.3 não tem** `bi-couch`, `bi-utensils`, `bi-washing-machine` (o projeto já os usa quebrados em seções antigas). Antes de usar um ícone novo, confira que existe nesta versão.
-- **CTAs de WhatsApp ficam ocultos por padrão** e só aparecem com `?magic=awesome` na URL (o parâmetro é removido da URL sem reload após uso). Não "corrija" CTAs invisíveis — é intencional.
-- Imagens de localidades seguem o padrão `localidades/{categoria}:{modo}:{nome}.png` (ex.: `barbearia:pe:Barbearia-do-Gregorio.png`), onde modo é `pe` (a pé) ou `carro`. Preserve o padrão ao adicionar novas.
+- **CTAs de WhatsApp ficam ocultos por padrão** e só aparecem com `?magic=awesome` na URL do site — ex.: `.../ambiance-1/?magic=awesome` (o parâmetro é removido da URL sem reload após uso). O `ambiance-1/app.js` é path-agnostic e não precisa de edição para isso. Não "corrija" CTAs invisíveis — é intencional.
+- Imagens de localidades seguem o padrão `ambiance-1/localidades/{categoria}:{modo}:{nome}.png` (ex.: `barbearia:pe:Barbearia-do-Gregorio.png`), onde modo é `pe` (a pé) ou `carro`. Preserve o padrão ao adicionar novas.
 
 ## Comandos
 
 ```bash
-# Servir localmente (abrir http://localhost:8000)
+# Servir localmente a partir da raiz do repo
 python3 -m http.server 8000
+# Stub:  http://localhost:8000/
+# Site:  http://localhost:8000/ambiance-1/
 ```
 
 Não há lint, testes ou build. Verificação visual no navegador é o critério.

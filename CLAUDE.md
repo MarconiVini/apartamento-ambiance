@@ -1,0 +1,106 @@
+# CLAUDE.md
+
+Diretrizes comportamentais para reduzir erros comuns de LLM em código, mescladas com as particularidades deste projeto.
+
+**Tradeoff:** estas diretrizes privilegiam cautela em vez de velocidade. Para tarefas triviais, use julgamento.
+
+## 1. Pense antes de codar
+
+**Não assuma. Não esconda confusão. Exponha tradeoffs.**
+
+Antes de implementar:
+- State suas suposições explicitamente. Se estiver incerto, pergunte.
+- Se houver múltiplas interpretações, apresente-as — não escolha uma em silêncio.
+- Se existir uma abordagem mais simples, diga. Conforme-se em questionar o pedido quando justificável.
+- Se algo estiver confuso, pare. Nomeie o que confunde. Pergunte.
+
+## 2. Simplicidade primeiro
+
+**Código mínimo que resolve o problema. Nada especulativo.**
+
+- Sem features além do que foi pedido.
+- Sem abstrações para código de uso único.
+- Sem "flexibilidade" ou "configurabilidade" que não foi pedida.
+- Sem tratamento de erro para cenários impossíveis.
+- Se você escreveu 200 linhas e poderiam ser 50, reescreva.
+
+Pergunte a si mesmo: "Uma pessoa engenheira sênior diria que isso está complicado demais?" Se sim, simplifique.
+
+## 3. Mudanças cirúrgicas
+
+**Toque apenas no necessário. Limpe só a bagunça que você criou.**
+
+Ao editar código existente:
+- Não "melhore" código, comentários ou formatação adjacentes.
+- Não refactora coisas que não estão quebradas.
+- Siga o estilo existente, mesmo que você faria diferente.
+- Se notar código morto não relacionado, mencione — não apague.
+
+Quando suas mudanças criarem órfãos:
+- Remova imports/variáveis/funções que SEUS edits tornaram unused.
+- Não remova código morto pré-existente sem ser pedido.
+
+O teste: toda linha alterada deve rastrear diretamente de volta ao pedido do usuário.
+
+## 4. Execução orientada a objetivos
+
+**Defina critérios de sucesso. Repita até verificar.**
+
+Transforme tarefas em objetivos verificáveis:
+- "Adicionar validação" → "Escrever testes para inputs inválidos, depois fazê-los passar"
+- "Corrigir o bug" → "Reproduzir o bug, depois corrigir"
+- "Refactorar X" → "Garantir que o comportamento fica idêntico antes e depois"
+
+Para tarefas multi-passo, planeje:
+```
+1. [Passo] → verificar: [checagem]
+2. [Passo] → verificar: [checagem]
+```
+
+Critérios fortes permitem trabalhar de forma independente. Critérios fracos ("faz funcionar") exigem clarificação constante.
+
+Neste projeto (sem suíte de testes), verificação = abrir a página no navegador e exercitar o fluxo afetado (tema, galeria, localização, etc.).
+
+---
+
+# Projeto: Ambiance 1 (landing page)
+
+Landing page estática de venda de apartamento (Condomínio Ambiance 1, Campinas). **Não é Rails** — é um mockup/estático puro:
+
+- `index.html` — arquivo único (~185 KB) com toda a página (hero, galeria, móveis/eletrodomésticos, planta, localização, diferenciais, finanças, estrutura, contato/footer). Tudo em pt-BR.
+- `app.js` — toda a lógica UI em vanilla JS (Anti-FOUC, config do Tailwind, galeria, lightboxes, localização, tracking GA4).
+- `DESIGN.md` — design system (tokens de cor, tipografia Hanken Grotesk + Inter, spacing, componentes). É a fonte da verdade visual.
+
+**Não existe** build, bundler, package.json, testes ou `bin/rails quality:check`. Não crie essa estrutura sem pedido.
+
+## Stack
+
+- **Tailwind via Play CDN** (`https://cdn.tailwindcss.com?plugins=forms,container-queries`) — plugins `forms` e `container-queries` ativos. A config do Tailwind (cores/tokens mapeados) vive **dentro de `app.js`**, não no HTML.
+- Ícones: **Bootstrap Icons 1.11.3** + Material Symbols + Google Fonts (Hanken Grotesk, Inter).
+- GA4 `G-R40NFZHCLM` (gtag no `<head>`; eventos de visualização/permanência/cliques por seção no `app.js`).
+- Deploy: Vercel (`https://ambiance1-campinas.vercel.app/`, URL canônica já no HTML).
+
+## Ordem de carregamento importa
+
+`app.js` é carregado **de forma síncrona no `<head>`**, logo após o Play CDN, para que os scripts Anti-FOUC (tema, WhatsApp) rodem antes da primeira pintura e a config do Tailwind seja aplicada a tempo. Não transforme em `defer`/`async` nem mova para o fim do body.
+
+## Tema (light/dark)
+
+- Tokens de cor são **canais rgb** (`--on-surface: 26 28 28`) definidos no `<style>` inline do `index.html`, acessados via `rgb(var(--token) / <alpha>)` tanto pelo Tailwind quanto pelo CSS customizado.
+- Troca de tema = adicionar/remover classe `.dark` no `<html>` (prioridade: `localStorage` > `prefers-color-scheme`).
+- **Gotcha:** o `<style>` do index.html é um bloco comum, **não** processado pelo Tailwind — `theme()` ali é ignorado. Use os hex/rgb do `DESIGN.md`.
+
+## Gotchas conhecidos
+
+- **Bootstrap Icons 1.11.3 não tem** `bi-couch`, `bi-utensils`, `bi-washing-machine` (o projeto já os usa quebrados em seções antigas). Antes de usar um ícone novo, confira que existe nesta versão.
+- **CTAs de WhatsApp ficam ocultos por padrão** e só aparecem com `?magic=awesome` na URL (o parâmetro é removido da URL sem reload após uso). Não "corrija" CTAs invisíveis — é intencional.
+- Imagens de localidades seguem o padrão `localidades/{categoria}:{modo}:{nome}.png` (ex.: `barbearia:pe:Barbearia-do-Gregorio.png`), onde modo é `pe` (a pé) ou `carro`. Preserve o padrão ao adicionar novas.
+
+## Comandos
+
+```bash
+# Servir localmente (abrir http://localhost:8000)
+python3 -m http.server 8000
+```
+
+Não há lint, testes ou build. Verificação visual no navegador é o critério.

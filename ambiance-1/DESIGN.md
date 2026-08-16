@@ -120,6 +120,13 @@ The palette is built on a foundation of "High-Contrast Light." Surfaces utilize 
 
 Typography and primary iconography are anchored in a deep Slate Grey (#1A1A1A), ensuring AA/AAA accessibility and a grounded, authoritative feel. The signature Gold (#D4AF37) is reserved strictly for high-priority calls to action, active states, and decorative accents, providing a warm, luxurious glow against the cool, clean backdrop.
 
+### Gold usage (as implemented)
+
+The signature Gold resolves to the token `secondary-container` (#D4AF37, identical in light and dark themes). Two rules govern it:
+
+- **Text and icon accents:** use `text-secondary` (#735C00 in light, #FED65B in dark). Never set #D4AF37 as running text on light surfaces — it fails contrast.
+- **Backgrounds and badges:** use `bg-secondary-container` with text always `#1a1c1c` (AA in both themes).
+
 ## Typography
 
 This design system utilizes a dual-font strategy to balance character with utility. **Hanken Grotesk** is used for headlines and labels; its sharp, contemporary geometry reinforces the "Precision" aspect of the brand. For labels, an uppercase treatment with slight tracking is applied to evoke a premium, architectural feel.
@@ -153,6 +160,10 @@ The shape language is **Soft** and intentional. A base radius of 4px (0.25rem) i
 
 Sharp corners (0px) should be avoided to prevent the UI from feeling too "Brutalist," while overly rounded or pill-shapes should be avoided to maintain the sophisticated, high-precision aesthetic. The goal is a subtle "tailored" appearance.
 
+## Motion
+
+Scroll-reveal is intentionally **static**: every `.reveal-up` element ships with the `active` class, so content is always visible even if JS fails. The hidden state and its long transition are scoped to `.reveal-up:not(.active)` in `app.css`, letting Tailwind hover transitions govern visible elements deterministically. Planta hotspot pulses are staggered via `animation-delay` (200ms steps; no ping). All motion honors `prefers-reduced-motion`.
+
 ## Components
 
 ### Buttons
@@ -169,6 +180,12 @@ Sharp corners (0px) should be avoided to prevent the UI from feeling too "Brutal
 - White background with a "Shadow-MD" elevation.
 - 8px corner radius.
 - Internal padding of 32px to emphasize the minimalist whitespace.
+
+### Section Headers (eyebrow)
+Every section header follows a single editorial pattern, always left-aligned: gold kicker (`font-label-md text-label-md uppercase tracking-widest text-secondary`) → H2 benefit headline → factual subtitle (`font-body-lg text-on-surface-variant`, max-w-3xl).
+
+### Stat Badges
+Proof points (e.g. "+57,4%") use `bg-secondary-container` with #1a1c1c text and DEFAULT radius. At most one gold badge per card — it must never compete with the price display.
 
 ### Chips & Tags
 - Soft grey (#F9F9F9) background with #1A1A1A text. 

@@ -68,7 +68,7 @@ Neste projeto (sem suíte de testes), verificação = abrir a página no navegad
 Landing page estática de venda de apartamento (Condomínio Ambiance 1, Campinas). **Não é Rails** — é um mockup/estático puro. A raiz do repo é um hub; o site completo (HTML, JS, assets) vive em `ambiance-1/`:
 
 - `index.html` (raiz) — stub mínimo: só um link de texto apontando para `ambiance-1/`, sem JS nem GA4.
-- `ambiance-1/index.html` — arquivo único (~185 KB) com toda a página (hero, galeria, móveis/eletrodomésticos, planta, localização, diferenciais, finanças, estrutura, contato/footer). Tudo em pt-BR.
+- `ambiance-1/index.html` — arquivo único (~176 KB) com toda a página (hero, galeria, móveis/eletrodomésticos, planta, localização, diferenciais, finanças, estrutura, contato/footer). Tudo em pt-BR.
 - `ambiance-1/resources/app.js` — toda a lógica UI em vanilla JS (Anti-FOUC, config do Tailwind, galeria, lightboxes, localização, tracking GA4). É path-agnostic.
 - `ambiance-1/resources/app.css` — CSS customizado (extraído do `<style>` inline do `ambiance-1/index.html`).
 - `ambiance-1/DESIGN.md` — design system (tokens de cor, tipografia Hanken Grotesk + Inter, spacing, componentes). É a fonte da verdade visual.
@@ -94,8 +94,10 @@ Landing page estática de venda de apartamento (Condomínio Ambiance 1, Campinas
 
 ## Gotchas conhecidos
 
-- **Bootstrap Icons 1.11.3 não tem** `bi-couch`, `bi-utensils`, `bi-washing-machine` (o projeto já os usa quebrados em seções antigas). Antes de usar um ícone novo, confira que existe nesta versão.
+- **Bootstrap Icons 1.11.3 não tem** `bi-couch`, `bi-utensils`, `bi-washing-machine` nem `bi-handshake`. Antes de usar um ícone novo, confira no manifest: `https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.json`.
 - **CTAs de WhatsApp ficam ocultos por padrão** e só aparecem com `?magic=awesome` na URL do site — ex.: `.../ambiance-1/?magic=awesome` (o parâmetro é removido da URL sem reload após uso). O `ambiance-1/resources/app.js` é path-agnostic e não precisa de edição para isso. Não "corrija" CTAs invisíveis — é intencional.
+- **Reveal é estático por decisão do dono (16/08/2026):** todos os `.reveal-up` já nascem com `active` — o conteúdo fica sempre visível, mesmo se o JS falhar. O estado oculto e a transition longa vivem em `.reveal-up:not(.active)` no `ambiance-1/resources/app.css`. Ao criar elementos novos com `.reveal-up`, inclua a classe `active`.
+- **Móveis & Eletrodomésticos ficam sempre abertos** (o toggle foi removido por decisão do dono em 16/08/2026). Não reintroduza comportamento de colapso nessa seção.
 - Imagens de localidades seguem o padrão `ambiance-1/localidades/{categoria}:{modo}:{nome}.png` (ex.: `barbearia:pe:Barbearia-do-Gregorio.png`), onde modo é `pe` (a pé) ou `carro`. Preserve o padrão ao adicionar novas.
 
 ## Comandos

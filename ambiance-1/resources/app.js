@@ -518,7 +518,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 const img = document.createElement('img');
                                 img.loading = 'lazy';
                                 img.decoding = 'async';
-                                img.className = 'w-20 h-16 object-cover rounded-lg';
+                                img.className = 'w-24 h-[72px] object-cover rounded-lg';
                                 img.alt = (baseAlt ? baseAlt + ' — ' : '') + 'miniatura ' + (i + 1);
                                 img.src = url;
 
@@ -742,21 +742,6 @@ document.addEventListener('DOMContentLoaded', function () {
 // Moveis & Eletrodomesticos - toggle do cabecalho expansivel (JS vanilla).
 // ============================================================================
 
-(function () {
-        document.addEventListener('DOMContentLoaded', () => {
-                const toggle = document.getElementById('extras-toggle');
-                const content = document.getElementById('extras-content');
-                if (!toggle || !content) return;
-
-                toggle.addEventListener('click', () => {
-                        const nowHidden = content.classList.toggle('hidden');
-                        const open = !nowHidden;
-                        toggle.classList.toggle('is-open', open);
-                        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-                });
-        });
-})();
-
 // ============================================================================
 // Moveis & Eletrodomesticos - master-detail + lightbox namespaced extras-* (JS vanilla).
 // ============================================================================
@@ -868,7 +853,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 const img = document.createElement('img');
                                 img.loading = 'lazy';
                                 img.decoding = 'async';
-                                img.className = 'w-20 h-16 object-cover rounded-lg';
+                                img.className = 'w-24 h-[72px] object-cover rounded-lg';
                                 img.alt = (baseAlt ? baseAlt + ' — ' : '') + 'miniatura ' + (i + 1);
                                 img.src = url;
 
@@ -1387,3 +1372,42 @@ document.addEventListener('DOMContentLoaded', function () {
                 init();
         });
 })();
+
+// ============================================================================
+// Menu mobile - abre/fecha o painel #mobileMenu a partir do #mobileMenuBtn.
+// ============================================================================
+
+// Roda em DOMContentLoaded: no <head> os elementos ainda nao existem.
+document.addEventListener('DOMContentLoaded', function () {
+        const btn = document.getElementById('mobileMenuBtn');
+        const menu = document.getElementById('mobileMenu');
+        if (!btn || !menu) return;
+
+        const mqDesktop = window.matchMedia('(min-width: 768px)'); // breakpoint md do Tailwind
+
+        function open() {
+                menu.hidden = false;
+                btn.setAttribute('aria-expanded', 'true');
+                btn.setAttribute('aria-label', 'Fechar menu');
+        }
+
+        function close() {
+                menu.hidden = true;
+                btn.setAttribute('aria-expanded', 'false');
+                btn.setAttribute('aria-label', 'Abrir menu');
+        }
+
+        btn.addEventListener('click', function () {
+                menu.hidden ? open() : close();
+        });
+
+        // Fecha ao navegar por qualquer link do painel.
+        menu.addEventListener('click', function (e) {
+                if (e.target.closest('a')) close();
+        });
+
+        // Fecha ao redimensionar de volta para o desktop (painel e md:hidden).
+        mqDesktop.addEventListener('change', function (e) {
+                if (e.matches) close();
+        });
+});

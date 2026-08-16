@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ambiance · Apartamentos à venda em Campinas</title>
-  <meta name="description" content="Dois apartamentos à venda nos condomínios Ambiance em Campinas: Ambiance 1 (50 m², 2 quartos, R$ 370 mil) e Ambiance 3 (R$ 390 mil). Fotos, planta e localização.">
+  <meta name="description" content="Dois apartamentos à venda nos condomínios Ambiance em Campinas: Ambiance 1 (50 m², 2 quartos, R$ 370 mil) e Ambiance 3 (R$ 395 mil). Fotos, planta e localização.">
   <meta name="theme-color" content="#1a1c1c">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="https://ambiance1-campinas.vercel.app/">
@@ -14,7 +14,7 @@
   <meta property="og:site_name" content="Condomínios Ambiance">
   <meta property="og:title" content="Ambiance · Apartamentos à venda em Campinas">
   <meta property="og:description"
-        content="Dois apartamentos à venda nos condomínios Ambiance em Campinas: Ambiance 1 (50 m², 2 quartos, R$ 370 mil) e Ambiance 3 (R$ 390 mil). Fotos, planta e localização.">
+        content="Dois apartamentos à venda nos condomínios Ambiance em Campinas: Ambiance 1 (50 m², 2 quartos, R$ 370 mil) e Ambiance 3 (R$ 395 mil). Fotos, planta e localização.">
   <meta property="og:url" content="https://ambiance1-campinas.vercel.app/">
   <meta property="og:image" content="https://ambiance1-campinas.vercel.app/og-hub.jpg">
   <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Ambiance · Apartamentos à venda em Campinas">
   <meta name="twitter:description"
-        content="Dois apartamentos à venda nos condomínios Ambiance em Campinas: Ambiance 1 (50 m², 2 quartos, R$ 370 mil) e Ambiance 3 (R$ 390 mil). Fotos, planta e localização.">
+        content="Dois apartamentos à venda nos condomínios Ambiance em Campinas: Ambiance 1 (50 m², 2 quartos, R$ 370 mil) e Ambiance 3 (R$ 395 mil). Fotos, planta e localização.">
   <meta name="twitter:image" content="https://ambiance1-campinas.vercel.app/og-hub.jpg">
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
@@ -88,12 +88,12 @@
 
     /* crossfade via hover/focus nos cards — CSS puro, sem JS */
     body:has(.hub-card--1:hover, .hub-card--1:focus-visible) .hub-bg__a1,
-    body:has(.hub-card--3:hover) .hub-bg__a3 { opacity: 1; }
+    body:has(.hub-card--3:hover, .hub-card--3:focus-visible) .hub-bg__a3 { opacity: 1; }
     body:has(.hub-card--1:hover, .hub-card--1:focus-visible) .hub-bg__a3,
-    body:has(.hub-card--3:hover) .hub-bg__a1 { opacity: 0; }
+    body:has(.hub-card--3:hover, .hub-card--3:focus-visible) .hub-bg__a1 { opacity: 0; }
 
     /* hover em qualquer card: véu alivia para revelar a foto */
-    body:has(.hub-card--1:hover, .hub-card--1:focus-visible, .hub-card--3:hover) .hub-bg::after { opacity: 0.75; }
+    body:has(.hub-card--1:hover, .hub-card--1:focus-visible, .hub-card--3:hover, .hub-card--3:focus-visible) .hub-bg::after { opacity: 0.75; }
 
     .hub-grid {
       display: grid;
@@ -201,13 +201,14 @@
           <span class="hub-card-cta">Ver apartamento <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
         </div>
       </a>
-      <div class="hub-card hub-card--3 hub-card--em-breve">
+      <a class="hub-card hub-card--3" href="ambiance-3/">
         <div class="hub-card-inner">
-          <span class="hub-card-badge">Em breve</span>
+          <span class="hub-card-eyebrow">Disponível</span>
           <h2 class="hub-card-title">Ambiance 3</h2>
-          <span class="hub-card-value">R$ 390 mil</span>
+          <span class="hub-card-value">R$ 395 mil · 50 m² · 2 quartos</span>
+          <span class="hub-card-cta">Ver apartamento <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
         </div>
-      </div>
+      </a>
     </div>
   </main>
 </body>

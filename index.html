@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ambiance · Apartamentos à venda em Campinas</title>
   <meta name="description" content="Dois apartamentos à venda nos condomínios Ambiance em Campinas: Ambiance 1 (50 m², 2 quartos, R$ 370 mil) e Ambiance 3 (R$ 390 mil). Fotos, planta e localização.">
-  <meta name="theme-color" content="#f9f9f9">
+  <meta name="theme-color" content="#1a1c1c">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="https://ambiance1-campinas.vercel.app/">
   <!-- Open Graph -->
@@ -37,37 +37,63 @@
       min-height: 100vh;
       display: grid;
       place-content: center;
-      background: #f9f9f9;             /* surface */
-      color: #1a1c1c;                  /* on-surface */
+      background: #1a1c1c;             /* inverse-surface — primeiro frame já escuro, sem flash claro */
+      color: #ffffff;
       font-family: 'Hanken Grotesk', sans-serif;
       text-align: center;
       padding: 32px 16px;              /* margin-mobile */
     }
-    h1 { margin: 0 0 8px; font-size: 28px; font-weight: 600; letter-spacing: -0.01em; }
-    .hub-sub { margin: 0 0 40px; font-size: 14px; color: #444748; }
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      color: #ffffff;
+    }
+    .hub-accent { color: #d4af37; }   /* ouro — realce em "Campinas", como no h1 do site */
+    .hub-sub {
+      margin: 0 auto 48px;
+      max-width: 42ch;                /* linha equilibrada em telas largas */
+      font-size: 15px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.75);
+    }
 
     .hub-bg {
       position: fixed;
       inset: 0;
       z-index: -1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
     }
     .hub-bg img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.35;
+      transition: opacity 500ms ease-out;
     }
-    .hub-bg::after {                 /* véu para o texto permanecer legível */
+    .hub-bg__a1 { opacity: 1; object-position: 30% center; }   /* fatia palmeira+caminho preservada no portrait */
+    .hub-bg__a3 { opacity: 0; object-position: center; }        /* torres simétricas; oculta por padrão */
+
+    .hub-bg::after {                 /* véu escuro para o texto permanecer legível */
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(249, 249, 249, 0.55), rgba(249, 249, 249, 0.25) 40%, rgba(249, 249, 249, 0.45));
+      background-color: rgba(0, 0, 0, 0.62);
+      background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.35), transparent 28%, transparent 72%, rgba(0, 0, 0, 0.35));
+      opacity: 0.9;
+      transition: opacity 500ms ease-out;
     }
-    @media (max-width: 639px) {
-      .hub-bg { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
-    }
+
+    /* crossfade via hover/focus nos cards — CSS puro, sem JS */
+    body:has(.hub-card--1:hover, .hub-card--1:focus-visible) .hub-bg__a1,
+    body:has(.hub-card--3:hover) .hub-bg__a3 { opacity: 1; }
+    body:has(.hub-card--1:hover, .hub-card--1:focus-visible) .hub-bg__a3,
+    body:has(.hub-card--3:hover) .hub-bg__a1 { opacity: 0; }
+
+    /* hover em qualquer card: véu alivia para revelar a foto */
+    body:has(.hub-card--1:hover, .hub-card--1:focus-visible, .hub-card--3:hover) .hub-bg::after { opacity: 0.75; }
 
     .hub-grid {
       display: grid;
@@ -82,18 +108,19 @@
 
     .hub-card {
       display: block;
-      background: #ffffff;             /* surface-container-lowest */
-      border: 1px solid #eeeeee;       /* limite de UI do DESIGN.md */
+      background: rgba(255, 255, 255, 0.10);        /* glass-panel sobre a foto */
+      border: 1px solid rgba(255, 255, 255, 0.20);
       border-radius: 12px;             /* match com rounded-xl (glass-panel) do site */
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);     /* Shadow-SM */
-      color: #1a1c1c;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: #ffffff;
       text-decoration: none;
       transition: box-shadow 250ms ease, transform 250ms ease, border-color 250ms ease;
     }
     a.hub-card:hover,
     a.hub-card:focus-visible {
       border-color: #d4af37;           /* ouro — gold de assinatura do DESIGN.md */
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);   /* Shadow-MD */
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.30);  /* Shadow-MD reforçada p/ fundo escuro */
       transform: translateY(-2px);
     }
     a.hub-card:focus-visible {
@@ -104,61 +131,81 @@
       .hub-card, .hub-card .bi { transition: none; }
       a.hub-card:hover, a.hub-card:focus-visible,
       a.hub-card:hover .bi, a.hub-card:focus-visible .bi { transform: none; }
+      .hub-bg img, .hub-bg::after { transition: none; }   /* troca de fundo instantânea */
     }
 
     .hub-card-inner {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      min-height: 128px;               /* alvo de toque generoso */
+      align-items: flex-start;         /* leitura à esquerda, como o hero do site em desktop */
+      height: 100%;                    /* estica p/ ancorar o CTA na base */
       padding: 32px 24px;              /* padding interno de card do DESIGN.md */
     }
-    .hub-card-title { margin: 0; font-size: 18px; font-weight: 600; }
-    .hub-card-value  { font-size: 15px; font-weight: 700; }
-    .hub-card .bi {
-      margin-top: 10px;
-      font-size: 18px;
-      transition: transform 250ms ease, color 250ms ease;
-    }
-    a.hub-card:hover .bi,
-    a.hub-card:focus-visible .bi { transform: translateX(4px); color: #d4af37; }
 
-    .hub-card-badge {                 /* selo "Em breve" do card sem link */
-      margin-top: 10px;
-      padding: 4px 12px;
-      border: 1px solid #d4af37;       /* acento ouro */
-      border-radius: 9999px;           /* rounded-full */
+    /* Slot de estado: eyebrow e badge na mesma altura, alinhando os títulos dos cards */
+    .hub-card-eyebrow,
+    .hub-card-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      margin-bottom: 12px;
       font-size: 12px;
       font-weight: 600;
       letter-spacing: 0.05em;          /* label-md do DESIGN.md */
       text-transform: uppercase;
-      color: #1a1c1c;                  /* on-surface */
     }
+    .hub-card-eyebrow { color: #d4af37; }
+    .hub-card-badge {
+      padding: 4px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 9999px;           /* rounded-full */
+      background: rgba(255, 255, 255, 0.12);        /* chip glass, ecoa o próprio card */
+      color: rgba(255, 255, 255, 0.80);
+    }
+
+    .hub-card-title { margin: 0 0 6px; font-size: 20px; font-weight: 700; line-height: 1.2; }
+    .hub-card-value  { font-size: 15px; font-weight: 700; color: rgba(255, 255, 255, 0.85); }
+
+    .hub-card-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: auto;                /* CTA ancorado na base do card */
+      padding-top: 32px;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.90);
+    }
+    .hub-card .bi {
+      font-size: 16px;
+      transition: transform 250ms ease, color 250ms ease;
+    }
+    a.hub-card:hover .bi,
+    a.hub-card:focus-visible .bi { transform: translateX(4px); color: #d4af37; }
   </style>
 </head>
 <body>
   <div class="hub-bg" aria-hidden="true">
-    <img src="ambiance-1/ambiance1-bg-1280.jpg" srcset="ambiance-1/ambiance1-bg-800.jpg 800w, ambiance-1/ambiance1-bg-1280.jpg 1280w, ambiance-1/ambiance1-bg-1920.jpg 1920w" sizes="(min-width: 640px) 50vw, 100vw" alt="" decoding="async" fetchpriority="high">
-    <img src="ambiance-3/ambiance-3-bg-1024.jpg" alt="" decoding="async">
+    <img class="hub-bg__a1" src="ambiance-1/ambiance1-bg-1280.jpg" srcset="ambiance-1/ambiance1-bg-800.jpg 800w, ambiance-1/ambiance1-bg-1280.jpg 1280w, ambiance-1/ambiance1-bg-1920.jpg 1920w" sizes="100vw" alt="" decoding="async" fetchpriority="high">
+    <img class="hub-bg__a3" src="ambiance-3/ambiance-3-bg-1024.jpg" sizes="100vw" alt="" decoding="async">
   </div>
   <main>
-    <h1>Apartamentos à venda em Campinas</h1>
-    <p class="hub-sub">Dois apartamentos nos condomínios Ambiance — escolha um para ver os detalhes.</p>
+    <h1>Apartamentos à venda em <span class="hub-accent">Campinas</span></h1>
+    <p class="hub-sub">Escolha um dos dois apartamentos para ver fotos, planta e localização.</p>
     <div class="hub-grid">
       <a class="hub-card hub-card--1" href="ambiance-1/">
         <div class="hub-card-inner">
-          <h2 class="hub-card-title">Apartamento no Ambiance 1</h2>
-          <span class="hub-card-value">R$ 370 mil</span>
-          <i class="bi bi-arrow-right" aria-hidden="true"></i>
+          <span class="hub-card-eyebrow">Disponível</span>
+          <h2 class="hub-card-title">Ambiance 1</h2>
+          <span class="hub-card-value">R$ 370 mil · 50 m² · 2 quartos</span>
+          <span class="hub-card-cta">Ver apartamento <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
         </div>
       </a>
       <div class="hub-card hub-card--3 hub-card--em-breve">
         <div class="hub-card-inner">
-          <h2 class="hub-card-title">Apartamento no Ambiance 3</h2>
-          <span class="hub-card-value">R$ 390 mil</span>
           <span class="hub-card-badge">Em breve</span>
+          <h2 class="hub-card-title">Ambiance 3</h2>
+          <span class="hub-card-value">R$ 390 mil</span>
         </div>
       </div>
     </div>

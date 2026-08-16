@@ -50,7 +50,7 @@ tailwind.config = {
                 extend: {
                         // Cores baseadas em variáveis CSS (rgb channels) para suportar
                         // light/dark sem precisar de variantes dark: em cada elemento.
-                        // Definições em :root (light) e .dark abaixo, no bloco <style>.
+                        // Definições em :root (light) e .dark em resources/app.css.
                         "colors": {
                                 "on-surface": "rgb(var(--on-surface) / <alpha-value>)",
                                 "on-surface-variant": "rgb(var(--on-surface-variant) / <alpha-value>)",

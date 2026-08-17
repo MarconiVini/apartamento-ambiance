@@ -22,20 +22,29 @@
 })();
 
 // ============================================================================
-// Anti-FOUC WhatsApp: CTAs ja nascem ocultos via CSS.
-// So sao habilitados se a URL contiver ?magic=awesome.
-// O parametro e removido da URL (sem reload) apos uso.
+// Anti-FOUC WhatsApp: CTAs ja nascem ocultos via CSS. Flag persistente no
+// localStorage (key 'wa-enabled', escopo por origem — vale para todos os
+// index do dominio): ?magic=awesome liga para sempre, ?magic=<outro valor>
+// desliga, sem parametro usa o valor salvo. O parametro e sempre removido
+// da URL (sem reload), preservando demais params e hash.
 // ============================================================================
 
 (function () {
+        var enabled = false;
+        try { enabled = localStorage.getItem('wa-enabled') === 'true'; } catch (e) { /* storage bloqueado */ }
         try {
                 var url = new URL(window.location.href);
-                if (url.searchParams.get('magic') === 'awesome') {
+                if (url.searchParams.has('magic')) {
+                        enabled = url.searchParams.get('magic') === 'awesome';
+                        try {
+                                if (enabled) localStorage.setItem('wa-enabled', 'true');
+                                else localStorage.removeItem('wa-enabled');
+                        } catch (e) { /* sem persistencia: vale so nesta visita */ }
                         url.searchParams.delete('magic');
                         window.history.replaceState(null, '', url.toString());
-                        document.documentElement.classList.add('wa-enabled');
                 }
         } catch (e) { /* ignore — estado padrão (oculto) já é o fallback */ }
+        if (enabled) document.documentElement.classList.add('wa-enabled');
 })();
 
 // ============================================================================

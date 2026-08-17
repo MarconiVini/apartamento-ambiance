@@ -86,7 +86,8 @@
       transition: opacity 500ms ease-out;
     }
 
-    /* crossfade via hover/focus nos cards — CSS puro, sem JS */
+    /* crossfade via hover/focus nos cards — CSS puro; o único JS da página é o
+       script inline do mecanismo magic no <head> */
     body:has(.hub-card--1:hover, .hub-card--1:focus-visible) .hub-bg__a1,
     body:has(.hub-card--3:hover, .hub-card--3:focus-visible) .hub-bg__a3 { opacity: 1; }
     body:has(.hub-card--1:hover, .hub-card--1:focus-visible) .hub-bg__a3,
@@ -183,6 +184,28 @@
     a.hub-card:hover .bi,
     a.hub-card:focus-visible .bi { transform: translateX(4px); color: #d4af37; }
   </style>
+  <script>
+    // Mecanismo magic (mesma mini-lógica do resources/app.js, que o hub não
+    // carrega): o hub não tem CTAs, mas gravar aqui vale para todo o domínio
+    // (localStorage é por origem).
+    (function () {
+      var enabled = false;
+      try { enabled = localStorage.getItem('wa-enabled') === 'true'; } catch (e) { /* storage bloqueado */ }
+      try {
+        var url = new URL(window.location.href);
+        if (url.searchParams.has('magic')) {
+          enabled = url.searchParams.get('magic') === 'awesome';
+          try {
+            if (enabled) localStorage.setItem('wa-enabled', 'true');
+            else localStorage.removeItem('wa-enabled');
+          } catch (e) { /* sem persistencia: vale so nesta visita */ }
+          url.searchParams.delete('magic');
+          window.history.replaceState(null, '', url.toString());
+        }
+      } catch (e) { /* ignore — estado padrão (oculto) já é o fallback */ }
+      if (enabled) document.documentElement.classList.add('wa-enabled');
+    })();
+  </script>
 </head>
 <body>
   <div class="hub-bg" aria-hidden="true">

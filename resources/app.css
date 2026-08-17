@@ -146,9 +146,10 @@
                 }
 
                 /* === Modo demo: CTAs de WhatsApp ocultos por padrão (CSS-first,
-                     evita FOUC mesmo antes do JS rodar). Só são exibidos se o
-                     script no <head> detectar ?magic=awesome e adicionar a classe
-                     .wa-enabled ao <html>. Em caso de JS falho/bloqueado, o estado
+                     evita FOUC mesmo antes do JS rodar). A classe .wa-enabled vem
+                     de um flag persistente em localStorage (ligado por
+                     ?magic=awesome, desligado por ?magic=<outro valor>), gravado
+                     pelo script no <head>. Em caso de JS falho/bloqueado, o estado
                      restritivo (oculto) prevalece como fail-safe. === */
                 html:not(.wa-enabled) .wa-cta {
                         display: none !important;

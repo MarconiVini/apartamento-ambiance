@@ -246,6 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ID de medicao: G-R40NFZHCLM (snippet no <head> do index.html).
 //
 // Eventos disparados:
+//   - utm_landing         : chegada por link rastreavel (UTM presente na URL).
 //   - section_view        : uma secao fica "ativa" (linha central do viewport).
 //   - section_engagement  : ao sair/trocar de secao ou aba ficar oculta, com
 //                           section_engagement_msec (tempo de permanencia).
@@ -254,7 +255,8 @@ document.addEventListener('DOMContentLoaded', () => {
 //
 // Nao quebra nada se o GA estiver bloqueado/indisponivel (guarda em gaTrack).
 // Requer dimensoes/metrica personalizadas no Admin do GA4:
-//   section_name, content_type, content_id (dimensoes) e
+//   section_name, content_type, content_id, utm_source, utm_medium,
+//   utm_campaign (dimensoes) e
 //   section_engagement_msec (metrica, em milissegundos).
 // ============================================================================
 
@@ -263,6 +265,27 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (typeof gtag !== 'function') return; // GA ausente/bloqueado: silencioso
 		try { gtag('event', event, params || {}); } catch (e) { /* ignore */ }
 	}
+
+	// ---- (0) Chegada por link rastreavel (UTM) ---------------------------
+	// O GA4 ja captura utm_* na sessao que COMECA com eles na URL (Aquisicao >
+	// Trafego). Este evento espelha cada chegada por link em Relatorios >
+	// Engajamento > Eventos, inclusive quando a URL com UTM abre no meio de uma
+	// sessao ja ativa (caso do clique nos cards do hub). Os parametros UTM
+	// PERMANECEM na URL: o gtag.js le a URL de chegada (so o ?magic= e
+	// removido, no Anti-FOUC la em cima).
+	(function () {
+		var UTMS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+		try {
+			var params = new URLSearchParams(window.location.search);
+			var found = {};
+			var has = false;
+			for (var i = 0; i < UTMS.length; i++) {
+				var v = params.get(UTMS[i]);
+				if (v) { found[UTMS[i]] = v; has = true; }
+			}
+			if (has) gaTrack('utm_landing', found);
+		} catch (e) { /* ignore */ }
+	})();
 
 	// ---- (1) Secao ativa + tempo de permanencia (dwell) ------------------
 	// rootMargin central (-50%/-50%) cria uma linha fina no meio do viewport;
@@ -345,6 +368,16 @@ document.addEventListener('DOMContentLoaded', () => {
 		{ sel: '.loc-mode-btn',      type: 'map_mode',      id: function (el) { return el.getAttribute('data-mode'); } },
 		{ sel: '.gallery-group-btn', type: 'gallery_group', id: function (el) { return el.getAttribute('data-group'); } },
 		{ sel: '.gallery-thumb',     type: 'gallery_thumb', id: function (el) { return basename(el.getAttribute('data-img')); } },
+		// Clique na capa da galeria (abre o lightbox): identifica a foto pelo
+		// arquivo, no mesmo criterio do gallery_thumb. O botao de zoom segue
+		// rastreado como lightbox (lightboxFromEl roda antes das RULES).
+		{ sel: '#gallery-cover-wrap', type: 'gallery_open',
+			id: function () { var img = document.getElementById('gallery-cover-img'); return img ? basename(img.getAttribute('src')) : '(sem-id)'; } },
+		{ sel: '#extras-cover-wrap', type: 'gallery_open',
+			id: function () { var img = document.getElementById('extras-cover-img'); return img ? basename(img.getAttribute('src')) : '(sem-id)'; } },
+		// Setas do lightbox (navegacao, distinta do clique na imagem).
+		{ sel: '#lb-prev, #lb-next',  type: 'gallery_nav',   id: function (el) { return 'gallery-' + (el.id === 'lb-prev' ? 'prev' : 'next'); } },
+		{ sel: '#extras-lb-prev, #extras-lb-next', type: 'gallery_nav', id: function (el) { return 'extras-' + (el.id === 'extras-lb-prev' ? 'prev' : 'next'); } },
 		{ sel: '.wa-cta',            type: 'whatsapp',      id: slugText },
 		{ sel: 'a[href="#contato"]', type: 'contact',       id: function () { return 'nav-contato'; } }
 	];

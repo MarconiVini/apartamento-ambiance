@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!-- Google tag (gtag.js) — mesmo ID dos sites -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-R40NFZHCLM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-R40NFZHCLM');
+  </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ambiance · Apartamentos à venda em Campinas</title>
@@ -86,8 +95,8 @@
       transition: opacity 500ms ease-out;
     }
 
-    /* crossfade via hover/focus nos cards — CSS puro; o único JS da página é o
-       script inline do mecanismo magic no <head> */
+    /* crossfade via hover/focus nos cards — CSS puro; o JS da página fica fora
+       daqui: gtag + mecanismo magic no <head> e tracking no fim do body */
     body:has(.hub-card--1:hover, .hub-card--1:focus-visible) .hub-bg__a1,
     body:has(.hub-card--3:hover, .hub-card--3:focus-visible) .hub-bg__a3 { opacity: 1; }
     body:has(.hub-card--1:hover, .hub-card--1:focus-visible) .hub-bg__a3,
@@ -216,7 +225,7 @@
     <h1>Apartamentos à venda em <span class="hub-accent">Campinas</span></h1>
     <p class="hub-sub">Escolha um dos dois apartamentos para ver fotos, planta e localização.</p>
     <div class="hub-grid">
-      <a class="hub-card hub-card--1" href="ambiance-1/">
+      <a class="hub-card hub-card--1" href="ambiance-1/?utm_source=hub&amp;utm_medium=card">
         <div class="hub-card-inner">
           <span class="hub-card-eyebrow">Disponível</span>
           <h2 class="hub-card-title">Ambiance 1</h2>
@@ -224,7 +233,7 @@
           <span class="hub-card-cta">Ver apartamento <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
         </div>
       </a>
-      <a class="hub-card hub-card--3" href="ambiance-3/">
+      <a class="hub-card hub-card--3" href="ambiance-3/?utm_source=hub&amp;utm_medium=card">
         <div class="hub-card-inner">
           <span class="hub-card-eyebrow">Disponível</span>
           <h2 class="hub-card-title">Ambiance 3</h2>
@@ -234,5 +243,43 @@
       </a>
     </div>
   </main>
+  <script>
+    // Tracking GA4 do hub — self-contained (o hub nao carrega resources/app.js).
+    // Espelha o padrao do app.js: gaTrack com guarda, select_content com
+    // content_type/content_id e utm_landing quando a chegada veio por link
+    // rastreavel. UTM permanece na URL; so o ?magic= e removido (script do <head>).
+    (function () {
+      function gaTrack(event, params) {
+        if (typeof gtag !== 'function') return; // GA ausente/bloqueado: silencioso
+        try { gtag('event', event, params || {}); } catch (e) { /* ignore */ }
+      }
+
+      // Chegada com UTM na URL do proprio hub (mesma mini-logica do app.js).
+      var UTMS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var found = {};
+        var has = false;
+        for (var i = 0; i < UTMS.length; i++) {
+          var v = params.get(UTMS[i]);
+          if (v) { found[UTMS[i]] = v; has = true; }
+        }
+        if (has) gaTrack('utm_landing', found);
+      } catch (e) { /* ignore */ }
+
+      // Clique nos cards -> select_content indicando o destino.
+      document.addEventListener('click', function (e) {
+        var el = e.target;
+        var card = el && el.closest ? el.closest('a.hub-card') : null;
+        if (!card) return;
+        var destino = (card.getAttribute('href') || '').split('/')[0] || '(desconhecido)';
+        gaTrack('select_content', {
+          section_name: 'hub',
+          content_type: 'hub_card',
+          content_id: destino
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

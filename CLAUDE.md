@@ -67,7 +67,7 @@ Neste projeto (sem suíte de testes), verificação = abrir a página no navegad
 
 Landing page estática de venda de apartamento (Condomínio Ambiance 1, Campinas). **Não é Rails** — é um mockup/estático puro. A raiz do repo é um hub; o site completo (HTML e assets) vive em `ambiance-1/`, e o JS/CSS compartilhados ficam em `resources/` na raiz:
 
-- `index.html` (raiz) — hub de cards para `ambiance-1/` e `ambiance-3/`, com CSS puro inline e sem GA4. Tem um único script inline no `<head>` (o mecanismo `magic` do flag dos CTAs de WhatsApp) — o hub não carrega `resources/app.js`.
+- `index.html` (raiz) — hub de cards para `ambiance-1/` e `ambiance-3/` (hrefs com `?utm_source=hub&utm_medium=card`), com CSS puro inline e GA4 `G-R40NFZHCLM` (mesmo ID dos sites). Tem dois scripts inline: o mecanismo `magic` do flag dos CTAs de WhatsApp no `<head>` e um script de tracking no fim do body (gtag + `utm_landing` + `select_content` `hub_card`) — o hub não carrega `resources/app.js`.
 - `ambiance-1/index.html` — arquivo único (~176 KB) com toda a página (hero, galeria, móveis/eletrodomésticos, planta, localização, diferenciais, finanças, estrutura, contato/footer). Tudo em pt-BR.
 - `resources/app.js` (pasta compartilhada na raiz, usada pelos sites em subpastas) — toda a lógica UI em vanilla JS (Anti-FOUC, config do Tailwind, galeria, lightboxes, localização, tracking GA4). É path-agnostic.
 - `resources/app.css` — CSS customizado (extraído do `<style>` inline do `ambiance-1/index.html`).

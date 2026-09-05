@@ -760,6 +760,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         const btn = event.target.closest('.gallery-group-btn');
                         if (!btn || !groupsList.contains(btn)) return;
                         aplicarGrupo(btn);
+                        // Pousa com a foto do ambiente no topo do viewport (o scroll-mt-24
+                        // no palco compensa a nav fixa). Fica aqui, e não em aplicarGrupo,
+                        // para a página não rolar sozinha no init().
+                        stage.scrollIntoView({
+                                behavior: prefersReduced.matches ? 'auto' : 'smooth',
+                                block: 'start'
+                        });
                 });
 
                 thumbsList.addEventListener('click', (event) => {

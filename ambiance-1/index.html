@@ -245,14 +245,12 @@
                                         class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">
                                         Conheça o Apt 36 por dentro</h2>
                                 <p class="font-body-lg text-on-surface-variant max-w-3xl">Sala integrada à sacada,
-                                        cozinha equipada e dormitório com armário embutido. Toque nos ambientes abaixo
-                                        para
-                                        navegar pelas fotos.</p>
+                                        cozinha equipada e dormitório com armário embutido. Toque nos ambientes para navegar pelas fotos.</p>
                         </div>
-                        <div class="flex flex-col lg:flex-row gap-10 lg:gap-16">
+                        <div class="flex flex-col lg:flex-row gap-5 lg:gap-16">
                                 <!-- COLUNA ESQUERDA — Palco (imagem principal do cômodo selecionado) -->
-                                <div class="w-full lg:w-3/5">
-                                        <figure class="glass-panel rounded-xl overflow-hidden reveal-up active"
+                                <div class="order-2 w-full lg:order-1 lg:w-3/5">
+                                        <figure class="glass-panel rounded-xl overflow-hidden reveal-up active scroll-mt-24"
                                                 id="gallery-stage">
                                                 <div class="relative group/cover" id="gallery-cover-wrap">
                                                         <img id="gallery-cover-img"
@@ -301,9 +299,10 @@
                                                 </ul>
                                         </figure>
                                 </div>
-                                <!-- COLUNA DIREITA — Lista de grupos (textos dos cômodos) -->
-                                <div class="w-full lg:w-2/5">
-                                        <p class="font-label-md text-on-surface-variant uppercase mb-6">Ambientes</p>
+                                <!-- COLUNA DIREITA — Lista de grupos (textos dos cômodos). No mobile vira chip bar acima do palco -->
+                                <div class="order-1 w-full lg:order-2 lg:w-2/5">
+                                        <p
+                                                class="hidden font-label-md text-on-surface-variant uppercase mb-6 lg:block">Ambientes</p>
                                         <ul id="gallery-groups" class="space-y-3" aria-label="Ambientes da galeria">
                                                 <li class="reveal-up active">
                                                         <button type="button"

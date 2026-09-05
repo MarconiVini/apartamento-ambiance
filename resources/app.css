@@ -237,6 +237,76 @@
                         outline-offset: 2px;
                 }
 
+                /* ===== Galeria no mobile (<lg): a lista vertical de ambientes vira uma
+                   fileira de chips roláveis acima do palco — a troca de foto acontece
+                   junto ao toque, em vez de muitas telas acima da lista. O desktop (lg+)
+                   mantém o master-detail lateral; o JS não muda (mesmos nós do DOM). ===== */
+                @media (max-width: 1023px) {
+                        #gallery-groups {
+                                display: flex;
+                                gap: 10px;
+                                overflow-x: auto;
+                                padding-bottom: 6px;
+                                scroll-snap-type: x proximity;
+                                -webkit-overflow-scrolling: touch;
+                        }
+
+                        #gallery-groups > li {
+                                flex: 0 0 auto;
+                                margin-top: 0; /* anula o space-y-3, que vira margem vertical na fileira */
+                                scroll-snap-align: start;
+                        }
+
+                        #gallery-groups .gallery-group-btn {
+                                width: auto;
+                                padding: 8px 14px;
+                                gap: 10px;
+                                border-radius: 9999px;
+                                white-space: nowrap;
+                        }
+
+                        #gallery-groups .gallery-group-btn.is-active {
+                                border: 1px solid rgb(var(--secondary-container));
+                                background: rgb(var(--secondary-container) / 0.18);
+                        }
+
+                        /* Estrutura fixa do botão: filho 1 = ícone; filho 2 = nome + descrição; filho 3 = contagem. */
+                        #gallery-groups .gallery-group-btn > span:first-child {
+                                width: 32px;
+                                height: 32px;
+                        }
+
+                        #gallery-groups .gallery-group-btn > span:first-child i {
+                                font-size: 16px;
+                        }
+
+                        #gallery-groups .gallery-group-btn > span:nth-child(2) > span:first-child {
+                                font-size: 15px;
+                        }
+
+                        /* Descrição longa some no chip; ela permanece no desktop. */
+                        #gallery-groups .gallery-group-btn > span:nth-child(2) > span + span {
+                                display: none;
+                        }
+
+                        /* Thumbs: mesma fileira rolável dos groups no mobile. O clique em um
+                           thumb continua trocando a foto (delegation em app.js) — o browser
+                           suprime o click quando o toque vira scroll. */
+                        #gallery-thumbs,
+                        #extras-gallery-thumbs {
+                                flex-wrap: nowrap; /* vence a utility .flex-wrap por especificidade de ID */
+                                overflow-x: auto;
+                                -webkit-overflow-scrolling: touch;
+                                scroll-snap-type: x proximity;
+                        }
+
+                        #gallery-thumbs > li,
+                        #extras-gallery-thumbs > li {
+                                flex: 0 0 auto;
+                                scroll-snap-align: start;
+                        }
+                }
+
                 /* ===== Localização Inteligente: categorias, lista e modo (master-detail) ===== */
                 .loc-cat-btn {
                         display: inline-flex;

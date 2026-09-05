@@ -1186,6 +1186,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 // Slug de modo → texto por extenso usado no alt da imagem.
                 const MODE_LABEL = { carro: 'de carro', pe: 'a pé' };
 
+                // Respeita a preferência do usuário por menos movimento.
+                const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
                 // Contador de geração: invalida callbacks de carregamentos anteriores (cliques rápidos).
                 let loadToken = 0;
                 // Tempo mínimo (ms) de exibição do loading: garante feedback perceptível mesmo
@@ -1337,6 +1340,13 @@ document.addEventListener('DOMContentLoaded', function () {
                         const btn = event.target.closest('.loc-place-btn');
                         if (!btn || !placesList.contains(btn)) return;
                         applyPlace(btn);
+                        // Pousa com o mapa do estabelecimento no topo do viewport (o
+                        // scroll-mt-24 no palco compensa a nav fixa). Fica aqui, e não em
+                        // applyPlace, para a página não rolar sozinha no init().
+                        stage.scrollIntoView({
+                                behavior: prefersReduced.matches ? 'auto' : 'smooth',
+                                block: 'start'
+                        });
                 });
 
                 modeList.addEventListener('click', (event) => {

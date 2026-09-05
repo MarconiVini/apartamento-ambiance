@@ -238,8 +238,8 @@
                 }
 
                 /* ===== Galeria no mobile (<lg): a lista vertical de ambientes vira uma
-                   fileira de chips roláveis acima do palco — a troca de foto acontece
-                   junto ao toque, em vez de muitas telas acima da lista. O desktop (lg+)
+                   fileira de chips roláveis abaixo do palco, como no ambiance-3 — tocar
+                   um chip troca a foto e rola suavemente de volta a ela. O desktop (lg+)
                    mantém o master-detail lateral; o JS não muda (mesmos nós do DOM). ===== */
                 @media (max-width: 1023px) {
                         #gallery-groups {
@@ -303,6 +303,21 @@
                         #gallery-thumbs > li,
                         #extras-gallery-thumbs > li {
                                 flex: 0 0 auto;
+                                scroll-snap-align: start;
+                        }
+
+                        /* Categorias da localização: 2 linhas fixas (5 colunas x 2) com
+                           rolagem horizontal, em vez de empilhar 4-5 fileiras no mobile. */
+                        #loc-categories {
+                                display: grid; /* vence o flex do HTML por especificidade de ID */
+                                grid-template-columns: repeat(5, max-content);
+                                overflow-x: auto;
+                                -webkit-overflow-scrolling: touch;
+                                scroll-snap-type: x proximity;
+                                padding-bottom: 6px;
+                        }
+
+                        #loc-categories > .loc-cat-btn {
                                 scroll-snap-align: start;
                         }
                 }

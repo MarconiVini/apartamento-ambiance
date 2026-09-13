@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://marconivini.github.io/apartamento-ambiance/sitemap.xml

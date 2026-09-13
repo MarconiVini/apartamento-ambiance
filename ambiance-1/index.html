@@ -20,7 +20,9 @@
         <meta name="author" content="Condomínio Ambiance 1">
         <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f9f9f9">
         <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1a1c1c">
-        <link rel="canonical" href="https://ambiance1-campinas.vercel.app/ambiance-1/">
+        <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+        <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+        <link rel="canonical" href="https://marconivini.github.io/apartamento-ambiance/ambiance-1/">
         <!-- Open Graph -->
         <meta property="og:type" content="website">
         <meta property="og:locale" content="pt_BR">
@@ -28,14 +30,17 @@
         <meta property="og:title" content="Condomínio Ambiance 1 | 50m² · 2 quartos · Campinas">
         <meta property="og:description"
                 content="Apartamento de 50m² com 2 quartos, 1 vaga, sacada e acabamento de alto padrão no Condomínio Ambiance 1 em Campinas.">
-        <meta property="og:url" content="https://ambiance1-campinas.vercel.app/ambiance-1/">
-        <meta property="og:image" content="https://ambiance1-campinas.vercel.app/ambiance-1/ambiance1.jpg">
+        <meta property="og:url" content="https://marconivini.github.io/apartamento-ambiance/ambiance-1/">
+        <meta property="og:image" content="https://marconivini.github.io/apartamento-ambiance/ambiance-1/og-ambiance1.jpg">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:image:alt" content="Prédios e área comum do Condomínio Ambiance 1, em Campinas.">
         <!-- Twitter Card -->
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="Condomínio Ambiance 1 | 50m² · 2 quartos · Campinas">
         <meta name="twitter:description"
                 content="Apartamento de 50m² com 2 quartos, 1 vaga, sacada e acabamento de alto padrão no Condomínio Ambiance 1 em Campinas.">
-        <meta name="twitter:image" content="https://ambiance1-campinas.vercel.app/ambiance-1/ambiance1.jpg">
+        <meta name="twitter:image" content="https://marconivini.github.io/apartamento-ambiance/ambiance-1/og-ambiance1.jpg">
         <!-- Material Symbols -->
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
                 rel="stylesheet">
@@ -53,6 +58,82 @@
              para que Anti-FOUC e a config do Tailwind rodem antes da primeira pintura. -->
         <script src="../resources/app.js"></script>
         <link rel="stylesheet" href="../resources/app.css">
+        <!-- Dados estruturados (schema.org): anúncio + imóvel + oferta + FAQ -->
+        <script type="application/ld+json">
+        {
+                "@context": "https://schema.org",
+                "@graph": [
+                        {
+                                "@type": "VideoObject",
+                                "name": "Apartamento 50m² à venda em Campinas | Condomínio Ambiance 1 — pronto para morar",
+                                "uploadDate": "2026-08-23T18:02:39-07:00",
+                                "embedUrl": "https://www.youtube.com/embed/q50sDbDV3Aw",
+                                "thumbnailUrl": ["https://i.ytimg.com/vi/q50sDbDV3Aw/maxresdefault.jpg"],
+                                "inLanguage": "pt-BR"
+                        },
+                        {
+                                "@type": "BreadcrumbList",
+                                "itemListElement": [
+                                        { "@type": "ListItem", "position": 1, "name": "Apartamentos à venda em Campinas", "item": "https://marconivini.github.io/apartamento-ambiance/" },
+                                        { "@type": "ListItem", "position": 2, "name": "Ambiance 1", "item": "https://marconivini.github.io/apartamento-ambiance/ambiance-1/" }
+                                ]
+                        },
+                        {
+                                "@type": "RealEstateListing",
+                                "@id": "https://marconivini.github.io/apartamento-ambiance/ambiance-1/#listing",
+                                "url": "https://marconivini.github.io/apartamento-ambiance/ambiance-1/",
+                                "name": "Apartamento de 50m² à venda no Condomínio Ambiance 1 — Campinas/SP",
+                                "description": "Apartamento de 50m² com 2 quartos, 1 vaga coberta e sacada no Condomínio Ambiance 1 (Apt 36, Bloco 3), Jardim Myriam, Campinas/SP. R$ 355.000, com móveis planejados e eletrodomésticos inclusos.",
+                                "image": "https://marconivini.github.io/apartamento-ambiance/ambiance-1/og-ambiance1.jpg",
+                                "inLanguage": "pt-BR",
+                                "about": { "@id": "#apartamento" },
+                                "offers": { "@id": "#oferta" }
+                        },
+                        {
+                                "@type": "Apartment",
+                                "@id": "#apartamento",
+                                "name": "Apt 36 — Bloco 3, Condomínio Ambiance 1",
+                                "alternateName": "Ambiance Residence I",
+                                "numberOfRooms": 2,
+                                "numberOfBathroomsTotal": 1,
+                                "floorSize": { "@type": "QuantitativeValue", "value": 50, "unitCode": "MTK" },
+                                "address": {
+                                        "@type": "PostalAddress",
+                                        "streetAddress": "Rua Luís Dionísio de Souza, 375 — Apt 36, Bloco 3, Jardim Myriam",
+                                        "addressLocality": "Campinas",
+                                        "addressRegion": "SP",
+                                        "addressCountry": "BR"
+                                },
+                                "amenityFeature": [
+                                        { "@type": "LocationFeatureSpecification", "name": "Vaga de garagem coberta", "value": true },
+                                        { "@type": "LocationFeatureSpecification", "name": "Sacada", "value": true },
+                                        { "@type": "LocationFeatureSpecification", "name": "Móveis planejados e eletrodomésticos inclusos", "value": true }
+                                ]
+                        },
+                        {
+                                "@type": "Offer",
+                                "@id": "#oferta",
+                                "itemOffered": { "@id": "#apartamento" },
+                                "price": "355000",
+                                "priceCurrency": "BRL",
+                                "availability": "https://schema.org/InStock",
+                                "url": "https://marconivini.github.io/apartamento-ambiance/ambiance-1/"
+                        },
+                        {
+                                "@type": "FAQPage",
+                                "@id": "#faq",
+                                "mainEntity": [
+                                        { "@type": "Question", "name": "Qual o valor de venda do apartamento?", "acceptedAnswer": { "@type": "Answer", "text": "R$ 355.000. O proprietário aceita negociação e o IPTU 2026 está quitado." } },
+                                        { "@type": "Question", "name": "Quais são as despesas de condomínio e IPTU?", "acceptedAnswer": { "@type": "Answer", "text": "Condomínio de R$ 477,77/mês (cota de agosto de 2026) e IPTU 2026 de R$ 917,00, já quitado." } },
+                                        { "@type": "Question", "name": "Qual a configuração do apartamento?", "acceptedAnswer": { "@type": "Answer", "text": "50m² com 2 quartos, sala de estar, sala de jantar, cozinha, área de serviço, sacada, 1 banheiro e 1 vaga de garagem coberta — 8 cômodos no total." } },
+                                        { "@type": "Question", "name": "O apartamento vem com móveis e eletrodomésticos?", "acceptedAnswer": { "@type": "Answer", "text": "Sim. A venda inclui móveis planejados e eletrodomésticos, como fogão, depurador e máquina de lavar — o apartamento é entregue pronto para morar." } },
+                                        { "@type": "Question", "name": "Onde o apartamento fica?", "acceptedAnswer": { "@type": "Answer", "text": "Rua Luís Dionísio de Souza, 375 — Jardim Myriam, Campinas/SP (Apt 36, Bloco 3), próximo à Unicamp, ao CPQD e ao CNPEM. O condomínio é o Ambiance Residence I, como é listado nos portais imobiliários." } },
+                                        { "@type": "Question", "name": "Como agendar uma visita?", "acceptedAnswer": { "@type": "Answer", "text": "As visitas são agendadas diretamente com o proprietário, pelo WhatsApp." } }
+                                ]
+                        }
+                ]
+        }
+        </script>
 </head>
 
 <body
@@ -133,7 +214,7 @@
                 <!-- Hero Section -->
                 <section id="hero" class="relative min-h-screen flex items-end overflow-hidden">
                         <!-- Foto em força total (hero editorial) -->
-                        <img src="ambiance1.jpg" alt="" role="presentation"
+                        <img src="ambiance1.jpg" alt="Prédios e área comum do Condomínio Ambiance 1, em Campinas"
                                 srcset="ambiance1-bg-800.jpg 800w, ambiance1-bg-1280.jpg 1280w, ambiance1-bg-1920.jpg 1920w"
                                 sizes="100vw"
                                 class="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none z-0"
@@ -569,6 +650,8 @@
                                                         <figcaption class="p-6">
                                                                 <h3 id="extras-cover-title"
                                                                         class="font-headline-md text-headline-md text-on-surface">
+                                                                        Móveis planejados e eletrodomésticos
+                                                                        inclusos
                                                                 </h3>
                                                                 <p id="extras-cover-caption"
                                                                         class="font-label-md text-on-secondary-container mt-2">
@@ -1765,6 +1848,61 @@
                                 </ul>
                         </div>
                 </section>
+                <!-- Perguntas Frequentes -->
+                <section class="py-section-gap px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto scroll-mt-24"
+                        id="faq">
+                        <div class="mb-16 reveal-up active">
+                                <p class="font-label-md text-label-md uppercase tracking-widest text-secondary mb-3">
+                                        Perguntas Frequentes</p>
+                                <h2
+                                        class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-4">
+                                        Perguntas frequentes</h2>
+                                <p class="font-body-lg text-on-surface-variant max-w-3xl">Respostas diretas sobre
+                                        valores, o imóvel e a visita.</p>
+                        </div>
+                        <div class="max-w-4xl mx-auto border-t border-surface-variant reveal-up active">
+                                <div class="py-6 border-b border-surface-variant">
+                                        <h3 class="font-headline-md text-on-surface text-lg md:text-xl mb-2">Qual o
+                                                valor de venda do apartamento?</h3>
+                                        <p class="font-body-md text-on-surface-variant">R$ 355.000. O proprietário
+                                                aceita negociação e o IPTU 2026 está quitado.</p>
+                                </div>
+                                <div class="py-6 border-b border-surface-variant">
+                                        <h3 class="font-headline-md text-on-surface text-lg md:text-xl mb-2">Quais são
+                                                as despesas de condomínio e IPTU?</h3>
+                                        <p class="font-body-md text-on-surface-variant">Condomínio de R$ 477,77/mês
+                                                (cota de agosto de 2026) e IPTU 2026 de R$ 917,00, já quitado.</p>
+                                </div>
+                                <div class="py-6 border-b border-surface-variant">
+                                        <h3 class="font-headline-md text-on-surface text-lg md:text-xl mb-2">Qual a
+                                                configuração do apartamento?</h3>
+                                        <p class="font-body-md text-on-surface-variant">50m² com 2 quartos, sala de
+                                                estar, sala de jantar, cozinha, área de serviço, sacada, 1 banheiro e
+                                                1 vaga de garagem coberta — 8 cômodos no total.</p>
+                                </div>
+                                <div class="py-6 border-b border-surface-variant">
+                                        <h3 class="font-headline-md text-on-surface text-lg md:text-xl mb-2">O
+                                                apartamento vem com móveis e eletrodomésticos?</h3>
+                                        <p class="font-body-md text-on-surface-variant">Sim. A venda inclui móveis
+                                                planejados e eletrodomésticos, como fogão, depurador e máquina de
+                                                lavar — o apartamento é entregue pronto para morar.</p>
+                                </div>
+                                <div class="py-6 border-b border-surface-variant">
+                                        <h3 class="font-headline-md text-on-surface text-lg md:text-xl mb-2">Onde o
+                                                apartamento fica?</h3>
+                                        <p class="font-body-md text-on-surface-variant">Rua Luís Dionísio de Souza,
+                                                375 — Jardim Myriam, Campinas/SP (Apt 36, Bloco 3), próximo à
+                                                Unicamp, ao CPQD e ao CNPEM. O condomínio é o Ambiance
+                                                Residence I, como é listado nos portais imobiliários.</p>
+                                </div>
+                                <div class="py-6 border-b border-surface-variant">
+                                        <h3 class="font-headline-md text-on-surface text-lg md:text-xl mb-2">Como
+                                                agendar uma visita?</h3>
+                                        <p class="font-body-md text-on-surface-variant">As visitas são agendadas
+                                                diretamente com o proprietário, pelo WhatsApp.</p>
+                                </div>
+                        </div>
+                </section>
         </main>
         <!-- Footer -->
         <footer class="bg-surface border-t border-surface-variant w-full" id="contato">
@@ -1772,10 +1910,11 @@
                         class="flex flex-col md:flex-row md:justify-between md:items-start gap-12 px-margin-mobile md:px-margin-desktop py-16 max-w-container-max mx-auto">
                         <div>
                                 <p class="font-display-lg text-[24px] tracking-tighter text-on-surface">AMBIANCE 1</p>
-                                <p class="font-body-md text-on-surface-variant mt-4">Rua Luís Dionísio de Souza, 375 —
-                                        Jardim Myriam, Campinas/SP</p>
-                                <p class="font-label-md text-label-md uppercase tracking-widest text-secondary mt-4">Apt
-                                        36 · Bloco 3 · 50m² · 2 quartos · 1 vaga</p>
+                                <address class="not-italic">
+                                        <p class="font-body-md text-on-surface-variant mt-4">Rua Luís Dionísio de Souza, 375 —
+                                                Jardim Myriam, Campinas/SP</p>
+                                        <p class="font-label-md text-label-md uppercase tracking-widest text-secondary mt-4">Bloco 3 · 50m² · 2 quartos · 1 vaga</p>
+                                </address>
                         </div>
                         <nav aria-label="Navegação do rodapé">
                                 <p

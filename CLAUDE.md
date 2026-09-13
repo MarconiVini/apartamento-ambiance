@@ -80,7 +80,7 @@ Landing page estática de venda de apartamento (Condomínio Ambiance 1, Campinas
 - **Tailwind via Play CDN** (`https://cdn.tailwindcss.com?plugins=forms,container-queries`) — plugins `forms` e `container-queries` ativos. A config do Tailwind (cores/tokens mapeados) vive **dentro de `resources/app.js`**, não no HTML.
 - Ícones: **Bootstrap Icons 1.11.3** + Material Symbols + Google Fonts (Hanken Grotesk, Inter).
 - GA4 `G-R40NFZHCLM` (gtag no `<head>`; eventos de visualização/permanência/cliques por seção no `resources/app.js`).
-- Deploy: Vercel — a raiz (`https://ambiance1-campinas.vercel.app/`) serve o stub; o site está em `https://ambiance1-campinas.vercel.app/ambiance-1/` (URL canônica do site, já no HTML).
+- Deploy: GitHub Pages — repo `MarconiVini/apartamento-ambiance` (push em `master` publica; ~1 min de propagação). URL canônica do site: `https://marconivini.github.io/apartamento-ambiance/` (landings em `/ambiance-1/` e `/ambiance-3/`, já nos canonicals do HTML). Um deploy Vercel antigo (`ambiance1-campinas.vercel.app`) está morto — não usar.
 
 ## Ordem de carregamento importa
 

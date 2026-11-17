@@ -12,8 +12,8 @@
   </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ambiance · Apartamentos à venda em Campinas</title>
-  <meta name="description" content="Dois apartamentos à venda nos condomínios Ambiance em Campinas: Ambiance 1 (50 m², 2 quartos, R$ 345 mil) e Ambiance 3 (R$ 430 mil). Fotos, planta e localização.">
+  <title>Ambiance · Apartamento à venda em Campinas</title>
+  <meta name="description" content="Apartamento à venda no Condomínio Ambiance em Campinas: Ambiance 3 (50 m², 2 quartos, R$ 430 mil). Fotos, planta e localização.">
   <meta name="theme-color" content="#1a1c1c">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -21,21 +21,21 @@
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
-  <meta property="og:site_name" content="Condomínios Ambiance">
-  <meta property="og:title" content="Ambiance · Apartamentos à venda em Campinas">
+  <meta property="og:site_name" content="Condomínio Ambiance">
+  <meta property="og:title" content="Ambiance · Apartamento à venda em Campinas">
   <meta property="og:description"
-        content="Dois apartamentos à venda nos condomínios Ambiance em Campinas: Ambiance 1 (50 m², 2 quartos, R$ 345 mil) e Ambiance 3 (R$ 430 mil). Fotos, planta e localização.">
+        content="Apartamento à venda no Condomínio Ambiance em Campinas: Ambiance 3 (50 m², 2 quartos, R$ 430 mil). Fotos, planta e localização.">
   <meta property="og:url" content="https://marconivini.github.io/apartamento-ambiance/">
-  <meta property="og:image" content="https://marconivini.github.io/apartamento-ambiance/og-hub.jpg">
+  <meta property="og:image" content="https://marconivini.github.io/apartamento-ambiance/ambiance-3/og-ambiance3.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Página de escolha entre os apartamentos dos condomínios Ambiance 1 e Ambiance 3, em Campinas.">
+  <meta property="og:image:alt" content="Entrada do Condomínio Ambiance 3, em Campinas.">
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Ambiance · Apartamentos à venda em Campinas">
+  <meta name="twitter:title" content="Ambiance · Apartamento à venda em Campinas">
   <meta name="twitter:description"
-        content="Dois apartamentos à venda nos condomínios Ambiance em Campinas: Ambiance 1 (50 m², 2 quartos, R$ 345 mil) e Ambiance 3 (R$ 430 mil). Fotos, planta e localização.">
-  <meta name="twitter:image" content="https://marconivini.github.io/apartamento-ambiance/og-hub.jpg">
+        content="Apartamento à venda no Condomínio Ambiance em Campinas: Ambiance 3 (50 m², 2 quartos, R$ 430 mil). Fotos, planta e localização.">
+  <meta name="twitter:image" content="https://marconivini.github.io/apartamento-ambiance/ambiance-3/og-ambiance3.jpg">
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&display=swap" rel="stylesheet">
@@ -83,8 +83,7 @@
       object-fit: cover;
       transition: opacity 500ms ease-out;
     }
-    .hub-bg__a1 { opacity: 1; object-position: 30% center; }   /* fatia palmeira+caminho preservada no portrait */
-    .hub-bg__a3 { opacity: 0; object-position: center; }        /* torres simétricas; oculta por padrão */
+    .hub-bg__a3 { opacity: 1; object-position: center; }        /* torres simétricas */
 
     .hub-bg::after {                 /* véu escuro para o texto permanecer legível */
       content: "";
@@ -96,25 +95,14 @@
       transition: opacity 500ms ease-out;
     }
 
-    /* crossfade via hover/focus nos cards — CSS puro; o JS da página fica fora
-       daqui: gtag + mecanismo magic no <head> e tracking no fim do body */
-    body:has(.hub-card--1:hover, .hub-card--1:focus-visible) .hub-bg__a1,
-    body:has(.hub-card--3:hover, .hub-card--3:focus-visible) .hub-bg__a3 { opacity: 1; }
-    body:has(.hub-card--1:hover, .hub-card--1:focus-visible) .hub-bg__a3,
-    body:has(.hub-card--3:hover, .hub-card--3:focus-visible) .hub-bg__a1 { opacity: 0; }
-
-    /* hover em qualquer card: véu alivia para revelar a foto */
-    body:has(.hub-card--1:hover, .hub-card--1:focus-visible, .hub-card--3:hover, .hub-card--3:focus-visible) .hub-bg::after { opacity: 0.75; }
+    /* hover/focus no card: véu alivia para revelar a foto — CSS puro; o JS da
+       página fica fora daqui: gtag + mecanismo magic no <head> e tracking no fim do body */
+    body:has(.hub-card:hover, .hub-card:focus-visible) .hub-bg::after { opacity: 0.75; }
 
     .hub-grid {
       display: grid;
-      grid-template-columns: 1fr;      /* empilhado no mobile */
-      gap: 24px;                       /* gutter */
-      width: min(100%, 760px);
+      width: min(100%, 480px);         /* card único centralizado */
       margin: 0 auto;
-    }
-    @media (min-width: 640px) {
-      .hub-grid { grid-template-columns: 1fr 1fr; }  /* lado a lado */
     }
 
     .hub-card {
@@ -219,21 +207,12 @@
 </head>
 <body>
   <div class="hub-bg" aria-hidden="true">
-    <img class="hub-bg__a1" src="ambiance-1/ambiance1-bg-1280.jpg" srcset="ambiance-1/ambiance1-bg-800.jpg 800w, ambiance-1/ambiance1-bg-1280.jpg 1280w, ambiance-1/ambiance1-bg-1920.jpg 1920w" sizes="100vw" alt="" decoding="async" fetchpriority="high">
-    <img class="hub-bg__a3" src="ambiance-3/ambiance-3-bg-1024.jpg" sizes="100vw" alt="" decoding="async">
+    <img class="hub-bg__a3" src="ambiance-3/ambiance-3-bg-1024.jpg" sizes="100vw" alt="" decoding="async" fetchpriority="high">
   </div>
   <main>
-    <h1>Apartamentos à venda em <span class="hub-accent">Campinas</span></h1>
-    <p class="hub-sub">Escolha um dos dois apartamentos para ver fotos, planta e localização.</p>
+    <h1>Apartamento à venda em <span class="hub-accent">Campinas</span></h1>
+    <p class="hub-sub">Veja fotos, planta e localização do apartamento.</p>
     <div class="hub-grid">
-      <a class="hub-card hub-card--1" href="ambiance-1/?utm_source=hub&amp;utm_medium=card">
-        <div class="hub-card-inner">
-          <span class="hub-card-eyebrow">Disponível</span>
-          <h2 class="hub-card-title">Ambiance 1</h2>
-          <span class="hub-card-value">R$ 345 mil · 50 m² · 2 quartos · 3º andar</span>
-          <span class="hub-card-cta">Ver apartamento <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
-        </div>
-      </a>
       <a class="hub-card hub-card--3" href="ambiance-3/?utm_source=hub&amp;utm_medium=card">
         <div class="hub-card-inner">
           <span class="hub-card-eyebrow">Disponível</span>

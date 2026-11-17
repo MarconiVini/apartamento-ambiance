@@ -10,7 +10,6 @@ dispara o evento `utm_landing` no GA4.
 
 ```
 https://marconivini.github.io/apartamento-ambiance/index.html?utm_source=zapimoveis&utm_medium=direct-link&magic=awesome
-https://marconivini.github.io/apartamento-ambiance/ambiance-1/index.html?utm_source=zapimoveis&utm_medium=direct-link&magic=awesome
 https://marconivini.github.io/apartamento-ambiance/ambiance-3/index.html?utm_source=zapimoveis&utm_medium=direct-link&magic=awesome
 ```
 
@@ -18,7 +17,6 @@ https://marconivini.github.io/apartamento-ambiance/ambiance-3/index.html?utm_sou
 
 ```
 https://marconivini.github.io/apartamento-ambiance/index.html?utm_source=zapimoveis&utm_medium=qr-code&magic=awesome
-https://marconivini.github.io/apartamento-ambiance/ambiance-1/index.html?utm_source=zapimoveis&utm_medium=qr-code&magic=awesome
 https://marconivini.github.io/apartamento-ambiance/ambiance-3/index.html?utm_source=zapimoveis&utm_medium=qr-code&magic=awesome
 ```
 
@@ -26,6 +24,5 @@ https://marconivini.github.io/apartamento-ambiance/ambiance-3/index.html?utm_sou
 
 | Link | Página |
 |---|---|
-| `/index.html` | Hub (escolha entre os dois apartamentos) |
-| `/ambiance-1/index.html` | Site do Ambiance 1 |
+| `/index.html` | Hub (apresenta o Ambiance 3) |
 | `/ambiance-3/index.html` | Site do Ambiance 3 |

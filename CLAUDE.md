@@ -63,11 +63,11 @@ Neste projeto (sem suíte de testes), verificação = abrir a página no navegad
 
 ---
 
-# Projeto: Ambiance 1 (landing page)
+# Projeto: Apartamentos Ambiance (landing pages)
 
-Landing page estática de venda de apartamento (Condomínio Ambiance 1, Campinas). **Não é Rails** — é um mockup/estático puro. A raiz do repo é um hub; o site completo (HTML e assets) vive em `ambiance-1/`, e o JS/CSS compartilhados ficam em `resources/` na raiz:
+Landing pages estáticas de venda de apartamentos (Condomínios Ambiance, Campinas). **Não é Rails** — é um mockup/estático puro. A raiz do repo é um hub; os sites completos (HTML e assets) vivem em subpastas (`ambiance-1/`, `ambiance-3/`), e o JS/CSS compartilhados ficam em `resources/` na raiz:
 
-- `index.html` (raiz) — hub de cards para `ambiance-1/` e `ambiance-3/` (hrefs com `?utm_source=hub&utm_medium=card`), com CSS puro inline e GA4 `G-R40NFZHCLM` (mesmo ID dos sites). Tem dois scripts inline: o mecanismo `magic` do flag dos CTAs de WhatsApp no `<head>` e um script de tracking no fim do body (gtag + `utm_landing` + `select_content` `hub_card`) — o hub não carrega `resources/app.js`.
+- `index.html` (raiz) — hub com card para `ambiance-3/` (href com `?utm_source=hub&utm_medium=card`), com CSS puro inline e GA4 `G-R40NFZHCLM` (mesmo ID dos sites). Tem dois scripts inline: o mecanismo `magic` do flag dos CTAs de WhatsApp no `<head>` e um script de tracking no fim do body (gtag + `utm_landing` + `select_content` `hub_card`) — o hub não carrega `resources/app.js`.
 - `ambiance-1/index.html` — arquivo único (~176 KB) com toda a página (hero, galeria, móveis/eletrodomésticos, planta, localização, diferenciais, finanças, estrutura, contato/footer). Tudo em pt-BR.
 - `resources/app.js` (pasta compartilhada na raiz, usada pelos sites em subpastas) — toda a lógica UI em vanilla JS (Anti-FOUC, config do Tailwind, galeria, lightboxes, localização, tracking GA4). É path-agnostic.
 - `resources/app.css` — CSS customizado (extraído do `<style>` inline do `ambiance-1/index.html`).
@@ -94,6 +94,8 @@ Landing page estática de venda de apartamento (Condomínio Ambiance 1, Campinas
 
 ## Gotchas conhecidos
 
+- **Ambiance 1 está fora do fluxo do site (decisão do dono em 17/11/2026):** o hub só linka o Ambiance 3; a página `ambiance-1/` segue no ar por URL direta, mas com `<meta name="robots" content="noindex">`, fora do `sitemap.xml` e do `llms.txt`, e sem nenhum link interno apontando para ela. Não reintroduza cards/links/referências ao Ambiance 1 — a omissão é intencional.
+
 - **Bootstrap Icons 1.11.3 não tem** `bi-couch`, `bi-utensils`, `bi-washing-machine` nem `bi-handshake`. Antes de usar um ícone novo, confira no manifest: `https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.json`.
 - **CTAs de WhatsApp ficam ocultos por padrão** e o desbloqueio é persistente em `localStorage` (key `wa-enabled`, escopo por origem — um único flag vale para o hub e os sites). `?magic=awesome` liga para sempre; `?magic=<qualquer outro valor>` desliga; sem parâmetro, usa o valor salvo (nada salvo = oculto). O parâmetro é removido da URL sem reload após uso, preservando os demais. A lógica vive no IIFE do `resources/app.js` e num pequeno script inline no `<head>` do hub raiz (que não carrega o `app.js`). Não "corrija" CTAs invisíveis — é intencional.
 - **Reveal é estático por decisão do dono (16/08/2026):** todos os `.reveal-up` já nascem com `active` — o conteúdo fica sempre visível, mesmo se o JS falhar. O estado oculto e a transition longa vivem em `.reveal-up:not(.active)` no `resources/app.css`. Ao criar elementos novos com `.reveal-up`, inclua a classe `active`.
@@ -106,7 +108,7 @@ Landing page estática de venda de apartamento (Condomínio Ambiance 1, Campinas
 # Servir localmente a partir da raiz do repo
 python3 -m http.server 8000
 # Stub:  http://localhost:8000/
-# Site:  http://localhost:8000/ambiance-1/
+# Site:  http://localhost:8000/ambiance-3/
 ```
 
 Não há lint, testes ou build. Verificação visual no navegador é o critério.
